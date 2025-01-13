@@ -13,11 +13,11 @@ public class UsuarioDAO {
         String sql = "INSERT INTO USUARIO (LOGIN, SENHA, NOME, IDADE, CPF, DATA_NASCIMENTO, PAIS, ESTADO, CIDADE, BAIRRO, RUA, NUMERO, CEP, CNPJ_LOJA) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = null;
 
-        String dataEntrada = usuario.getDataNascimento(); // Data de entrada no formato dd/MM/yyyy
+        String dataNascimento = usuario.getDataNascimento(); // Data de entrada no formato dd/MM/yyyy
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // Formatador para interpretar a entrada
         // Converter a data para o formato SQL
-        LocalDate localDate = LocalDate.parse(dataEntrada, formatter);
-        dataEntrada = localDate.toString();
+        LocalDate localDate = LocalDate.parse(dataNascimento, formatter);
+        dataNascimento = localDate.toString();
 
         try{
             ps = ConexaoDB.getConexao().prepareStatement(sql);
@@ -26,7 +26,7 @@ public class UsuarioDAO {
             ps.setString(3, usuario.getNome());
             ps.setInt(4, usuario.getIdade());
             ps.setString(5, usuario.getCpf());
-            ps.setString(6, dataEntrada);
+            ps.setString(6, dataNascimento);
             ps.setString(7, usuario.getPais());
             ps.setString(8, usuario.getEstado());
             ps.setString(9, usuario.getCidade());

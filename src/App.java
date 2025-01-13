@@ -1,6 +1,8 @@
 import dao.LojaDAO;
+import dao.ProdutoDAO;
 import dao.UsuarioDAO;
 import model.entity.Loja;
+import model.entity.Produto;
 import model.entity.Usuario;
 
 public class App {
@@ -19,7 +21,7 @@ public class App {
         heliot.setTelefone("(81)91234-5678");
         heliot.setEmail("heliottech@gmail.com");
 
-        new LojaDAO().cadastrarLoja(heliot);*/
+        new LojaDAO().cadastrarLoja(heliot);
 
         Usuario usuario = new Usuario();
         usuario.setNome("Administrador");
@@ -37,6 +39,18 @@ public class App {
         usuario.setIdade(40);
         usuario.setCnpj_loja("23.456.789/0001-95");
 
-        new UsuarioDAO().cadastrarUsuario(usuario);
+        new UsuarioDAO().cadastrarUsuario(usuario);*/
+
+        Produto produto = new Produto();
+        produto.setCodigo("PRD-2025-00123");
+        produto.setNome("Notebook Gamer G15");
+        produto.setDescricao("Processador: Intel I5 13º Geração");
+        produto.setPreco(5300.00);
+        produto.setCategoria("Notebook Gamer");
+        produto.setMarca("Dell");
+        produto.setDataEntrega("15/02/2025");
+        produto.setCnpj_loja("23.456.789/0001-95");
+
+        new ProdutoDAO().cadastrarProduto(produto);
     }
 }
