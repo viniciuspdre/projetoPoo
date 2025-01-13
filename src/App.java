@@ -98,11 +98,16 @@ public class App {
         telefonesUsuario.setTelefone("(21)98765-4321");
         new TelefonesUsuarioDAO().cadastrarTelefonesUsuario(telefonesUsuario);*/
 
-        UsuarioCompraProduto usuarioCompraProduto = new UsuarioCompraProduto();
+        /*UsuarioCompraProduto usuarioCompraProduto = new UsuarioCompraProduto();
         usuarioCompraProduto.setLogin_usuario("pedrovictor");
         usuarioCompraProduto.setCod_produto("PRD-2025-00123");
         usuarioCompraProduto.setDataCompra("10/11/2024");
         usuarioCompraProduto.setFormaPagamento("Cartão de Crédito");
-        new UsuarioCompraProdutoDAO().inserir(usuarioCompraProduto);
+        new UsuarioCompraProdutoDAO().inserir(usuarioCompraProduto);*/
+
+        LojaDetemFornecedor lojaDetemFornecedor = new LojaDetemFornecedor();
+        lojaDetemFornecedor.setCnpj_loja("23.456.789/0001-95");
+        lojaDetemFornecedor.setCnpj_fornecedor("12.345.678/0001-90");
+        new LojaDetemFornecedorDAO().inserir(lojaDetemFornecedor);
     }
 }
