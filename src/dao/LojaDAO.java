@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class LojaDAO {
 
     public void cadastrarLoja(Loja loja){
-        String sql = "INSERT INTO LOJA (CNPJ, CATEGORIA, NOME, PAIS, ESTADO, CIDADE, BAIRRO, RUA, NUMERO) VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO LOJA (CNPJ, CATEGORIA, NOME, PAIS, ESTADO, CIDADE, BAIRRO, RUA, NUMERO , CEP, TELEFONE, EMAIL) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
 
         PreparedStatement ps = null;
 
@@ -24,6 +24,9 @@ public class LojaDAO {
             ps.setString(7, loja.getBairro());
             ps.setString(8, loja.getRua());
             ps.setString(9, loja.getNumero());
+            ps.setString(10, loja.getCep());
+            ps.setString(11, loja.getTelefone());
+            ps.setString(12, loja.getEmail());
 
             ps.execute();
             ps.close();

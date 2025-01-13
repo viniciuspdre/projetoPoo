@@ -1,9 +1,12 @@
 package model.entity;
 
-public class Loja {
-    private String cnpj;
+public class Usuario {
+    private String login;
+    private String senha;
     private String nome;
-    private String categoria;
+    private int idade;
+    private String cpf;
+    private String dataNascimento; // (01/02/2004)
     private String pais;
     private String estado;
     private String cidade;
@@ -11,15 +14,22 @@ public class Loja {
     private String rua;
     private String numero;
     private String cep;
-    private String telefone;
-    private String email;
+    private String cnpj_loja;
 
-    public String getCnpj() {
-        return cnpj;
+    public String getLogin() {
+        return login;
     }
 
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public String getNome() {
@@ -30,12 +40,12 @@ public class Loja {
         this.nome = nome;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public int getIdade() {
+        return idade;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setIdade(int idade) {
+        this.idade = idade;
     }
 
     public String getPais() {
@@ -94,21 +104,27 @@ public class Loja {
         this.cep = cep;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
-    public String getEmail() {
-        return email;
+    public String getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setDataNascimento(String dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public String getCnpj_loja() {
+        return cnpj_loja;
+    }
+
+    public void setCnpj_loja(String cnpj_loja) {
+        this.cnpj_loja = cnpj_loja;
     }
 }
-
-
