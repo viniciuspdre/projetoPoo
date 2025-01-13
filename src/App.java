@@ -77,5 +77,25 @@ public class App {
         cliente.setLogin_usuario("pedrovictor");
         cliente.setStatus("Ativo");
         new ClienteDAO().cadastrarCliente(cliente);*/
+
+        /*DadosBancariosUsuario dados = new DadosBancariosUsuario();
+        dados.setNome_titular("Pedro Victor da Silva Pereira");
+        dados.setBanco("Banco do Brasil");
+        dados.setAgencia("1234-5");
+        dados.setNumeroConta("12345-6");
+        dados.setTipo_conta("Corrente");
+        dados.setChave_pix("(21)98765-4321");
+        dados.setLogin_usuario("pedrovictor");
+        new DadosBancariosUsuarioDAO().cadastrarDadosBancariosUsuario(dados);*/
+
+        /*EmailsUsuario emailsUsuario = new EmailsUsuario();
+        emailsUsuario.setLogin_usuario("pedrovictor");
+        emailsUsuario.setEmail("pedrovictor@gmail.com");
+        new EmailsUsuarioDAO().cadastrarEmailUsuario(emailsUsuario);*/
+
+        /*TelefonesUsuario telefonesUsuario = new TelefonesUsuario();
+        telefonesUsuario.setLogin_usuario("pedrovictor");
+        telefonesUsuario.setTelefone("(21)98765-4321");
+        new TelefonesUsuarioDAO().cadastrarTelefonesUsuario(telefonesUsuario);*/
     }
 }
