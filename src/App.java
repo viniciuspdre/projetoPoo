@@ -69,8 +69,8 @@ public class App {
         new DependenteDAO().cadastrarDependente(dependente);*/
 
         /*Administrador admin = new Administrador();
-        admin.setLogin_usuario("admin");
-        admin.setCargo("admin");
+        admin.setLogin_usuario("pedrovictor");
+        admin.setCargo("pedrovictor");
         new AdministradorDAO().cadastrarAdministrador(admin);*/
 
         /*Cliente cliente = new Cliente();
@@ -105,9 +105,14 @@ public class App {
         usuarioCompraProduto.setFormaPagamento("Cartão de Crédito");
         new UsuarioCompraProdutoDAO().inserir(usuarioCompraProduto);*/
 
-        LojaDetemFornecedor lojaDetemFornecedor = new LojaDetemFornecedor();
+        /*LojaDetemFornecedor lojaDetemFornecedor = new LojaDetemFornecedor();
         lojaDetemFornecedor.setCnpj_loja("23.456.789/0001-95");
         lojaDetemFornecedor.setCnpj_fornecedor("12.345.678/0001-90");
-        new LojaDetemFornecedorDAO().inserir(lojaDetemFornecedor);
+        new LojaDetemFornecedorDAO().inserir(lojaDetemFornecedor);*/
+
+        /*AdministradorGerenciaAdministrador gerencia = new AdministradorGerenciaAdministrador();
+        gerencia.setLoginAdministradorGerencia("admin");
+        gerencia.setLoginAdministradorGerenciado("pedrovictor");
+        new AdministradorGerenciaAdministradorDAO().cadastrarAdministrador(gerencia);*/
     }
 }
