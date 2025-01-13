@@ -68,10 +68,14 @@ public class App {
         dependente.setData_nascimento("06/06/2004");
         new DependenteDAO().cadastrarDependente(dependente);*/
 
-        Administrador admin = new Administrador();
+        /*Administrador admin = new Administrador();
         admin.setLogin_usuario("admin");
         admin.setCargo("admin");
-        new AdministradorDAO().cadastrarAdministrador(admin);
+        new AdministradorDAO().cadastrarAdministrador(admin);*/
 
+        /*Cliente cliente = new Cliente();
+        cliente.setLogin_usuario("pedrovictor");
+        cliente.setStatus("Ativo");
+        new ClienteDAO().cadastrarCliente(cliente);*/
     }
 }
