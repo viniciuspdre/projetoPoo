@@ -1,11 +1,5 @@
-import dao.FornecedorDAO;
-import dao.LojaDAO;
-import dao.ProdutoDAO;
-import dao.UsuarioDAO;
-import model.entity.Fornecedor;
-import model.entity.Loja;
-import model.entity.Produto;
-import model.entity.Usuario;
+import dao.*;
+import model.entity.*;
 
 public class App {
     public static void main(String[] args) {
@@ -26,19 +20,19 @@ public class App {
         new LojaDAO().cadastrarLoja(heliot);*/
 
         /*Usuario usuario = new Usuario();
-        usuario.setNome("Fornecedor Dell");
-        usuario.setLogin("fornecedordell");
-        usuario.setSenha("fornecedordell");
-        usuario.setCpf("987.654.321-00");
-        usuario.setDataNascimento("22/08/1985");
+        usuario.setNome("Pedro Victor");
+        usuario.setLogin("pedrovictor");
+        usuario.setSenha("pedrovictor");
+        usuario.setCpf("321.654.987-01");
+        usuario.setDataNascimento("06/06/2004");
         usuario.setPais("BR");
         usuario.setEstado("PE");
         usuario.setCidade("Belo Jardim");
-        usuario.setBairro("São Antônio");
-        usuario.setRua("Uma rua qualquer");
-        usuario.setNumero("45");
-        usuario.setCep("24680-135");
-        usuario.setIdade(40);
+        usuario.setBairro("Cohab 1");
+        usuario.setRua("Agenor Barbosa Maciel");
+        usuario.setNumero("135A");
+        usuario.setCep("55158-230");
+        usuario.setIdade(20);
         usuario.setCnpj_loja("23.456.789/0001-95");
 
         new UsuarioDAO().cadastrarUsuario(usuario);*/
@@ -55,7 +49,7 @@ public class App {
 
         new ProdutoDAO().cadastrarProduto(produto);*/
 
-        Fornecedor fornecedor = new Fornecedor();
+        /*Fornecedor fornecedor = new Fornecedor();
         fornecedor.setLogin_usuario("fornecedordell");
         fornecedor.setCnpj("12.345.678/0001-90");
         fornecedor.setData_fornecimento("20/12/2024");
@@ -68,6 +62,15 @@ public class App {
         fornecedor.setCep("24680-135");
         fornecedor.setNumero("40");
 
-        new FornecedorDAO().cadastrarFornecedor(fornecedor);
+        new FornecedorDAO().cadastrarFornecedor(fornecedor);*/
+
+        /*Dependente dependente = new Dependente();
+        dependente.setLogin_usuario("pedrovictor");
+        dependente.setNome("Dependente Pedrovictor");
+        dependente.setSexo("I");
+        dependente.setParentesco("Indefinido");
+        dependente.setData_nascimento("06/06/2004");
+
+        new DependenteDAO().cadastrarDependente(dependente);*/
     }
 }
