@@ -16,7 +16,6 @@ public class App {
         heliot.setCep("12345-678");
         heliot.setTelefone("(81)91234-5678");
         heliot.setEmail("heliottech@gmail.com");
-
         new LojaDAO().cadastrarLoja(heliot);*/
 
         /*Usuario usuario = new Usuario();
@@ -34,7 +33,6 @@ public class App {
         usuario.setCep("55158-230");
         usuario.setIdade(20);
         usuario.setCnpj_loja("23.456.789/0001-95");
-
         new UsuarioDAO().cadastrarUsuario(usuario);*/
 
         /*Produto produto = new Produto();
@@ -46,7 +44,6 @@ public class App {
         produto.setMarca("Dell");
         produto.setDataEntrega("15/02/2025");
         produto.setCnpj_loja("23.456.789/0001-95");
-
         new ProdutoDAO().cadastrarProduto(produto);*/
 
         /*Fornecedor fornecedor = new Fornecedor();
@@ -61,7 +58,6 @@ public class App {
         fornecedor.setRua("Outra rua qualquer");
         fornecedor.setCep("24680-135");
         fornecedor.setNumero("40");
-
         new FornecedorDAO().cadastrarFornecedor(fornecedor);*/
 
         /*Dependente dependente = new Dependente();
@@ -70,7 +66,12 @@ public class App {
         dependente.setSexo("I");
         dependente.setParentesco("Indefinido");
         dependente.setData_nascimento("06/06/2004");
-
         new DependenteDAO().cadastrarDependente(dependente);*/
+
+        Administrador admin = new Administrador();
+        admin.setLogin_usuario("admin");
+        admin.setCargo("admin");
+        new AdministradorDAO().cadastrarAdministrador(admin);
+
     }
 }
