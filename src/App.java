@@ -97,5 +97,12 @@ public class App {
         telefonesUsuario.setLogin_usuario("pedrovictor");
         telefonesUsuario.setTelefone("(21)98765-4321");
         new TelefonesUsuarioDAO().cadastrarTelefonesUsuario(telefonesUsuario);*/
+
+        UsuarioCompraProduto usuarioCompraProduto = new UsuarioCompraProduto();
+        usuarioCompraProduto.setLogin_usuario("pedrovictor");
+        usuarioCompraProduto.setCod_produto("PRD-2025-00123");
+        usuarioCompraProduto.setDataCompra("10/11/2024");
+        usuarioCompraProduto.setFormaPagamento("Cartão de Crédito");
+        new UsuarioCompraProdutoDAO().inserir(usuarioCompraProduto);
     }
 }
