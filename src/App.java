@@ -1,6 +1,8 @@
+import dao.FornecedorDAO;
 import dao.LojaDAO;
 import dao.ProdutoDAO;
 import dao.UsuarioDAO;
+import model.entity.Fornecedor;
 import model.entity.Loja;
 import model.entity.Produto;
 import model.entity.Usuario;
@@ -21,27 +23,27 @@ public class App {
         heliot.setTelefone("(81)91234-5678");
         heliot.setEmail("heliottech@gmail.com");
 
-        new LojaDAO().cadastrarLoja(heliot);
+        new LojaDAO().cadastrarLoja(heliot);*/
 
-        Usuario usuario = new Usuario();
-        usuario.setNome("Administrador");
-        usuario.setLogin("admin");
-        usuario.setSenha("admin");
-        usuario.setCpf("123.456.789-09");
-        usuario.setDataNascimento("13/01/2025");
+        /*Usuario usuario = new Usuario();
+        usuario.setNome("Fornecedor Dell");
+        usuario.setLogin("fornecedordell");
+        usuario.setSenha("fornecedordell");
+        usuario.setCpf("987.654.321-00");
+        usuario.setDataNascimento("22/08/1985");
         usuario.setPais("BR");
         usuario.setEstado("PE");
         usuario.setCidade("Belo Jardim");
-        usuario.setBairro("São Pedro");
-        usuario.setRua("A outra Esquina");
-        usuario.setNumero("230");
-        usuario.setCep("98765-432");
+        usuario.setBairro("São Antônio");
+        usuario.setRua("Uma rua qualquer");
+        usuario.setNumero("45");
+        usuario.setCep("24680-135");
         usuario.setIdade(40);
         usuario.setCnpj_loja("23.456.789/0001-95");
 
         new UsuarioDAO().cadastrarUsuario(usuario);*/
 
-        Produto produto = new Produto();
+        /*Produto produto = new Produto();
         produto.setCodigo("PRD-2025-00123");
         produto.setNome("Notebook Gamer G15");
         produto.setDescricao("Processador: Intel I5 13º Geração");
@@ -51,6 +53,21 @@ public class App {
         produto.setDataEntrega("15/02/2025");
         produto.setCnpj_loja("23.456.789/0001-95");
 
-        new ProdutoDAO().cadastrarProduto(produto);
+        new ProdutoDAO().cadastrarProduto(produto);*/
+
+        Fornecedor fornecedor = new Fornecedor();
+        fornecedor.setLogin_usuario("fornecedordell");
+        fornecedor.setCnpj("12.345.678/0001-90");
+        fornecedor.setData_fornecimento("20/12/2024");
+        fornecedor.setNome("FornecedorDell");
+        fornecedor.setPais("BR");
+        fornecedor.setEstado("PE");
+        fornecedor.setCidade("Belo Jardim");
+        fornecedor.setBairro("São Pedro");
+        fornecedor.setRua("Outra rua qualquer");
+        fornecedor.setCep("24680-135");
+        fornecedor.setNumero("40");
+
+        new FornecedorDAO().cadastrarFornecedor(fornecedor);
     }
 }
