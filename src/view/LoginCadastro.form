@@ -134,20 +134,7 @@
             </constraints>
             <properties>
               <background color="-1"/>
-              <model>
-                <item value="1"/>
-                <item value="2"/>
-                <item value="3"/>
-                <item value="4"/>
-                <item value="5"/>
-                <item value="6"/>
-                <item value="7"/>
-                <item value="8"/>
-                <item value="9"/>
-                <item value="10"/>
-                <item value="11"/>
-                <item value="12"/>
-              </model>
+              <model/>
             </properties>
           </component>
           <component id="c4983" class="javax.swing.JComboBox" binding="jcYearCadastro">

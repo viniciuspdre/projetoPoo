@@ -3,6 +3,8 @@ package controller;
 import view.LoginCadastro;
 
 import javax.swing.*;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
@@ -10,14 +12,25 @@ import java.util.Calendar;
 
 public class CadastroController {
     private LoginCadastro loginCadastro;
+    private int flag = 0;
 
     public CadastroController(LoginCadastro loginCadastro) {
         this.loginCadastro = loginCadastro;
 
-        loginCadastro.getJcMonthCadastro().addActionListener(new ActionListener() {
+        loginCadastro.getJcMonthCadastro().addPopupMenuListener(new PopupMenuListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
                 atualizarCalendario();
+            }
+
+            @Override
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+                System.out.print("Menu fechado");
+            }
+
+            @Override
+            public void popupMenuCanceled(PopupMenuEvent e) {
+                System.out.print("Menu cancelado");
             }
         });
 
@@ -70,7 +83,7 @@ public class CadastroController {
     }
 
     private boolean checarSenha() {
-        String senha = Arrays.toString(loginCadastro.getJfPasswordCadastro().getPassword());
+        String senha = String.valueOf(loginCadastro.getJfPasswordCadastro().getPassword());
 
         if (senha.length() < 8) {
             return false;
@@ -79,21 +92,30 @@ public class CadastroController {
 
     private void atualizarCalendario() {
         Calendar cal = Calendar.getInstance();
-        for (int year = 1900; year < Calendar.YEAR; year++) {
-            loginCadastro.getJcYearCadastro().addItem(year);
+        int anoAtual = cal.get(Calendar.YEAR);
+
+        if (flag == 0) {
+            for (int year = 1900; year < anoAtual; year++) {
+                loginCadastro.getJcYearCadastro().addItem(String.valueOf(year));
+            }
+
+            for (int month = 1; month <= 12; month++) {
+                loginCadastro.getJcMonthCadastro().addItem(String.valueOf(month));
+            }
+            flag = 1;
         }
 
-        if (loginCadastro.getJcMonthCadastro().getSelectedItem() != null) {
-            int mes = (int) loginCadastro.getJcMonthCadastro().getSelectedItem();
-            int ano = (int) loginCadastro.getJcYearCadastro().getSelectedItem();
+        if (loginCadastro.getJcMonthCadastro().getSelectedItem() != null && loginCadastro.getJcYearCadastro().getSelectedItem() != null) {
+            int mes = Integer.parseInt((String.valueOf(loginCadastro.getJcMonthCadastro().getSelectedItem())));
+            int ano = Integer.parseInt(String.valueOf(loginCadastro.getJcYearCadastro().getSelectedItem()));
 
 
             cal.set(Calendar.YEAR, ano);
             cal.set(Calendar.MONTH, mes - 1);
 
             loginCadastro.getJcDayCadastro().removeAllItems();
-            for (int dia = 1; dia < cal.getActualMaximum(Calendar.DAY_OF_MONTH); dia++) {
-                loginCadastro.getJcDayCadastro().addItem(dia);
+            for (int dia = 1; dia <= cal.getActualMaximum(Calendar.DAY_OF_MONTH); dia++) {
+                loginCadastro.getJcDayCadastro().addItem(String.valueOf(dia));
             }
 
         }
