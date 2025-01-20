@@ -9,6 +9,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class UsuarioDAO {
+    public void cadastroInicial(Usuario usuario) {
+        String sql = "INSERT INTO USUARIO (LOGIN, SENHA, NOME, CPF, DATA_NASCIMENTO) VALUES (?,?,?,?,?)";
+        PreparedStatement stmt = null;
+    }
+
     public void cadastrarUsuario(Usuario usuario) {
         String sql = "INSERT INTO USUARIO (LOGIN, SENHA, NOME, IDADE, CPF, DATA_NASCIMENTO, PAIS, ESTADO, CIDADE, BAIRRO, RUA, NUMERO, CEP, CNPJ_LOJA) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = null;

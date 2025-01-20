@@ -1,5 +1,7 @@
 package controller;
 
+import jdk.jfr.Event;
+import model.entity.Usuario;
 import view.LoginCadastro;
 
 import javax.swing.*;
@@ -9,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.EventListener;
 
 public class CadastroController {
     private LoginCadastro loginCadastro;
@@ -17,7 +20,20 @@ public class CadastroController {
     public CadastroController(LoginCadastro loginCadastro) {
         this.loginCadastro = loginCadastro;
 
-        loginCadastro.getJcMonthCadastro().addPopupMenuListener(new PopupMenuListener() {
+        adicionarPopupListener(loginCadastro.getJcDayCadastro());
+        adicionarPopupListener(loginCadastro.getJcMonthCadastro());
+        adicionarPopupListener(loginCadastro.getJcYearCadastro());
+
+        loginCadastro.getJbCadastro().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cadastrarUsuario();
+            }
+        });
+    }
+
+    private void adicionarPopupListener(JComboBox<?> comboBox) {
+       comboBox.addPopupMenuListener(new PopupMenuListener() {
             @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
                 atualizarCalendario();
@@ -25,19 +41,12 @@ public class CadastroController {
 
             @Override
             public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                System.out.print("Menu fechado");
+                System.out.print("Menu invisivel");
             }
 
             @Override
             public void popupMenuCanceled(PopupMenuEvent e) {
                 System.out.print("Menu cancelado");
-            }
-        });
-
-        loginCadastro.getJbCadastro().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cadastrarUsuario();
             }
         });
     }
@@ -63,12 +72,12 @@ public class CadastroController {
 
         int soma = 0;
         for (int i = 0; i < cpf.length() - 2; i++) {
-            soma += (cpf.charAt(i) - '0') * (10-i);
+            soma += ((int)cpf.charAt(i) - '0') * (10-i);
         }
         int resto = soma % 11;
         int primeiroDigito = (resto < 2)  ? 0 : 11 - resto;
 
-        if (primeiroDigito != cpf.charAt(9)) {
+        if (primeiroDigito != cpf.charAt(9) - '0') {
             return false;
         }
 
@@ -79,7 +88,7 @@ public class CadastroController {
         resto = soma % 11;
         int segundoDigito = (resto < 2)  ? 0 : 11 - resto;
 
-        return segundoDigito == cpf.charAt(10);
+        return segundoDigito == cpf.charAt(10) - '0';
     }
 
     private boolean checarSenha() {
@@ -121,6 +130,18 @@ public class CadastroController {
         }
     }
 
+    private void enviandoValoresCadastro(Usuario usuario) {
+        usuario.setCpf(loginCadastro.getJfCPFCadastro().getText());
+        usuario.setNome(loginCadastro.getJfNameCadastro().getText());
+        usuario.setSenha(String.valueOf(loginCadastro.getJfPasswordCadastro().getPassword()));
+        String dia = String.valueOf(loginCadastro.getJcDayCadastro().getSelectedItem());
+        String mes = String.valueOf(loginCadastro.getJcMonthCadastro().getSelectedItem()).length() == 1 ?
+                0+String.valueOf(loginCadastro.getJcMonthCadastro().getSelectedItem()) : String.valueOf(loginCadastro.getJcMonthCadastro().getSelectedItem());
+        String ano = String.valueOf(loginCadastro.getJcYearCadastro().getSelectedItem());
+        usuario.setDataNascimento(dia+"/"+mes+"/"+ano);
+        usuario.setLogin(loginCadastro.getJfCPFCadastro().getText());
+    }
+
     private void cadastrarUsuario() {
         if (!checarCampos()) {
             JOptionPane.showMessageDialog(loginCadastro, "Preencha todos os campos.");
@@ -132,7 +153,9 @@ public class CadastroController {
             JOptionPane.showMessageDialog(loginCadastro, "Insira uma senha com 8 digitos ou mais.");
         }
         else {
-            JOptionPane.showMessageDialog(loginCadastro, "Usuário cadastrado com sucesso!");
+            Usuario usuario = new Usuario();
+            enviandoValoresCadastro(usuario);
+            JOptionPane.showMessageDialog(loginCadastro, "Data de nascimento: "+usuario.getDataNascimento());
         }
     }
 }
