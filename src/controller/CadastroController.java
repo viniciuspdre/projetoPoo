@@ -101,7 +101,14 @@ public class CadastroController {
     private boolean checarSenha() {
         String senha = String.valueOf(loginCadastro.getJfPasswordCadastro().getPassword());
 
-        if (senha.length() < 8) {
+        if (senha.length() < 8 || senha.length() > 15) {
+            return false;
+        } return true;
+    }
+
+    private boolean checarUser() {
+        String username = loginCadastro.getJfUserNameCadastro().getText();
+        if (username == null || username.isEmpty() || username.contains(" ") || username.contains("-")) {
             return false;
         } return true;
     }
@@ -138,15 +145,19 @@ public class CadastroController {
     }
 
     private void enviandoValoresCadastro(Usuario usuario) {
-        usuario.setCpf(loginCadastro.getJfCPFCadastro().getText());
+        String cpf = loginCadastro.getJfCPFCadastro().getText();
+        cpf = cpf.replaceAll("\\D", "");
+        usuario.setCpf(cpf);
         usuario.setNome(loginCadastro.getJfNameCadastro().getText());
         usuario.setSenha(String.valueOf(loginCadastro.getJfPasswordCadastro().getPassword()));
-        String dia = String.valueOf(loginCadastro.getJcDayCadastro().getSelectedItem());
+        String dia = String.valueOf(loginCadastro.getJcDayCadastro().getSelectedItem()).length() == 1 ?
+                0+String.valueOf(loginCadastro.getJcDayCadastro().getSelectedItem()):
+                String.valueOf(loginCadastro.getJcDayCadastro().getSelectedItem());
         String mes = String.valueOf(loginCadastro.getJcMonthCadastro().getSelectedItem()).length() == 1 ?
                 0+String.valueOf(loginCadastro.getJcMonthCadastro().getSelectedItem()) : String.valueOf(loginCadastro.getJcMonthCadastro().getSelectedItem());
         String ano = String.valueOf(loginCadastro.getJcYearCadastro().getSelectedItem());
         usuario.setDataNascimento(dia+"/"+mes+"/"+ano);
-        usuario.setLogin(loginCadastro.getJfCPFCadastro().getText());
+        usuario.setLogin(loginCadastro.getJfUserNameCadastro().getText());
     }
 
     private void cadastrarUsuario() {
@@ -157,7 +168,10 @@ public class CadastroController {
             JOptionPane.showMessageDialog(loginCadastro, "Insira um CPF válido.");
         }
         else if (!checarSenha()) {
-            JOptionPane.showMessageDialog(loginCadastro, "Insira uma senha com 8 digitos ou mais.");
+            JOptionPane.showMessageDialog(loginCadastro, "Insira uma senha com 8 a 15 digitos.");
+        }
+        else if (!checarUser()) {
+            JOptionPane.showMessageDialog(loginCadastro, "Seu nome de usuário é inválido, tente não usar espaços nem hífens.");
         }
         else {
             Usuario usuario = new Usuario();
