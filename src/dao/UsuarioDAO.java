@@ -9,15 +9,40 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class UsuarioDAO {
-    public void cadastrarUsuario(Usuario usuario) {
-        String sql = "INSERT INTO USUARIO (LOGIN, SENHA, NOME, IDADE, CPF, DATA_NASCIMENTO, PAIS, ESTADO, CIDADE, BAIRRO, RUA, NUMERO, CEP, CNPJ_LOJA) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    public static void cadastroInicial(Usuario usuario) {
+        String sql = "INSERT INTO USUARIO (LOGIN, SENHA, NOME, CPF, DATA_NASCIMENTO) VALUES (?,?,?,?,?)";
         PreparedStatement ps = null;
 
+        String dataNascimento = tratarDataParaBD(usuario);
+        try {
+            ps = ConexaoDB.getConexao().prepareStatement(sql);
+            ps.setString(1, usuario.getLogin());
+            ps.setString(2, usuario.getSenha());
+            ps.setString(3, usuario.getNome());
+            ps.setString(4, usuario.getCpf());
+            ps.setString(5, dataNascimento);
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String tratarDataParaBD(Usuario usuario) {
         String dataNascimento = usuario.getDataNascimento(); // Data de entrada no formato dd/MM/yyyy
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // Formatador para interpretar a entrada
         // Converter a data para o formato SQL
         LocalDate localDate = LocalDate.parse(dataNascimento, formatter);
         dataNascimento = localDate.toString();
+        return dataNascimento;
+    }
+
+    public void cadastrarUsuario(Usuario usuario) {
+        String sql = "INSERT INTO USUARIO (LOGIN, SENHA, NOME, IDADE, CPF, DATA_NASCIMENTO, PAIS, ESTADO, CIDADE, BAIRRO, RUA, NUMERO, CEP, CNPJ_LOJA) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement ps = null;
+
+        String dataNascimento = tratarDataParaBD(usuario);
 
         try{
             ps = ConexaoDB.getConexao().prepareStatement(sql);
