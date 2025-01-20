@@ -1,5 +1,6 @@
 package controller;
 
+import dao.UsuarioDAO;
 import jdk.jfr.Event;
 import model.entity.Usuario;
 import view.LoginCadastro;
@@ -52,7 +53,13 @@ public class CadastroController {
     }
 
     private boolean checarCampos() {
-        if (loginCadastro.getJfCPFCadastro().getText().trim().isEmpty() || loginCadastro.getJfNameCadastro().getText().trim().isEmpty() || loginCadastro.getJfPasswordCadastro().getText().trim().isEmpty() || loginCadastro.getJfUserNameCadastro().getText().trim().isEmpty() || loginCadastro.getJcDayCadastro().getSelectedItem() == null || loginCadastro.getJcMonthCadastro().getSelectedItem() == null || loginCadastro.getJcYearCadastro().getSelectedItem() == null) {
+        if (loginCadastro.getJfCPFCadastro().getText().trim().isEmpty() ||
+                loginCadastro.getJfNameCadastro().getText().trim().isEmpty() ||
+                loginCadastro.getJfPasswordCadastro().getText().trim().isEmpty() ||
+                loginCadastro.getJfUserNameCadastro().getText().trim().isEmpty() ||
+                loginCadastro.getJcDayCadastro().getSelectedItem() == null ||
+                loginCadastro.getJcMonthCadastro().getSelectedItem() == null ||
+                loginCadastro.getJcYearCadastro().getSelectedItem() == null) {
             return false;
         }
         return true;
@@ -155,7 +162,8 @@ public class CadastroController {
         else {
             Usuario usuario = new Usuario();
             enviandoValoresCadastro(usuario);
-            JOptionPane.showMessageDialog(loginCadastro, "Data de nascimento: "+usuario.getDataNascimento());
+            UsuarioDAO.cadastroInicial(usuario);
+            JOptionPane.showMessageDialog(loginCadastro, "Cadastro realizado com sucesso!");
         }
     }
 }
