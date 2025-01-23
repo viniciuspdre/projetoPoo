@@ -1,10 +1,11 @@
 package view;
 
 import controller.CadastroController;
+import dao.UsuarioDAO;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class LoginCadastro extends JFrame {
 
@@ -136,4 +137,30 @@ public class LoginCadastro extends JFrame {
         LoginCadastro tela = new LoginCadastro();
         new CadastroController(tela);
     }
-}
+
+    private void botaoEnterLogin(java.awt.event.ActionEvent evt) {
+        try {
+
+            String Login = getJfUsernameLogin().getText();
+            String Senha = new String(getJfPasswordLogin().getPassword());
+
+            UsuarioDAO objUsuarioDAO = new UsuarioDAO();
+            ResultSet rsusuariodao = objUsuarioDAO.autenticacaoUsuario(Login, Senha);
+
+            if (rsusuariodao.next()) {
+                // chamar tela que vai abrir depois do login
+                JOptionPane.showMessageDialog(null, "Certo");
+                telaPrincipal objPrincipal = new telaPrincipal();
+                objPrincipal.setVisible(true);
+
+                dispose(); // fechar a tela de login
+            }else {
+                // enviar mensagem de erro
+                JOptionPane.showMessageDialog(null, "Login ou senha incorretos");
+            }
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "FRMLoginView" + erro);
+        }
+    }
+    };
+
