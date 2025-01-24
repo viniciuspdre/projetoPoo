@@ -70,9 +70,9 @@ public class UsuarioDAO {
             e.printStackTrace();
         }
     }
-    Connection conexao;
+    private static Connection conexao;
 
-    public ResultSet autenticacaoUsuario(String login, String senha) {
+    public static boolean autenticacaoUsuario(String login, String senha) {
         conexao = new ConexaoDB().getConexao();
 
         try{
@@ -81,12 +81,13 @@ public class UsuarioDAO {
             pstm.setString(1, login);
             pstm.setString(2, senha);
 
-            ResultSet rs = pstm.executeQuery();
-            return rs;
+            try (ResultSet rs = pstm.executeQuery()) {
+                return rs.next();
+            }
 
         } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "UsuarioDAO: " + erro);
-            return null;
+            System.err.println("Erro ao autenticar usuário: " + erro.getMessage());
+            return false;
         }
     }
 }
