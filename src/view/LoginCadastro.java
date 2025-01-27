@@ -3,6 +3,7 @@ package view;
 import controller.CadastroController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -121,7 +122,8 @@ public class LoginCadastro extends JFrame {
     private JLabel jlBirthDay;
 
     public LoginCadastro() {
-        ImageIcon img = new ImageIcon("C:\\Users\\Pedro Lira\\Documents\\projetos\\projetoPoo\\icon\\user.png");
+        ImageIcon img = new ImageIcon("icon/user.png");
+        
         setIconImage(img.getImage());
         setContentPane(MainPanel);
         setTitle("Cadastro");

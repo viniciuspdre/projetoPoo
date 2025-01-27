@@ -4,8 +4,10 @@
       <root url="jar://$PROJECT_DIR$/lib/mysql-connector-j-9.1.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/miglayout-4.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/TimingFramework-0.55.jar!/" />
+      <root url="file://$PROJECT_DIR$/lib/javafx-sdk-23.0.2/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/javafx-sdk-23.0.2/lib" recursive="false" />
   </library>
 </component>

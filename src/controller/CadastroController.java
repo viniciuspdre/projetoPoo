@@ -8,13 +8,15 @@ import view.LoginCadastro;
 import javax.swing.*;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.EventListener;
 
-public class CadastroController {
+public class CadastroController extends Component {
     private LoginCadastro loginCadastro;
     private int flag = 0;
 
@@ -28,9 +30,17 @@ public class CadastroController {
         loginCadastro.getJbCadastro().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                carregarFoto();
                 cadastrarUsuario();
             }
         });
+    }
+
+    private void carregarFoto() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Selecione um foto");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Arquivo de Imagens(*.PNG, *.JPG ,*.JPEG)","png", "jpg", "jpeg"));
+        fileChooser.showOpenDialog(this);
     }
 
     private void adicionarPopupListener(JComboBox<?> comboBox) {

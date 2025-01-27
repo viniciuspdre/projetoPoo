@@ -4,11 +4,25 @@ public class Produto {
     private String codigo;
     private String nome;
     private double preco;
+    private int estoque;
+    private int vendidos;
     private String categoria;
     private String marca;
     private String descricao;
     private String dataEntrega;
     private String cnpj_loja;
+
+    public Produto(String codigo, String nome, double preco,int estoque, int vendidos, String categoria, String marca, String descricao, String cnpj_loja) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.preco = preco;
+        this.categoria = categoria;
+        this.marca = marca;
+        this.descricao = descricao;
+        this.cnpj_loja = cnpj_loja;
+        this.vendidos = vendidos;
+        this.estoque = estoque;
+    }
 
     public String getCodigo() {
         return codigo;
@@ -42,14 +56,6 @@ public class Produto {
         this.categoria = categoria;
     }
 
-    public String getDataEntrega() {
-        return dataEntrega;
-    }
-
-    public void setDataEntrega(String dataEntrega) {
-        this.dataEntrega = dataEntrega;
-    }
-
     public String getDescricao() {
         return descricao;
     }
@@ -72,5 +78,26 @@ public class Produto {
 
     public void setCnpj_loja(String cnpj_loja) {
         this.cnpj_loja = cnpj_loja;
+    }
+
+    public String getFoto() {
+
+        return "";
+    }
+
+    public int getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(int estoque) {
+        this.estoque = estoque;
+    }
+
+    public int getVendidos() {
+        return vendidos;
+    }
+
+    public void setVendidos(int vendidos) {
+        this.vendidos = vendidos;
     }
 }
