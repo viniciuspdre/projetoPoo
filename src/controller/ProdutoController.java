@@ -15,9 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.image.ImageView;
-import model.entity.Produto;
 
-import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,16 +70,7 @@ public class ProdutoController implements Initializable {
     private ImageView Image_Atualizar_Produto;
 
     @FXML
-    private Button Importar_Adicionar_Produto;
-
-    @FXML
-    private Button Importar_Atualizar_Produto;
-
-    @FXML
     private TextField Input_Remover_Produto;
-
-    @FXML
-    private Button Limpar_Adicionar_Produto;
 
     @FXML
     private Button Limpar_Atualizar_Produto;
@@ -90,13 +79,13 @@ public class ProdutoController implements Initializable {
     private Button Limpar_Remover_Produto;
 
     @FXML
-    private Button Pesquisar_Adicionar_Produto;
-
-    @FXML
     private ImageView Pesquisar_Atualizar_Produto;
 
     @FXML
     private TextField Pesquisar_Remover_Produto;
+
+    @FXML
+    private TextField Pesquisar_Adicionar_Produto;
 
     @FXML
     private Button Remover_Produto;
@@ -139,6 +128,42 @@ public class ProdutoController implements Initializable {
 
     @FXML
     private TableColumn<Produto, Integer> colunaVendidos;
+
+    @FXML
+    private TableView<Produto> Tabela_Produto_Adicionar;
+
+    @FXML
+    private TableColumn<Produto, String> colunaCategoria_Adicionar;
+
+    @FXML
+    private TableColumn<Produto, String> colunaCodigo_Adicionar;
+
+    @FXML
+    private TableColumn<Produto, String> colunaDescricao_Adicionar;
+
+    @FXML
+    private TableColumn<Produto, Integer> colunaEstoque_Adicionar;
+
+    @FXML
+    private TableColumn<Produto, String> colunaFornecedor_Adicionar;
+
+    @FXML
+    private TableColumn<Produto, String> colunaFoto_Adicionar;
+
+    @FXML
+    private TableColumn<Produto, String> colunaLoja_Adicionar;
+
+    @FXML
+    private TableColumn<Produto, String> colunaMarca_Adicionar;
+
+    @FXML
+    private TableColumn<Produto, String> colunaNome_Adicionar;
+
+    @FXML
+    private TableColumn<Produto, Double> colunaPreco_Adicionar;
+
+    @FXML
+    private TableColumn<Produto, Integer> colunaVendidos_Adicionar;
 
     @FXML
     private Label Total_Produtos;
@@ -207,9 +232,11 @@ public class ProdutoController implements Initializable {
     private List<String> categorias = new ArrayList<String>();
 
     private ObservableList<String> categoriasObservableList;
-    private ObservableList<Produto> DadosTabelaProduto = FXCollections.observableArrayList();
+    private ObservableList<Produto> DadosTabelaProdutoRemover = FXCollections.observableArrayList();
+    private ObservableList<Produto> DadosTabelaProdutoAdicionar = FXCollections.observableArrayList();
 
-    private FilteredList<Produto> filteredList = new FilteredList<>(DadosTabelaProduto, p -> true);
+    private FilteredList<Produto> filteredListRemover = new FilteredList<>(DadosTabelaProdutoRemover, p -> true);
+    private FilteredList<Produto> filteredListAdicionar = new FilteredList<>(DadosTabelaProdutoAdicionar, p -> true);
 
     @FXML
     void Adicionar_Produto() {
@@ -244,6 +271,11 @@ public class ProdutoController implements Initializable {
     }
 
     @FXML
+    public void Importar_Adicionar_Produto() {
+        // lógica do metodo
+    }
+
+    @FXML
     private void close() {
         // Obter a janela atual
         Stage stage = (Stage) btnFechar.getScene().getWindow();
@@ -261,6 +293,18 @@ public class ProdutoController implements Initializable {
     private void Limpar_Remover_Produto() {
         Input_Remover_Produto.setText(null);
         Pesquisar_Remover_Produto.setText(null);
+    }
+
+    @FXML
+    private void Limpar_Adicionar_Produto() {
+        Pesquisar_Adicionar_Produto.setText(null);
+        Adicionar_Produto_Nome.setText(null);
+        Adicionar_Produto_Preco.setText(null);
+        Adicionar_Produto_Marca.setText(null);
+        Adicionar_Produto_Estoque.setText(null);
+        //Adicionar_Produto_Fornecedor.setText(null);
+        //Adicionar_Produto_Categorias.setItems();
+        Adicionar_Produto_Descricao.setText(null);
     }
 
     @FXML
@@ -291,8 +335,10 @@ public class ProdutoController implements Initializable {
             alert.showAndWait();
 
             // Atualiza a tabela após a remoção do produto
-            DadosTabelaProduto.removeIf(produto -> produto.getCodigo().equals(codigo));
+            DadosTabelaProdutoRemover.removeIf(produto -> produto.getCodigo().equals(codigo));
+            DadosTabelaProdutoAdicionar.removeIf(produto -> produto.getCodigo().equals(codigo));
             Tabela_Produto_Remover.refresh(); // Atualiza a tabela para refletir a exclusão
+            Tabela_Produto_Adicionar.refresh();
 
             // Atualiza quantidade de produto na janela de estatísticas
             produtos = ProdutoDAO.listarProdutos();
@@ -330,20 +376,18 @@ public class ProdutoController implements Initializable {
     }
 
     private void carregarDadosTabelaProduto() {
-        /*if (produtos != null && !produtos.isEmpty()) {
-            for (Produto produto : produtos) {
-                DadosTabelaProduto.add(produto); // Adiciona cada produto à lista observável
-            }
-        } else {
-            System.out.println("Lista de produtos está vazia ou nula.");
-        }
-        Tabela_Produto_Remover.setItems(DadosTabelaProduto);*/
-        DadosTabelaProduto.clear(); // Limpa os dados antes de carregar
-        DadosTabelaProduto.addAll(produtos); // Adiciona todos os produtos à lista
+        // Limpa os dados antes de carregar
+        DadosTabelaProdutoRemover.clear();
+        DadosTabelaProdutoAdicionar.clear();
+
+        // Adiciona todos os produtos à lista
+        DadosTabelaProdutoRemover.addAll(produtos);
+        DadosTabelaProdutoAdicionar.addAll(produtos);
     }
 
     // Metodo para configurar as colunas da TableView
     private void configurarColunasTabela() {
+        //Configuração Tabela Pagina de remover produto
         colunaNome.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNome()));
         colunaCodigo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCodigo()));
         colunaPreco.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPreco()).asObject());
@@ -353,6 +397,17 @@ public class ProdutoController implements Initializable {
         colunaMarca.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMarca()));
         colunaDescricao.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
         colunaLoja.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCnpj_loja()));
+
+        //Configuração Tabela Pagina de adicionar produto
+        colunaNome_Adicionar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNome()));
+        colunaCodigo_Adicionar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCodigo()));
+        colunaPreco_Adicionar.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPreco()).asObject());
+        colunaEstoque_Adicionar.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getEstoque()).asObject());
+        colunaVendidos_Adicionar.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getVendidos()).asObject());
+        colunaCategoria_Adicionar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCategoria()));
+        colunaMarca_Adicionar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMarca()));
+        colunaDescricao_Adicionar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
+        colunaLoja_Adicionar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCnpj_loja()));
     }
 
     public void eventos(){
@@ -360,15 +415,39 @@ public class ProdutoController implements Initializable {
         Input_Remover_Produto.setOnAction(event -> {
             btn_Remover_Produto();
         });
+
+        // Ao clicar em uma linha da tabela tranfere o código dela para o textfield
+        Tabela_Produto_Remover.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                // Captura os dados da linha selecionada
+                Produto produtoSelecionado = newValue;
+                Input_Remover_Produto.setText(produtoSelecionado.getCodigo());
+            }
+        });
+
+        // Ao clicar em uma linha da tabela tranfere o código dela para o textfield
+        Tabela_Produto_Adicionar.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                // Captura os dados da linha selecionada
+                Produto produtoSelecionado = newValue;
+                Adicionar_Produto_Nome.setText(produtoSelecionado.getNome());
+                Adicionar_Produto_Preco.setText(String.valueOf(produtoSelecionado.getPreco()));
+                Adicionar_Produto_Marca.setText(produtoSelecionado.getMarca());
+                Adicionar_Produto_Estoque.setText(String.valueOf(produtoSelecionado.getEstoque()));
+                //Adicionar_Produto_Fornecedor.setText(produtoSelecionado.getFornecedor());
+                //Adicionar_Produto_Categorias.setItems();
+                Adicionar_Produto_Descricao.setText(produtoSelecionado.getDescricao());
+            }
+        });
     }
 
-    public void filtroPesquisa(){
+    public void filtroPesquisaRemover(){
         // Criação da lista filtrada
-        filteredList = new FilteredList<>(DadosTabelaProduto, p -> true); // Inicialmente, sem filtro
+        filteredListRemover = new FilteredList<>(DadosTabelaProdutoRemover, p -> true); // Inicialmente, sem filtro
 
         // Adiciona um listener ao TextField de pesquisa para filtrar os produtos
         Pesquisar_Remover_Produto.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredList.setPredicate(produto -> {
+            filteredListRemover.setPredicate(produto -> {
                 // Se o texto de pesquisa estiver vazio, mostra todos os produtos
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
@@ -386,8 +465,38 @@ public class ProdutoController implements Initializable {
                         produto.getCnpj_loja().toLowerCase().contains(lowerCaseFilter);
             });
         });
+
         // Configura a TableView para usar o filtro
-        Tabela_Produto_Remover.setItems(filteredList);
+        Tabela_Produto_Remover.setItems(filteredListRemover);
+    }
+
+    public void filtroPesquisaAdicionar(){
+        // Criação da lista filtrada
+        filteredListAdicionar = new FilteredList<>(DadosTabelaProdutoAdicionar, p -> true); // Inicialmente, sem filtro
+
+        // Adiciona um listener ao TextField de pesquisa para filtrar os produtos
+        Pesquisar_Adicionar_Produto.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredListAdicionar.setPredicate(produto -> {
+                // Se o texto de pesquisa estiver vazio, mostra todos os produtos
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Converte o texto de pesquisa para minúsculas
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Filtra os produtos com base no nome ou no código
+                return produto.getNome().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getCodigo().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getCategoria().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getMarca().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getDescricao().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getCnpj_loja().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
+
+        // Configura a TableView para usar o filtro
+        Tabela_Produto_Adicionar.setItems(filteredListAdicionar);
     }
 
     @Override
@@ -395,17 +504,9 @@ public class ProdutoController implements Initializable {
         produtos = ProdutoDAO.listarProdutos();
         Total_Produtos.setText(String.valueOf(produtos.size()));
 
-        // Ao clicar em uma linha da tabela tranfere o código dela para o textfield
-        Tabela_Produto_Remover.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                // Captura os dados da linha selecionada
-                Produto produtoSelecionado = newValue;
-                Input_Remover_Produto.setText(produtoSelecionado.getCodigo());
-            }
-        });
-
         configurarColunasTabela(); // Configura as colunas da TableView
-        filtroPesquisa(); // Filtro da textfield Pesquisa
+        filtroPesquisaRemover(); // Filtro da textfield Pesquisa
+        filtroPesquisaAdicionar(); // Filtro da textfield Pesquisa
         carregarListaCategorias(); // Carrega a lista de categorias da combobox
         carregarDadosTabelaProduto(); // Carrega os dados para a tabela
         eventos(); // Adiciona eventos de teclado

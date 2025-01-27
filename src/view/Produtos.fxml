@@ -316,38 +316,34 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="Container_Adicionar_Produto" layoutX="9.0" prefHeight="532.0" prefWidth="882.0" stylesheets="@../style/cadastroProdutos.css" visible="false" AnchorPane.bottomAnchor="10.399999999999977" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="10.199999999999932" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Container_Adicionar_Produto" layoutX="9.0" prefHeight="532.0" prefWidth="882.0" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="10.399999999999977" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="10.199999999999932" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane prefHeight="288.0" prefWidth="878.0" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="259.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <TableView fx:id="Tabela_Produto_Adicionar" layoutX="10.0" layoutY="55.0" prefHeight="205.0" prefWidth="858.0" stylesheets="@../style/cadastroProdutos.css">
                                        <columns>
-                                          <TableColumn fx:id="colunaCodigo" prefWidth="86.39998245239258" text="Código" />
-                                          <TableColumn fx:id="colunaNome" prefWidth="81.60000610351562" text="Nome" />
-                                          <TableColumn fx:id="colunaPreco" prefWidth="75.99998474121094" text="Preço" />
-                                          <TableColumn fx:id="colunaCategoria" prefWidth="103.20001220703125" text="Categoria" />
-                                          <TableColumn fx:id="colunaMarca" prefWidth="72.0" text="Marca" />
-                                          <TableColumn fx:id="colunaDescricao" prefWidth="72.0" text="Descrição" />
-                                          <TableColumn fx:id="colunaEstoque" prefWidth="61.5999755859375" text="Estoque" />
-                                          <TableColumn fx:id="colunaVendidos" prefWidth="64.79998779296875" text="Vendidos" />
-                                          <TableColumn fx:id="colunaFoto" prefWidth="63.2000732421875" text="Foto" />
-                                          <TableColumn fx:id="colunaFornecedor" prefWidth="82.39996337890625" text="Fornecedor(CNPJ)" />
-                                          <TableColumn fx:id="colunaLoja" prefWidth="91.20009765625002" text="Loja(CNPJ)" />
+                                          <TableColumn fx:id="colunaCodigo_Adicionar" prefWidth="86.39998245239258" text="Código" />
+                                          <TableColumn fx:id="colunaNome_Adicionar" prefWidth="81.60000610351562" text="Nome" />
+                                          <TableColumn fx:id="colunaPreco_Adicionar" prefWidth="75.99998474121094" text="Preço" />
+                                          <TableColumn fx:id="colunaCategoria_Adicionar" prefWidth="103.20001220703125" text="Categoria" />
+                                          <TableColumn fx:id="colunaMarca_Adicionar" prefWidth="72.0" text="Marca" />
+                                          <TableColumn fx:id="colunaDescricao_Adicionar" prefWidth="72.0" text="Descrição" />
+                                          <TableColumn fx:id="colunaEstoque_Adicionar" prefWidth="61.5999755859375" text="Estoque" />
+                                          <TableColumn fx:id="colunaVendidos_Adicionar" prefWidth="64.79998779296875" text="Vendidos" />
+                                          <TableColumn fx:id="colunaFoto_Adicionar" prefWidth="63.2000732421875" text="Foto" />
+                                          <TableColumn fx:id="colunaFornecedor_Adicionar" prefWidth="82.39996337890625" text="Fornecedor(CNPJ)" />
+                                          <TableColumn fx:id="colunaLoja_Adicionar" prefWidth="91.20009765625002" text="Loja(CNPJ)" />
                                        </columns>
                                     </TableView>
-                                    <TextField fx:id="Pesquisar_Remover_Produto2" layoutX="12.0" layoutY="13.0" prefHeight="30.0" prefWidth="200.0" promptText="Pesquisar" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
-                                    <Button fx:id="Pesquisar_Adicionar_Produto" layoutX="170.0" layoutY="12.0" mnemonicParsing="false" styleClass="nav-btn" stylesheets="@../style/cadastroProdutos.css">
-                                       <graphic>
-                                          <ImageView fitHeight="22.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" styleClass="nav-btn">
-                                             <image>
-                                                <Image url="@../icon/search.png" />
-                                             </image>
-                                             <effect>
-                                                <ColorAdjust brightness="0.79" />
-                                             </effect>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
+                                    <TextField fx:id="Pesquisar_Adicionar_Produto" layoutX="12.0" layoutY="13.0" prefHeight="30.0" prefWidth="200.0" promptText="Pesquisar" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
+                                    <ImageView fitHeight="22.0" fitWidth="23.0" layoutX="184.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" styleClass="nav-btn">
+                                       <image>
+                                          <Image url="@../icon/search.png" />
+                                       </image>
+                                       <effect>
+                                          <ColorAdjust brightness="0.79" />
+                                       </effect>
+                                    </ImageView>
                                  </children>
                               </AnchorPane>
                               <TextField fx:id="Adicionar_Produto_Nome" layoutX="109.0" layoutY="317.0" promptText="Nome" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
@@ -357,16 +353,15 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor></ComboBox>
                               <TextField fx:id="Adicionar_Produto_Marca" layoutX="109.0" layoutY="432.0" promptText="Marca" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
-                              <TextArea fx:id="Adicionar_Produto_Descricao" layoutX="298.0" layoutY="442.0" prefHeight="83.0" prefWidth="150.0" promptText="Descrição" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
-                              <AnchorPane layoutX="488.0" layoutY="317.0" prefHeight="127.0" prefWidth="101.0" stylesheets="@../style/cadastroProdutos.css">
+                              <TextArea fx:id="Adicionar_Produto_Descricao" layoutX="298.0" layoutY="442.0" prefHeight="83.0" prefWidth="150.0" promptText="Descrição" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" wrapText="true" />
+                              <AnchorPane layoutX="488.0" layoutY="317.0" prefHeight="180.0" prefWidth="150.0" stylesheets="@../style/cadastroProdutos.css">
                                  <styleClass>
                                     <String fx:value="white" />
                                     <String fx:value="shadow" />
                                     <String fx:value="textfield" />
                                  </styleClass>
                                  <children>
-                                    <ImageView fx:id="Image_Adicionar_Produto" fitHeight="150.0" fitWidth="121.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Button fx:id="Importar_Adicionar_Produto" layoutX="9.0" layoutY="110.0" mnemonicParsing="false" prefWidth="101.0" stylesheets="@../style/cadastroProdutos.css" text="Importar" AnchorPane.bottomAnchor="5.0">
+                                    <Button layoutX="24.0" layoutY="150.2" mnemonicParsing="false" onAction="#Importar_Adicionar_Produto" prefWidth="101.0" stylesheets="@../style/cadastroProdutos.css" text="Importar" AnchorPane.bottomAnchor="6.600000000000023">
                                        <font>
                                           <Font name="Tahoma Bold" size="12.0" />
                                        </font>
@@ -374,9 +369,14 @@
                                           <String fx:value="btn-operacao" />
                                           <String fx:value="shadow" />
                                        </styleClass></Button>
+                                    <ImageView fitHeight="140.0" fitWidth="160.0" layoutX="5.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icon/image2.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </AnchorPane>
-                              <Button fx:id="Limpar_Adicionar_Produto" layoutX="641.0" layoutY="334.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="94.0" stylesheets="@../style/cadastroProdutos.css" text="Limpar">
+                              <Button layoutX="691.0" layoutY="333.0" mnemonicParsing="false" onAction="#Limpar_Adicionar_Produto" prefHeight="41.0" prefWidth="94.0" stylesheets="@../style/cadastroProdutos.css" text="Limpar">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
@@ -421,12 +421,12 @@
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label alignment="CENTER" layoutX="484.0" layoutY="293.0" prefHeight="18.0" prefWidth="128.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Carregar Foto">
+                              <Label alignment="CENTER" layoutX="488.0" layoutY="293.0" prefHeight="18.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Carregar Foto">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="btn_Adicionar_Produto" layoutX="641.0" layoutY="404.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="94.0" stylesheets="@../style/cadastroProdutos.css" text="Adicionar">
+                              <Button fx:id="btn_Adicionar_Produto" layoutX="691.0" layoutY="403.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="94.0" stylesheets="@../style/cadastroProdutos.css" text="Adicionar">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
@@ -559,7 +559,10 @@
                                              <font>
                                                 <Font name="Tahoma Bold" size="12.0" />
                                              </font></Button>
-                                          <ImageView fx:id="Image_Atualizar_Produto" fitHeight="143.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                                          <ImageView fx:id="Image_Atualizar_Produto" fitHeight="143.0" fitWidth="150.0" layoutX="4.0" opacity="0.25" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icon/image2.png" />
+                                             </image></ImageView>
                                        </children>
                                        <styleClass>
                                           <String fx:value="white" />
@@ -594,7 +597,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="Container_Remover_Produto" layoutX="12.0" layoutY="6.0" prefHeight="530.0" prefWidth="872.0" stylesheets="@../style/cadastroProdutos.css">
+                        <AnchorPane fx:id="Container_Remover_Produto" layoutX="12.0" layoutY="6.0" prefHeight="530.0" prefWidth="872.0" stylesheets="@../style/cadastroProdutos.css" visible="false">
                            <styleClass>
                               <String fx:value="white" />
                               <String fx:value="shadow" />
