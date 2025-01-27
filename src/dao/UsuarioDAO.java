@@ -3,7 +3,10 @@ package dao;
 import dao.conexao.ConexaoDB;
 import model.entity.Usuario;
 
+import javax.swing.*;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -65,6 +68,26 @@ public class UsuarioDAO {
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+    private static Connection conexao;
+
+    public static boolean autenticacaoUsuario(String login, String senha) {
+        conexao = new ConexaoDB().getConexao();
+
+        try{
+            String sql = "SELECT * FROM USUARIO WHERE LOGIN = ? AND SENHA = ?";
+            PreparedStatement pstm = conexao.prepareStatement(sql);
+            pstm.setString(1, login);
+            pstm.setString(2, senha);
+
+            try (ResultSet rs = pstm.executeQuery()) {
+                return rs.next();
+            }
+
+        } catch (SQLException erro) {
+            System.err.println("Erro ao autenticar usuário: " + erro.getMessage());
+            return false;
         }
     }
 }

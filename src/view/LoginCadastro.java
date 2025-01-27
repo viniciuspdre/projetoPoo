@@ -1,10 +1,13 @@
 package view;
 
 import controller.CadastroController;
+import controller.LoginController;
+import dao.UsuarioDAO;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class LoginCadastro extends JFrame {
 
@@ -129,6 +132,10 @@ public class LoginCadastro extends JFrame {
         setSize(1024, 720);
         setLocationRelativeTo(null);
         setResizable(false);
+        // é instância do controler
+        LoginController loginController = new LoginController(this);
+        // vai associar o botão
+        jbLogin.addActionListener(evt -> loginController.botaoEnterLogin(evt));
         setVisible(true);
     }
 
@@ -136,4 +143,6 @@ public class LoginCadastro extends JFrame {
         LoginCadastro tela = new LoginCadastro();
         new CadastroController(tela);
     }
+
+
 }
