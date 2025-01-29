@@ -9,7 +9,6 @@ public class Produto {
     private String categoria;
     private String marca;
     private String descricao;
-    private String dataEntrega;
     private String cnpj_loja;
 
     public Produto(String codigo, String nome, double preco,int estoque, int vendidos, String categoria, String marca, String descricao, String cnpj_loja) {

@@ -3,6 +3,7 @@ package controller;
 import dao.ProdutoDAO;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.entity.Produto;
@@ -17,6 +18,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,9 +37,6 @@ public class ProdutoController implements Initializable {
 
     @FXML
     private TextField Adicionar_Produto_Estoque;
-
-    @FXML
-    private TextField Adicionar_Produto_Fornecedor;
 
     @FXML
     private TextField Adicionar_Produto_Marca;
@@ -109,9 +108,6 @@ public class ProdutoController implements Initializable {
     private TableColumn<Produto, Integer> colunaEstoque;
 
     @FXML
-    private TableColumn<Produto, String> colunaFornecedor;
-
-    @FXML
     private TableColumn<Produto, String> colunaFoto;
 
     @FXML
@@ -143,9 +139,6 @@ public class ProdutoController implements Initializable {
 
     @FXML
     private TableColumn<Produto, Integer> colunaEstoque_Adicionar;
-
-    @FXML
-    private TableColumn<Produto, String> colunaFornecedor_Adicionar;
 
     @FXML
     private TableColumn<Produto, String> colunaFoto_Adicionar;
@@ -191,9 +184,6 @@ public class ProdutoController implements Initializable {
 
     @FXML
     private TextField input_Atualizar_Estoque;
-
-    @FXML
-    private TextField input_Atualizar_Fornecedor;
 
     @FXML
     private TextField input_Atualizar_Loja;
@@ -302,10 +292,78 @@ public class ProdutoController implements Initializable {
         Adicionar_Produto_Preco.setText(null);
         Adicionar_Produto_Marca.setText(null);
         Adicionar_Produto_Estoque.setText(null);
-        //Adicionar_Produto_Fornecedor.setText(null);
-        //Adicionar_Produto_Categorias.setItems();
+        Adicionar_Produto_Categorias.setValue(null);
         Adicionar_Produto_Descricao.setText(null);
     }
+
+    @FXML
+    private void btn_Adicionar_Produto() {
+        // Gera automaticamente o código do produto
+        String codigo = gerarCodigoProduto();
+
+        // Obtém os demais valores dos campos
+        String nome = Adicionar_Produto_Nome.getText();
+        String precoTexto = Adicionar_Produto_Preco.getText();
+        String marca = Adicionar_Produto_Marca.getText();
+        String estoqueTexto = Adicionar_Produto_Estoque.getText();
+        String categoria = Adicionar_Produto_Categorias.getSelectionModel().getSelectedItem();
+        String descricao = Adicionar_Produto_Descricao.getText();
+        String cnpj_loja = "23.456.789/0001-95";
+        int vendidos = 0;
+
+
+        // Validação de campos obrigatórios
+        if (nome.trim().isEmpty() || precoTexto.trim().isEmpty() || estoqueTexto.trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Campos Obrigatórios");
+            alert.setHeaderText(null);
+            alert.setContentText("Preencha todos os campos obrigatórios.");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            // Conversão de valores
+            double preco = Double.parseDouble(precoTexto);
+            int estoque = Integer.parseInt(estoqueTexto);
+
+            // Criação do objeto produto
+            Produto novoProduto = new Produto(codigo, nome, preco, estoque, vendidos, categoria, marca, descricao, cnpj_loja);
+
+            // Salvando o produto no banco (DAO)
+            ProdutoDAO produtoDAO = new ProdutoDAO();
+            produtoDAO.cadastrarProduto(novoProduto);
+
+            // Feedback para o usuário
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sucesso");
+            alert.setHeaderText(null);
+            alert.setContentText("Produto cadastrado com sucesso! Código: " + codigo);
+            alert.showAndWait();
+
+            // Limpar os campos após o cadastro
+            Limpar_Adicionar_Produto();
+
+            produtos = produtoDAO.listarProdutos();
+            carregarDadosTabelaProduto();
+            carregarListaCategorias();
+
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText(null);
+            alert.setContentText("Preço e estoque devem ser valores numéricos.");
+            alert.showAndWait();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText(null);
+            alert.setContentText("Erro ao cadastrar o produto: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+
 
     @FXML
     private void btn_Remover_Produto(){
@@ -354,6 +412,33 @@ public class ProdutoController implements Initializable {
             e.printStackTrace(); // Para depuração (pode ser substituído por um logger)
         }
     }
+
+    // Metodo para gerar automaticamente o próximo código do produto
+    private String gerarCodigoProduto() {
+        // Prefixo fixo
+        String prefixo = "CPV";
+
+        // Ano atual
+        String ano = String.valueOf(java.time.Year.now());
+
+        // Obtém o último produto cadastrado no banco
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+        String ultimoCodigo = produtoDAO.obterUltimoCodigoProduto(); // Metodo no DAO
+
+        // Calcula o próximo número sequencial
+        int numeroSequencial = 1; // Inicia no 1 se não houver código anterior
+        if (ultimoCodigo != null && ultimoCodigo.startsWith(prefixo)) {
+            String sequencialStr = ultimoCodigo.substring(9); // Obtém os últimos 5 dígitos
+            numeroSequencial = Integer.parseInt(sequencialStr) + 1;
+        }
+
+        // Formata o número sequencial com 5 dígitos
+        String sequencialFormatado = String.format("%05d", numeroSequencial);
+
+        // Retorna o código completo
+        return String.format("%s-%s-%s", prefixo, ano, sequencialFormatado);
+    }
+
 
     private void carregarListaCategorias(){
         // Limpando a lista de categorias para evitar duplicações
@@ -420,8 +505,8 @@ public class ProdutoController implements Initializable {
         Tabela_Produto_Remover.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 // Captura os dados da linha selecionada
-                Produto produtoSelecionado = newValue;
-                Input_Remover_Produto.setText(produtoSelecionado.getCodigo());
+                Produto produtoSelecionado_Remover = newValue;
+                Input_Remover_Produto.setText(produtoSelecionado_Remover.getCodigo());
             }
         });
 
@@ -429,16 +514,31 @@ public class ProdutoController implements Initializable {
         Tabela_Produto_Adicionar.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 // Captura os dados da linha selecionada
-                Produto produtoSelecionado = newValue;
-                Adicionar_Produto_Nome.setText(produtoSelecionado.getNome());
-                Adicionar_Produto_Preco.setText(String.valueOf(produtoSelecionado.getPreco()));
-                Adicionar_Produto_Marca.setText(produtoSelecionado.getMarca());
-                Adicionar_Produto_Estoque.setText(String.valueOf(produtoSelecionado.getEstoque()));
-                //Adicionar_Produto_Fornecedor.setText(produtoSelecionado.getFornecedor());
-                //Adicionar_Produto_Categorias.setItems();
-                Adicionar_Produto_Descricao.setText(produtoSelecionado.getDescricao());
+                Produto produtoSelecionado_Adicionar = newValue;
+                Adicionar_Produto_Nome.setText(produtoSelecionado_Adicionar.getNome());
+                Adicionar_Produto_Preco.setText(String.valueOf(produtoSelecionado_Adicionar.getPreco()));
+                Adicionar_Produto_Marca.setText(produtoSelecionado_Adicionar.getMarca());
+                Adicionar_Produto_Estoque.setText(String.valueOf(produtoSelecionado_Adicionar.getEstoque()));
+                Adicionar_Produto_Categorias.setValue(produtoSelecionado_Adicionar.getCategoria());
+                Adicionar_Produto_Descricao.setText(produtoSelecionado_Adicionar.getDescricao());
             }
         });
+
+        Adicionar_Produto_Preco.setTextFormatter(new TextFormatter<>(change -> {
+            String caracteresPermitidos = "0123456789.";
+            if (change.getText().matches("[" + caracteresPermitidos + "]*")) {
+                return change; // Aceita a mudança
+            }
+            return null; // Rejeita a mudança
+        }));
+
+        Adicionar_Produto_Estoque.setTextFormatter(new TextFormatter<>(change -> {
+            String caracteresPermitidos = "0123456789";
+            if (change.getText().matches("[" + caracteresPermitidos + "]*")) {
+                return change; // Aceita a mudança
+            }
+            return null; // Rejeita a mudança
+        }));
     }
 
     public void filtroPesquisaRemover(){

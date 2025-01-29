@@ -326,13 +326,12 @@
                                           <TableColumn fx:id="colunaNome_Adicionar" prefWidth="81.60000610351562" text="Nome" />
                                           <TableColumn fx:id="colunaPreco_Adicionar" prefWidth="75.99998474121094" text="Preço" />
                                           <TableColumn fx:id="colunaCategoria_Adicionar" prefWidth="103.20001220703125" text="Categoria" />
-                                          <TableColumn fx:id="colunaMarca_Adicionar" prefWidth="72.0" text="Marca" />
-                                          <TableColumn fx:id="colunaDescricao_Adicionar" prefWidth="72.0" text="Descrição" />
+                                          <TableColumn fx:id="colunaMarca_Adicionar" prefWidth="84.79998779296875" text="Marca" />
+                                          <TableColumn fx:id="colunaDescricao_Adicionar" prefWidth="96.0" text="Descrição" />
                                           <TableColumn fx:id="colunaEstoque_Adicionar" prefWidth="61.5999755859375" text="Estoque" />
-                                          <TableColumn fx:id="colunaVendidos_Adicionar" prefWidth="64.79998779296875" text="Vendidos" />
-                                          <TableColumn fx:id="colunaFoto_Adicionar" prefWidth="63.2000732421875" text="Foto" />
-                                          <TableColumn fx:id="colunaFornecedor_Adicionar" prefWidth="82.39996337890625" text="Fornecedor(CNPJ)" />
-                                          <TableColumn fx:id="colunaLoja_Adicionar" prefWidth="91.20009765625002" text="Loja(CNPJ)" />
+                                          <TableColumn fx:id="colunaVendidos_Adicionar" prefWidth="72.79998779296875" text="Vendidos" />
+                                          <TableColumn fx:id="colunaFoto_Adicionar" prefWidth="66.40008544921875" text="Foto" />
+                                          <TableColumn fx:id="colunaLoja_Adicionar" prefWidth="126.39996337890625" text="Loja(CNPJ)" />
                                        </columns>
                                     </TableView>
                                     <TextField fx:id="Pesquisar_Adicionar_Produto" layoutX="12.0" layoutY="13.0" prefHeight="30.0" prefWidth="200.0" promptText="Pesquisar" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
@@ -348,12 +347,12 @@
                               </AnchorPane>
                               <TextField fx:id="Adicionar_Produto_Nome" layoutX="109.0" layoutY="317.0" promptText="Nome" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
                               <TextField fx:id="Adicionar_Produto_Preco" layoutX="109.0" layoutY="377.0" promptText="Preço" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
-                              <ComboBox fx:id="Adicionar_Produto_Categorias" layoutX="298.0" layoutY="380.0" prefWidth="150.0" promptText="Vazio" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css">
+                              <ComboBox fx:id="Adicionar_Produto_Categorias" editable="true" layoutX="298.0" layoutY="317.0" prefWidth="150.0" promptText="Vazio" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor></ComboBox>
                               <TextField fx:id="Adicionar_Produto_Marca" layoutX="109.0" layoutY="432.0" promptText="Marca" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
-                              <TextArea fx:id="Adicionar_Produto_Descricao" layoutX="298.0" layoutY="442.0" prefHeight="83.0" prefWidth="150.0" promptText="Descrição" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" wrapText="true" />
+                              <TextArea fx:id="Adicionar_Produto_Descricao" layoutX="298.0" layoutY="378.0" prefHeight="83.0" prefWidth="150.0" promptText="Descrição" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" wrapText="true" />
                               <AnchorPane layoutX="488.0" layoutY="317.0" prefHeight="180.0" prefWidth="150.0" stylesheets="@../style/cadastroProdutos.css">
                                  <styleClass>
                                     <String fx:value="white" />
@@ -405,18 +404,12 @@
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="Adicionar_Produto_Fornecedor" layoutX="299.0" layoutY="317.0" promptText="Fornecedor (CNPJ)" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
-                              <Label alignment="CENTER" layoutX="298.0" layoutY="295.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Fornecedor (CNPJ):">
+                              <Label alignment="CENTER" layoutX="298.0" layoutY="293.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Categoria:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label alignment="CENTER" layoutX="300.0" layoutY="358.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Categoria:">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label alignment="CENTER" layoutX="298.0" layoutY="420.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Descrição:">
+                              <Label alignment="CENTER" layoutX="298.0" layoutY="354.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Descrição:">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
@@ -426,7 +419,7 @@
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="btn_Adicionar_Produto" layoutX="691.0" layoutY="403.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="94.0" stylesheets="@../style/cadastroProdutos.css" text="Adicionar">
+                              <Button layoutX="691.0" layoutY="403.0" mnemonicParsing="false" onAction="#btn_Adicionar_Produto" prefHeight="41.0" prefWidth="94.0" stylesheets="@../style/cadastroProdutos.css" text="Adicionar">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>

@@ -86,4 +86,20 @@ public class ProdutoDAO {
             e.printStackTrace();
         }
     }
+
+    public String obterUltimoCodigoProduto() {
+        String sql = "SELECT COD FROM PRODUTO ORDER BY COD DESC LIMIT 1;"; // Altere "produtos" e "id" conforme sua tabela
+        try (Connection conn = ConexaoDB.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getString("COD");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao obter o último código: " + e.getMessage());
+        }
+        return null;
+    }
+
 }
