@@ -3,8 +3,12 @@ package controller;
 import dao.ProdutoDAO;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.entity.Produto;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -16,15 +20,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import java.awt.*;
 import java.net.URL;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ProdutoController implements Initializable {
+public class ProdutoController extends Component implements Initializable {
 
     @FXML
     private Button Adicionar_Produto;
@@ -82,6 +91,9 @@ public class ProdutoController implements Initializable {
 
     @FXML
     private ImageView Pesquisar_Atualizar_Produto;
+
+    @FXML
+    private ImageView Imagem_Produto_Adicionar;
 
     @FXML
     private TextField Pesquisar_Remover_Produto;
@@ -237,6 +249,10 @@ public class ProdutoController implements Initializable {
     private FilteredList<Produto> filteredListRemover = new FilteredList<>(DadosTabelaProdutoRemover, p -> true);
     private FilteredList<Produto> filteredListAdicionar = new FilteredList<>(DadosTabelaProdutoAdicionar, p -> true);
 
+    private File imagemArquivo; // Armazena o arquivo selecionado
+    private Image imagemProduto; // Armazena a imagem carregada
+    private long tamanhoImagem; // Armazena o tamanho do arquivo em bytes
+
     @FXML
     void Adicionar_Produto() {
         Container_Adicionar_Produto.setVisible(true);
@@ -270,8 +286,22 @@ public class ProdutoController implements Initializable {
     }
 
     @FXML
-    public void Importar_Adicionar_Produto() {
-        // lógica do metodo
+    public void Importar_Foto_Adicionar_Produto() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Carregar Foto");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Arquivo de Imagens (*.PNG, *.JPG, *.JPEG)", "*.png", "*.jpg", "*.jpeg"));
+
+        imagemArquivo = fileChooser.showOpenDialog(null);
+
+        if (imagemArquivo != null) {
+            try {
+                imagemProduto = new Image(new FileInputStream(imagemArquivo)); // Carrega a imagem
+                tamanhoImagem = imagemArquivo.length(); // Obtém o tamanho do arquivo
+                Imagem_Produto_Adicionar.setImage(imagemProduto);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML
@@ -305,12 +335,10 @@ public class ProdutoController implements Initializable {
         Adicionar_Produto_Descricao.setText(null);
         Adicionar_Produto_Estoque_Minimo.setText(null);
     }
-
     @FXML
-    private void btn_Adicionar_Produto() {
+    private void btn_Adicionar_Produto() throws FileNotFoundException {
         // Gera automaticamente o código do produto
         String codigo = gerarCodigoProduto();
-
         // Obtém os demais valores dos campos
         String nome = Adicionar_Produto_Nome.getText();
         String precoTexto = Adicionar_Produto_Preco.getText();
@@ -320,6 +348,8 @@ public class ProdutoController implements Initializable {
         String categoria = Adicionar_Produto_Categorias.getSelectionModel().getSelectedItem();
         String descricao = Adicionar_Produto_Descricao.getText();
         String cnpj_loja = "23.456.789/0001-95";
+        FileInputStream foto = new FileInputStream(imagemArquivo);
+        long tamanho = tamanhoImagem;
         int vendidos = 0;
 
 
@@ -340,7 +370,7 @@ public class ProdutoController implements Initializable {
             int estoque_minimo = Integer.parseInt(estoque_minimoTexto);
 
             // Criação do objeto produto
-            Produto novoProduto = new Produto(codigo, nome, preco, estoque, estoque_minimo, vendidos, categoria, marca, descricao, cnpj_loja);
+            Produto novoProduto = new Produto(codigo, nome, preco, estoque, estoque_minimo, vendidos, categoria, marca, descricao, foto, tamanho, cnpj_loja);
 
             // Salvando o produto no banco (DAO)
             ProdutoDAO produtoDAO = new ProdutoDAO();

@@ -316,7 +316,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="Container_Adicionar_Produto" layoutX="9.0" prefHeight="532.0" prefWidth="882.0" stylesheets="@../style/cadastroProdutos.css" visible="false" AnchorPane.bottomAnchor="10.399999999999977" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="10.199999999999932" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Container_Adicionar_Produto" layoutX="9.0" prefHeight="532.0" prefWidth="882.0" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="10.399999999999977" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="10.199999999999932" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane prefHeight="288.0" prefWidth="878.0" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="259.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
@@ -361,7 +361,7 @@
                                     <String fx:value="textfield" />
                                  </styleClass>
                                  <children>
-                                    <Button layoutX="24.0" layoutY="150.2" mnemonicParsing="false" onAction="#Importar_Adicionar_Produto" prefWidth="101.0" stylesheets="@../style/cadastroProdutos.css" text="Importar" AnchorPane.bottomAnchor="6.600000000000023">
+                                    <Button layoutX="24.0" layoutY="150.2" mnemonicParsing="false" onAction="#Importar_Foto_Adicionar_Produto" prefWidth="101.0" stylesheets="@../style/cadastroProdutos.css" text="Importar" AnchorPane.bottomAnchor="6.600000000000023">
                                        <font>
                                           <Font name="Tahoma Bold" size="12.0" />
                                        </font>
@@ -369,7 +369,7 @@
                                           <String fx:value="btn-operacao" />
                                           <String fx:value="shadow" />
                                        </styleClass></Button>
-                                    <ImageView fitHeight="140.0" fitWidth="160.0" layoutX="5.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="Imagem_Produto_Adicionar" fitHeight="136.0" fitWidth="140.0" layoutX="7.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../icon/image2.png" />
                                        </image>
@@ -597,7 +597,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="Container_Remover_Produto" layoutX="12.0" layoutY="6.0" prefHeight="530.0" prefWidth="872.0" stylesheets="@../style/cadastroProdutos.css">
+                        <AnchorPane fx:id="Container_Remover_Produto" layoutX="12.0" layoutY="6.0" prefHeight="530.0" prefWidth="872.0" stylesheets="@../style/cadastroProdutos.css" visible="false">
                            <styleClass>
                               <String fx:value="white" />
                               <String fx:value="shadow" />

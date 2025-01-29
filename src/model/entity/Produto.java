@@ -1,5 +1,11 @@
 package model.entity;
 
+import javafx.scene.image.Image;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
 public class Produto {
     private String codigo;
     private String nome;
@@ -11,8 +17,10 @@ public class Produto {
     private String marca;
     private String descricao;
     private String cnpj_loja;
+    private FileInputStream foto;
+    private long tamanho_imagem;
 
-    public Produto(String codigo, String nome, double preco,int estoque, int estoque_minimo, int vendidos, String categoria, String marca, String descricao, String cnpj_loja) {
+    public Produto(String codigo, String nome, double preco, int estoque, int estoque_minimo, int vendidos, String categoria, String marca, String descricao, FileInputStream foto, long tamanho_imagem, String cnpj_loja) {
         this.codigo = codigo;
         this.nome = nome;
         this.preco = preco;
@@ -23,6 +31,8 @@ public class Produto {
         this.vendidos = vendidos;
         this.estoque = estoque;
         this.estoque_minimo = estoque_minimo;
+        this.tamanho_imagem = tamanho_imagem;
+        this.foto = foto;
     }
 
     public String getCodigo() {
@@ -81,11 +91,6 @@ public class Produto {
         this.cnpj_loja = cnpj_loja;
     }
 
-    public String getFoto() {
-
-        return "";
-    }
-
     public int getEstoque() {
         return estoque;
     }
@@ -108,5 +113,21 @@ public class Produto {
 
     public int getEstoque_minimo() {
         return estoque_minimo;
+    }
+
+    public void setFoto(FileInputStream foto) {
+        this.foto = foto;
+    }
+
+    public void setTamanho_imagem(int tamanho_imagem) {
+        this.tamanho_imagem = tamanho_imagem;
+    }
+
+    public long getTamanho_imagem() {
+        return tamanho_imagem;
+    }
+
+    public FileInputStream getFoto() {
+        return foto;
     }
 }

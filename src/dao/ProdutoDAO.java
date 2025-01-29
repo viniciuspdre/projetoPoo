@@ -3,6 +3,7 @@ package dao;
 import dao.conexao.ConexaoDB;
 import model.entity.Produto;
 
+import java.io.FileInputStream;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.*;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class ProdutoDAO {
     public void cadastrarProduto(Produto produto) {
-        String sql = "INSERT INTO PRODUTO (COD, NOME, PRECO, ESTOQUE,ESTOQUE_MINIMO, VENDIDOS, CATEGORIA, MARCA, DESCRICAO, CNPJ_LOJA) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO PRODUTO (COD, NOME, PRECO, ESTOQUE,ESTOQUE_MINIMO, VENDIDOS, CATEGORIA, MARCA, DESCRICAO, FOTO_PRODUTO, TAMANHO_IMAGEM, CNPJ_LOJA) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = null;
 
         try{
@@ -25,10 +26,10 @@ public class ProdutoDAO {
             ps.setString(7, produto.getCategoria());
             ps.setString(8, produto.getMarca());
             ps.setString(9, produto.getDescricao());
-            ps.setString(10, produto.getCnpj_loja());
-
+            ps.setBlob(10, produto.getFoto(), (int)produto.getTamanho_imagem());
+            ps.setLong(11,produto.getTamanho_imagem());
+            ps.setString(12, produto.getCnpj_loja());
             ps.executeUpdate();
-
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -36,7 +37,7 @@ public class ProdutoDAO {
     }
 
     public static List<Produto> listarProdutos() {
-        String sql = "SELECT COD, NOME, PRECO, ESTOQUE, ESTOQUE_MINIMO, VENDIDOS, CATEGORIA, MARCA, DESCRICAO, CNPJ_LOJA FROM PRODUTO";
+        String sql = "SELECT COD, NOME, PRECO, ESTOQUE, ESTOQUE_MINIMO, VENDIDOS, CATEGORIA, MARCA, DESCRICAO, FOTO_PRODUTO, TAMANHO_IMAGEM, CNPJ_LOJA FROM PRODUTO";
         List<Produto> produtos = new ArrayList<>();
 
         try (Connection conexao = ConexaoDB.getConexao();
@@ -54,6 +55,8 @@ public class ProdutoDAO {
                         rs.getString("CATEGORIA"),
                         rs.getString("MARCA"),
                         rs.getString("DESCRICAO"),
+                        (FileInputStream) rs.getBlob(9),
+                        rs.getInt("TAMANHO_IMAGEM"),
                         rs.getString("CNPJ_LOJA")
                 ));
             }
