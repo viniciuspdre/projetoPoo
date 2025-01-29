@@ -48,6 +48,9 @@ public class ProdutoController implements Initializable {
     private TextField Adicionar_Produto_Preco;
 
     @FXML
+    private TextField Adicionar_Produto_Estoque_Minimo;
+
+    @FXML
     private Button Atualizar_Produto;
 
     @FXML
@@ -106,6 +109,12 @@ public class ProdutoController implements Initializable {
 
     @FXML
     private TableColumn<Produto, Integer> colunaEstoque;
+
+    @FXML
+    private TableColumn<Produto, Integer> colunaEstoque_Minimo;
+
+    @FXML
+    private TableColumn<Produto, Integer> colunaEstoque_Minimo_Adicionar;
 
     @FXML
     private TableColumn<Produto, String> colunaFoto;
@@ -306,6 +315,7 @@ public class ProdutoController implements Initializable {
         String precoTexto = Adicionar_Produto_Preco.getText();
         String marca = Adicionar_Produto_Marca.getText();
         String estoqueTexto = Adicionar_Produto_Estoque.getText();
+        String estoque_minimoTexto = Adicionar_Produto_Estoque_Minimo.getText();
         String categoria = Adicionar_Produto_Categorias.getSelectionModel().getSelectedItem();
         String descricao = Adicionar_Produto_Descricao.getText();
         String cnpj_loja = "23.456.789/0001-95";
@@ -326,9 +336,10 @@ public class ProdutoController implements Initializable {
             // Conversão de valores
             double preco = Double.parseDouble(precoTexto);
             int estoque = Integer.parseInt(estoqueTexto);
+            int estoque_minimo = Integer.parseInt(estoque_minimoTexto);
 
             // Criação do objeto produto
-            Produto novoProduto = new Produto(codigo, nome, preco, estoque, vendidos, categoria, marca, descricao, cnpj_loja);
+            Produto novoProduto = new Produto(codigo, nome, preco, estoque, estoque_minimo, vendidos, categoria, marca, descricao, cnpj_loja);
 
             // Salvando o produto no banco (DAO)
             ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -344,7 +355,7 @@ public class ProdutoController implements Initializable {
             // Limpar os campos após o cadastro
             Limpar_Adicionar_Produto();
 
-            produtos = produtoDAO.listarProdutos();
+            produtos = ProdutoDAO.listarProdutos();
             carregarDadosTabelaProduto();
             carregarListaCategorias();
 
@@ -477,6 +488,7 @@ public class ProdutoController implements Initializable {
         colunaCodigo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCodigo()));
         colunaPreco.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPreco()).asObject());
         colunaEstoque.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getEstoque()).asObject());
+        colunaEstoque_Minimo.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getEstoque_minimo()).asObject());
         colunaVendidos.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getVendidos()).asObject());
         colunaCategoria.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCategoria()));
         colunaMarca.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMarca()));
@@ -488,6 +500,7 @@ public class ProdutoController implements Initializable {
         colunaCodigo_Adicionar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCodigo()));
         colunaPreco_Adicionar.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPreco()).asObject());
         colunaEstoque_Adicionar.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getEstoque()).asObject());
+        colunaEstoque_Minimo_Adicionar.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getEstoque_minimo()).asObject());
         colunaVendidos_Adicionar.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getVendidos()).asObject());
         colunaCategoria_Adicionar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCategoria()));
         colunaMarca_Adicionar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMarca()));
@@ -519,6 +532,7 @@ public class ProdutoController implements Initializable {
                 Adicionar_Produto_Preco.setText(String.valueOf(produtoSelecionado_Adicionar.getPreco()));
                 Adicionar_Produto_Marca.setText(produtoSelecionado_Adicionar.getMarca());
                 Adicionar_Produto_Estoque.setText(String.valueOf(produtoSelecionado_Adicionar.getEstoque()));
+                //Adicionar_Produto_Estoque_Minimo.setText(String.valueOf(produtoSelecionado_Adicionar.getEstoque_minimo()));
                 Adicionar_Produto_Categorias.setValue(produtoSelecionado_Adicionar.getCategoria());
                 Adicionar_Produto_Descricao.setText(produtoSelecionado_Adicionar.getDescricao());
             }

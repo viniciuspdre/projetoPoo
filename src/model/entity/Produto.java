@@ -6,12 +6,13 @@ public class Produto {
     private double preco;
     private int estoque;
     private int vendidos;
+    private int estoque_minimo;
     private String categoria;
     private String marca;
     private String descricao;
     private String cnpj_loja;
 
-    public Produto(String codigo, String nome, double preco,int estoque, int vendidos, String categoria, String marca, String descricao, String cnpj_loja) {
+    public Produto(String codigo, String nome, double preco,int estoque,int estoque_minimo, int vendidos, String categoria, String marca, String descricao, String cnpj_loja) {
         this.codigo = codigo;
         this.nome = nome;
         this.preco = preco;
@@ -21,6 +22,7 @@ public class Produto {
         this.cnpj_loja = cnpj_loja;
         this.vendidos = vendidos;
         this.estoque = estoque;
+        this.estoque_minimo = estoque_minimo;
     }
 
     public String getCodigo() {
@@ -98,5 +100,13 @@ public class Produto {
 
     public void setVendidos(int vendidos) {
         this.vendidos = vendidos;
+    }
+
+    public void setEstoque_minimo(int estoque_minimo) {
+        this.estoque_minimo = estoque_minimo;
+    }
+
+    public int getEstoque_minimo() {
+        return estoque_minimo;
     }
 }

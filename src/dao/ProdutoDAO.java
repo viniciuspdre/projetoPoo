@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ProdutoDAO {
     public void cadastrarProduto(Produto produto) {
-        String sql = "INSERT INTO PRODUTO (COD, NOME, PRECO, ESTOQUE, VENDIDOS, CATEGORIA, MARCA, DESCRICAO, CNPJ_LOJA) VALUES (?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO PRODUTO (COD, NOME, PRECO, ESTOQUE,ESTOQUE_MINIMO, VENDIDOS, CATEGORIA, MARCA, DESCRICAO, CNPJ_LOJA) VALUES (?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = null;
 
         try{
@@ -21,10 +21,11 @@ public class ProdutoDAO {
             ps.setDouble(3, produto.getPreco());
             ps.setInt(4, produto.getEstoque());
             ps.setInt(5, produto.getVendidos());
-            ps.setString(6, produto.getCategoria());
-            ps.setString(7, produto.getMarca());
-            ps.setString(8, produto.getDescricao());
-            ps.setString(9, produto.getCnpj_loja());
+            ps.setInt(6, produto.getEstoque_minimo());
+            ps.setString(7, produto.getCategoria());
+            ps.setString(8, produto.getMarca());
+            ps.setString(9, produto.getDescricao());
+            ps.setString(10, produto.getCnpj_loja());
 
             ps.executeUpdate();
 
@@ -35,7 +36,7 @@ public class ProdutoDAO {
     }
 
     public static List<Produto> listarProdutos() {
-        String sql = "SELECT COD, NOME, PRECO, ESTOQUE, VENDIDOS, CATEGORIA, MARCA, DESCRICAO, CNPJ_LOJA FROM PRODUTO";
+        String sql = "SELECT COD, NOME, PRECO, ESTOQUE, ESTOQUE_MINIMO, VENDIDOS, CATEGORIA, MARCA, DESCRICAO, CNPJ_LOJA FROM PRODUTO";
         List<Produto> produtos = new ArrayList<>();
 
         try (Connection conexao = ConexaoDB.getConexao();
@@ -48,6 +49,7 @@ public class ProdutoDAO {
                         rs.getString("NOME"),
                         rs.getDouble("PRECO"),
                         rs.getInt("ESTOQUE"),
+                        rs.getInt("ESTOQUE_MINIMO"),
                         rs.getInt("VENDIDOS"),
                         rs.getString("CATEGORIA"),
                         rs.getString("MARCA"),
