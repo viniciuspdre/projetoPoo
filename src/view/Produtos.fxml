@@ -322,17 +322,16 @@
                                  <children>
                                     <TableView fx:id="Tabela_Produto_Adicionar" layoutX="10.0" layoutY="55.0" prefHeight="206.0" prefWidth="870.0" stylesheets="@../style/cadastroProdutos.css">
                                        <columns>
-                                          <TableColumn fx:id="colunaCodigo_Adicionar" prefWidth="78.39999485015869" text="Código" />
-                                          <TableColumn fx:id="colunaNome_Adicionar" prefWidth="91.20001220703125" text="Nome" />
-                                          <TableColumn fx:id="colunaPreco_Adicionar" prefWidth="56.800048828125" text="Preço" />
-                                          <TableColumn fx:id="colunaCategoria_Adicionar" prefWidth="67.19998168945312" text="Categoria" />
-                                          <TableColumn fx:id="colunaMarca_Adicionar" prefWidth="72.00006103515625" text="Marca" />
-                                          <TableColumn fx:id="colunaDescricao_Adicionar" prefWidth="82.39996337890625" text="Descrição" />
-                                          <TableColumn fx:id="colunaEstoque_Adicionar" prefWidth="56.00006103515625" text="Estoque" />
-                                          <TableColumn fx:id="colunaEstoque_Minimo_Adicionar" prefWidth="92.800048828125" text="Estoque_Min" />
-                                          <TableColumn fx:id="colunaVendidos_Adicionar" prefWidth="92.79998779296875" text="Vendidos" />
-                                          <TableColumn fx:id="colunaFoto_Adicionar" prefWidth="79.199951171875" text="Foto" />
-                                          <TableColumn fx:id="colunaLoja_Adicionar" prefWidth="93.5999755859375" text="Loja(CNPJ)" />
+                                          <TableColumn fx:id="colunaCodigo_Adicionar" prefWidth="116.79998874664307" text="Código" />
+                                          <TableColumn fx:id="colunaNome_Adicionar" prefWidth="77.5999755859375" text="Nome" />
+                                          <TableColumn fx:id="colunaPreco_Adicionar" prefWidth="80.00006103515625" text="Preço" />
+                                          <TableColumn fx:id="colunaCategoria_Adicionar" text="Categoria" />
+                                          <TableColumn fx:id="colunaMarca_Adicionar" prefWidth="54.4000244140625" text="Marca" />
+                                          <TableColumn fx:id="colunaDescricao_Adicionar" prefWidth="75.99993896484375" text="Descrição" />
+                                          <TableColumn fx:id="colunaEstoque_Adicionar" prefWidth="86.4000244140625" text="Estoque" />
+                                          <TableColumn fx:id="colunaEstoque_Minimo_Adicionar" prefWidth="93.60003662109375" text="Estoque_Min" />
+                                          <TableColumn fx:id="colunaVendidos_Adicionar" prefWidth="91.19989013671875" text="Vendidos" />
+                                          <TableColumn fx:id="colunaLoja_Adicionar" prefWidth="112.7999267578125" text="Loja(CNPJ)" />
                                        </columns>
                                     </TableView>
                                     <TextField fx:id="Pesquisar_Adicionar_Produto" layoutX="12.0" layoutY="13.0" prefHeight="30.0" prefWidth="200.0" promptText="Pesquisar" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />

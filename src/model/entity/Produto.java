@@ -1,10 +1,6 @@
 package model.entity;
 
-import javafx.scene.image.Image;
-
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 
 public class Produto {
     private String codigo;
@@ -17,10 +13,9 @@ public class Produto {
     private String marca;
     private String descricao;
     private String cnpj_loja;
-    private FileInputStream foto;
-    private long tamanho_imagem;
+    private byte[] foto;
 
-    public Produto(String codigo, String nome, double preco, int estoque, int estoque_minimo, int vendidos, String categoria, String marca, String descricao, FileInputStream foto, long tamanho_imagem, String cnpj_loja) {
+    public Produto(String codigo, String nome, double preco, int estoque, int estoque_minimo, int vendidos, String categoria, String marca, String descricao, byte[] foto, String cnpj_loja) {
         this.codigo = codigo;
         this.nome = nome;
         this.preco = preco;
@@ -31,7 +26,6 @@ public class Produto {
         this.vendidos = vendidos;
         this.estoque = estoque;
         this.estoque_minimo = estoque_minimo;
-        this.tamanho_imagem = tamanho_imagem;
         this.foto = foto;
     }
 
@@ -115,19 +109,11 @@ public class Produto {
         return estoque_minimo;
     }
 
-    public void setFoto(FileInputStream foto) {
+    public void setFoto(byte[] foto) {
         this.foto = foto;
     }
 
-    public void setTamanho_imagem(int tamanho_imagem) {
-        this.tamanho_imagem = tamanho_imagem;
-    }
-
-    public long getTamanho_imagem() {
-        return tamanho_imagem;
-    }
-
-    public FileInputStream getFoto() {
+    public byte[] getFoto() {
         return foto;
     }
 }

@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.converter.ByteStringConverter;
 import model.entity.Produto;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -22,12 +23,13 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 
 import java.awt.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -129,9 +131,6 @@ public class ProdutoController extends Component implements Initializable {
     private TableColumn<Produto, Integer> colunaEstoque_Minimo_Adicionar;
 
     @FXML
-    private TableColumn<Produto, String> colunaFoto;
-
-    @FXML
     private TableColumn<Produto, String> colunaLoja;
 
     @FXML
@@ -160,9 +159,6 @@ public class ProdutoController extends Component implements Initializable {
 
     @FXML
     private TableColumn<Produto, Integer> colunaEstoque_Adicionar;
-
-    @FXML
-    private TableColumn<Produto, String> colunaFoto_Adicionar;
 
     @FXML
     private TableColumn<Produto, String> colunaLoja_Adicionar;
@@ -249,9 +245,7 @@ public class ProdutoController extends Component implements Initializable {
     private FilteredList<Produto> filteredListRemover = new FilteredList<>(DadosTabelaProdutoRemover, p -> true);
     private FilteredList<Produto> filteredListAdicionar = new FilteredList<>(DadosTabelaProdutoAdicionar, p -> true);
 
-    private File imagemArquivo; // Armazena o arquivo selecionado
-    private Image imagemProduto; // Armazena a imagem carregada
-    private long tamanhoImagem; // Armazena o tamanho do arquivo em bytes
+  private byte[] imagemBytes;
 
     @FXML
     void Adicionar_Produto() {
@@ -286,22 +280,22 @@ public class ProdutoController extends Component implements Initializable {
     }
 
     @FXML
-    public void Importar_Foto_Adicionar_Produto() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Carregar Foto");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Arquivo de Imagens (*.PNG, *.JPG, *.JPEG)", "*.png", "*.jpg", "*.jpeg"));
+    public byte[] Importar_Foto_Adicionar_Produto() {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Carregar Imagem");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imagens", "*.png", "*.jpg", "*.jpeg"));
+            File file = fileChooser.showOpenDialog(null);
 
-        imagemArquivo = fileChooser.showOpenDialog(null);
-
-        if (imagemArquivo != null) {
-            try {
-                imagemProduto = new Image(new FileInputStream(imagemArquivo)); // Carrega a imagem
-                tamanhoImagem = imagemArquivo.length(); // Obtém o tamanho do arquivo
-                Imagem_Produto_Adicionar.setImage(imagemProduto);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            if (file != null) {
+                Imagem_Produto_Adicionar.setImage(new Image(file.toURI().toString()));
+                imagemBytes = Files.readAllBytes(file.toPath());
+                return imagemBytes;
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+        return null;
     }
 
     @FXML
@@ -334,11 +328,12 @@ public class ProdutoController extends Component implements Initializable {
         Adicionar_Produto_Categorias.setValue(null);
         Adicionar_Produto_Descricao.setText(null);
         Adicionar_Produto_Estoque_Minimo.setText(null);
+        Imagem_Produto_Adicionar.setImage(new Image(new File("src/icon/image2.png").toURI().toString()));
+
     }
     @FXML
     private void btn_Adicionar_Produto() throws FileNotFoundException {
-        // Gera automaticamente o código do produto
-        String codigo = gerarCodigoProduto();
+        String codigo = gerarCodigoProduto();// Gera automaticamente o código do produto
         // Obtém os demais valores dos campos
         String nome = Adicionar_Produto_Nome.getText();
         String precoTexto = Adicionar_Produto_Preco.getText();
@@ -348,10 +343,8 @@ public class ProdutoController extends Component implements Initializable {
         String categoria = Adicionar_Produto_Categorias.getSelectionModel().getSelectedItem();
         String descricao = Adicionar_Produto_Descricao.getText();
         String cnpj_loja = "23.456.789/0001-95";
-        FileInputStream foto = new FileInputStream(imagemArquivo);
-        long tamanho = tamanhoImagem;
         int vendidos = 0;
-
+        byte[] fotoBytes = imagemBytes;
 
         // Validação de campos obrigatórios
         if (nome.trim().isEmpty() || precoTexto.trim().isEmpty() || estoqueTexto.trim().isEmpty()) {
@@ -370,7 +363,7 @@ public class ProdutoController extends Component implements Initializable {
             int estoque_minimo = Integer.parseInt(estoque_minimoTexto);
 
             // Criação do objeto produto
-            Produto novoProduto = new Produto(codigo, nome, preco, estoque, estoque_minimo, vendidos, categoria, marca, descricao, foto, tamanho, cnpj_loja);
+            Produto novoProduto = new Produto(codigo, nome, preco, estoque, estoque_minimo, vendidos, categoria, marca, descricao, fotoBytes, cnpj_loja);
 
             // Salvando o produto no banco (DAO)
             ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -566,6 +559,9 @@ public class ProdutoController extends Component implements Initializable {
                 Adicionar_Produto_Estoque_Minimo.setText(String.valueOf(produtoSelecionado_Adicionar.getEstoque_minimo()));
                 Adicionar_Produto_Categorias.setValue(produtoSelecionado_Adicionar.getCategoria());
                 Adicionar_Produto_Descricao.setText(produtoSelecionado_Adicionar.getDescricao());
+                //Pegar Imagem
+                Image image = new Image(new ByteArrayInputStream(produtoSelecionado_Adicionar.getFoto()));
+                Imagem_Produto_Adicionar.setImage(image);
             }
         });
 
