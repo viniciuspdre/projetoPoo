@@ -1,72 +1,59 @@
 package controller;
 
-import dao.UsuarioDAO;
-import jdk.jfr.Event;
-import model.entity.Usuario;
-import view.LoginCadastro;
 
-import javax.swing.*;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Arrays;
+import dao.UsuarioDAO;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import model.entity.Usuario;
+
 import java.util.Calendar;
-import java.util.EventListener;
 
 public class CadastroController {
-    private LoginCadastro loginCadastro;
+
+    @FXML
+    private TextField campoNome;
+    @FXML
+    private TextField campoUsuario;
+    @FXML
+    private TextField campoCPF;
+    @FXML
+    private PasswordField campoSenha;
+    @FXML
+    private Button botaoCadastro;
+    @FXML
+    private ComboBox<String> comboDia;
+    @FXML
+    private ComboBox<String> comboMes;
+    @FXML
+    private ComboBox<String> comboAno;
+    @FXML
+    private ImageView imageLogo;
+
+
+
     private int flag = 0;
+    private String mesAtual = null;
+    private String anoAtual = null;
 
-    public CadastroController(LoginCadastro loginCadastro) {
-        this.loginCadastro = loginCadastro;
-
-        adicionarPopupListener(loginCadastro.getJcDayCadastro());
-        adicionarPopupListener(loginCadastro.getJcMonthCadastro());
-        adicionarPopupListener(loginCadastro.getJcYearCadastro());
-
-        loginCadastro.getJbCadastro().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cadastrarUsuario();
-            }
-        });
+    @FXML
+    public void initialize() {
+        atualizarCalendario();
+        Image image = new Image(getClass().getResourceAsStream("loja-online.png"));
+        imageLogo.setImage(image);
     }
 
-    private void adicionarPopupListener(JComboBox<?> comboBox) {
-       comboBox.addPopupMenuListener(new PopupMenuListener() {
-            @Override
-            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-                atualizarCalendario();
-            }
-
-            @Override
-            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                System.out.print("Menu invisivel");
-            }
-
-            @Override
-            public void popupMenuCanceled(PopupMenuEvent e) {
-                System.out.print("Menu cancelado");
-            }
-        });
-    }
-
-    private boolean checarCampos() {
-        if (loginCadastro.getJfCPFCadastro().getText().trim().isEmpty() ||
-                loginCadastro.getJfNameCadastro().getText().trim().isEmpty() ||
-                loginCadastro.getJfPasswordCadastro().getText().trim().isEmpty() ||
-                loginCadastro.getJfUserNameCadastro().getText().trim().isEmpty() ||
-                loginCadastro.getJcDayCadastro().getSelectedItem() == null ||
-                loginCadastro.getJcMonthCadastro().getSelectedItem() == null ||
-                loginCadastro.getJcYearCadastro().getSelectedItem() == null) {
+    private boolean validarCampos() {
+        if (campoCPF.getText().isEmpty() || campoSenha.getText().isEmpty() ||
+        campoNome.getText().isEmpty() || campoUsuario.getText().isEmpty() ||
+        comboDia.getValue() == null || comboMes.getValue() == null || comboAno.getValue() == null) {
             return false;
-        }
-        return true;
+        }   return true;
     }
 
-    private boolean checarCPF() {
-        String cpf = loginCadastro.getJfCPFCadastro().getText();
+    private boolean validarCPF() {
+        String cpf = campoCPF.getText();
         cpf = cpf.replaceAll("\\D", "");
 
         if (cpf.length() != 11) {
@@ -98,86 +85,114 @@ public class CadastroController {
         return segundoDigito == cpf.charAt(10) - '0';
     }
 
-    private boolean checarSenha() {
-        String senha = String.valueOf(loginCadastro.getJfPasswordCadastro().getPassword());
+    private boolean validarSenha() {
+        String senha = campoSenha.getText();
 
         if (senha.length() < 8 || senha.length() > 15) {
             return false;
         } return true;
     }
 
-    private boolean checarUser() {
-        String username = loginCadastro.getJfUserNameCadastro().getText();
+    private boolean validarUsuario() {
+        String username = campoUsuario.getText();
         if (username == null || username.isEmpty() || username.contains(" ") || username.contains("-")) {
             return false;
         } return true;
     }
 
+    @FXML
     private void atualizarCalendario() {
         Calendar cal = Calendar.getInstance();
-        int anoAtual = cal.get(Calendar.YEAR);
+        int anoCorrente = cal.get(Calendar.YEAR);
 
         if (flag == 0) {
-            for (int year = 1900; year < anoAtual; year++) {
-                loginCadastro.getJcYearCadastro().addItem(String.valueOf(year));
+            for (int year = 1900; year <= anoCorrente; year++) {
+                comboAno.getItems().add(String.valueOf(year));
             }
 
             for (int month = 1; month <= 12; month++) {
-                loginCadastro.getJcMonthCadastro().addItem(String.valueOf(month));
+                comboMes.getItems().add(String.valueOf(month));
             }
             flag = 1;
         }
 
-        if (loginCadastro.getJcMonthCadastro().getSelectedItem() != null && loginCadastro.getJcYearCadastro().getSelectedItem() != null) {
-            int mes = Integer.parseInt((String.valueOf(loginCadastro.getJcMonthCadastro().getSelectedItem())));
-            int ano = Integer.parseInt(String.valueOf(loginCadastro.getJcYearCadastro().getSelectedItem()));
+        String anoSelecionado = comboAno.getSelectionModel().getSelectedItem();
+        String mesSelecionado = comboMes.getSelectionModel().getSelectedItem();
 
+        if (anoSelecionado != null && mesSelecionado != null) {
+            if (!mesSelecionado.equals(mesAtual) || !anoSelecionado.equals(anoAtual)) {
+                mesAtual = mesSelecionado;
+                anoAtual = anoSelecionado;
 
-            cal.set(Calendar.YEAR, ano);
-            cal.set(Calendar.MONTH, mes - 1);
+                int mes = Integer.parseInt(mesSelecionado);
+                int ano = Integer.parseInt(anoSelecionado);
 
-            loginCadastro.getJcDayCadastro().removeAllItems();
-            for (int dia = 1; dia <= cal.getActualMaximum(Calendar.DAY_OF_MONTH); dia++) {
-                loginCadastro.getJcDayCadastro().addItem(String.valueOf(dia));
+                cal.set(Calendar.YEAR, ano);
+                cal.set(Calendar.MONTH, mes - 1); // Meses começam de 0
+
+                comboDia.getItems().clear();
+                for (int dia = 1; dia <= cal.getActualMaximum(Calendar.DAY_OF_MONTH); dia++) {
+                    comboDia.getItems().add(String.valueOf(dia));
+                }
             }
-
         }
+    }
+
+    private void limparCampos() {
+        campoNome.setText("");
+        campoUsuario.setText("");
+        campoCPF.setText("");
+        campoSenha.setText("");
+        comboDia.getItems().clear();
+        comboMes.getItems().clear();
+        comboAno.getItems().clear();
+        flag = 0;
     }
 
     private void enviandoValoresCadastro(Usuario usuario) {
-        String cpf = loginCadastro.getJfCPFCadastro().getText();
+        String cpf = campoCPF.getText();
         cpf = cpf.replaceAll("\\D", "");
         usuario.setCpf(cpf);
-        usuario.setNome(loginCadastro.getJfNameCadastro().getText());
-        usuario.setSenha(String.valueOf(loginCadastro.getJfPasswordCadastro().getPassword()));
-        String dia = String.valueOf(loginCadastro.getJcDayCadastro().getSelectedItem()).length() == 1 ?
-                0+String.valueOf(loginCadastro.getJcDayCadastro().getSelectedItem()):
-                String.valueOf(loginCadastro.getJcDayCadastro().getSelectedItem());
-        String mes = String.valueOf(loginCadastro.getJcMonthCadastro().getSelectedItem()).length() == 1 ?
-                0+String.valueOf(loginCadastro.getJcMonthCadastro().getSelectedItem()) : String.valueOf(loginCadastro.getJcMonthCadastro().getSelectedItem());
-        String ano = String.valueOf(loginCadastro.getJcYearCadastro().getSelectedItem());
+        usuario.setNome(campoNome.getText());
+        usuario.setSenha(campoSenha.getText());
+        String dia = comboDia.getSelectionModel().getSelectedItem().length() == 1 ?
+                0+comboDia.getSelectionModel().getSelectedItem():
+                comboDia.getSelectionModel().getSelectedItem();
+        String mes = comboMes.getSelectionModel().getSelectedItem().length() == 1 ?
+                0+comboMes.getSelectionModel().getSelectedItem() : comboMes.getSelectionModel().getSelectedItem();
+        String ano = comboAno.getSelectionModel().getSelectedItem();
         usuario.setDataNascimento(dia+"/"+mes+"/"+ano);
-        usuario.setLogin(loginCadastro.getJfUserNameCadastro().getText());
+        usuario.setLogin(campoUsuario.getText());
     }
 
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensagem) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
+    }
+
+    @FXML
     private void cadastrarUsuario() {
-        if (!checarCampos()) {
-            JOptionPane.showMessageDialog(loginCadastro, "Preencha todos os campos.");
+        if (!validarCampos()) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Campos Obrigatórios", "Preencha todos os campos.");
         }
-        else if (!checarCPF()) {
-            JOptionPane.showMessageDialog(loginCadastro, "Insira um CPF válido.");
+        else if (!validarCPF()) {
+            mostrarAlerta(Alert.AlertType.ERROR, "CPF Inválido", "Insira um CPF válido.");
         }
-        else if (!checarSenha()) {
-            JOptionPane.showMessageDialog(loginCadastro, "Insira uma senha com 8 a 15 digitos.");
+        else if (!validarSenha()) {
+            mostrarAlerta(Alert.AlertType.ERROR, "Senha Inválida", "Insira uma senha com 8 a 15 dígitos.");
         }
-        else if (!checarUser()) {
-            JOptionPane.showMessageDialog(loginCadastro, "Seu nome de usuário é inválido, tente não usar espaços nem hífens.");
+        else if (!validarUsuario()) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Usuário Inválido", "Seu nome de usuário é inválido. Tente não usar espaços ou hífens.");
         }
         else {
             Usuario usuario = new Usuario();
             enviandoValoresCadastro(usuario);
             UsuarioDAO.cadastroInicial(usuario);
-            JOptionPane.showMessageDialog(loginCadastro, "Cadastro realizado com sucesso!");
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Cadastro realizado com sucesso!");
+            limparCampos();
         }
     }
 }
