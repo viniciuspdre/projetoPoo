@@ -20,8 +20,8 @@ public class ProdutoDAO {
             ps.setString(2, produto.getNome());
             ps.setDouble(3, produto.getPreco());
             ps.setInt(4, produto.getEstoque());
-            ps.setInt(5, produto.getVendidos());
-            ps.setInt(6, produto.getEstoque_minimo());
+            ps.setInt(5, produto.getEstoque_minimo());
+            ps.setInt(6, produto.getVendidos());
             ps.setString(7, produto.getCategoria());
             ps.setString(8, produto.getMarca());
             ps.setString(9, produto.getDescricao());

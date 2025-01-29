@@ -303,6 +303,7 @@ public class ProdutoController implements Initializable {
         Adicionar_Produto_Estoque.setText(null);
         Adicionar_Produto_Categorias.setValue(null);
         Adicionar_Produto_Descricao.setText(null);
+        Adicionar_Produto_Estoque_Minimo.setText(null);
     }
 
     @FXML
@@ -532,7 +533,7 @@ public class ProdutoController implements Initializable {
                 Adicionar_Produto_Preco.setText(String.valueOf(produtoSelecionado_Adicionar.getPreco()));
                 Adicionar_Produto_Marca.setText(produtoSelecionado_Adicionar.getMarca());
                 Adicionar_Produto_Estoque.setText(String.valueOf(produtoSelecionado_Adicionar.getEstoque()));
-                //Adicionar_Produto_Estoque_Minimo.setText(String.valueOf(produtoSelecionado_Adicionar.getEstoque_minimo()));
+                Adicionar_Produto_Estoque_Minimo.setText(String.valueOf(produtoSelecionado_Adicionar.getEstoque_minimo()));
                 Adicionar_Produto_Categorias.setValue(produtoSelecionado_Adicionar.getCategoria());
                 Adicionar_Produto_Descricao.setText(produtoSelecionado_Adicionar.getDescricao());
             }
