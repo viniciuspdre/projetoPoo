@@ -3,7 +3,6 @@ package dao;
 import dao.conexao.ConexaoDB;
 import model.entity.Usuario;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +25,7 @@ public class UsuarioDAO {
             ps.setString(5, dataNascimento);
 
             ps.executeUpdate();
+            ps.close();
 
         } catch (SQLException e) {
             e.printStackTrace();

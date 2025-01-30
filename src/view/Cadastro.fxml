@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: #EAEAEA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastroController">
+<AnchorPane fx:id="mainScreen" prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: #EAEAEA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastroController">
    <children>
       <AnchorPane layoutX="512.0" prefHeight="720.0" prefWidth="512.0" style="-fx-background-color: #031926;">
          <children>
             <ImageView fx:id="imageLogo" fitHeight="197.0" fitWidth="227.0" layoutX="167.0" layoutY="271.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../controller/loja-online.png" />
+                  <Image url="@../../icon/loja-online.png" />
                </image>
             </ImageView>
             <Label layoutX="182.0" layoutY="217.0" text="TekMark" textFill="#eaeaea">

@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import model.entity.Usuario;
 
 import java.util.Calendar;
@@ -31,8 +32,6 @@ public class CadastroController {
     @FXML
     private ImageView imageLogo;
 
-
-
     private int flag = 0;
     private String mesAtual = null;
     private String anoAtual = null;
@@ -40,7 +39,7 @@ public class CadastroController {
     @FXML
     public void initialize() {
         atualizarCalendario();
-        Image image = new Image(getClass().getResourceAsStream("loja-online.png"));
+        Image image = new Image(getClass().getResourceAsStream("/icon/loja-online.png"));
         imageLogo.setImage(image);
     }
 
