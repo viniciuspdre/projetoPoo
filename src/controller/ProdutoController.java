@@ -3,12 +3,17 @@ package controller;
 import com.sun.javafx.charts.Legend;
 import dao.ProdutoDAO;
 import javafx.collections.transformation.FilteredList;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.entity.Produto;
@@ -249,65 +254,30 @@ public class ProdutoController extends Component implements Initializable {
     @FXML
     private TextField input_Atualizar_Preco;
 
-    @FXML
-    private TextField input_Atualizar_Vendidos;
-
-    @FXML
-    private Button btnFechar;
-
-    @FXML
-    private Button btnMinimizer;
-
-    @FXML
-    private AnchorPane Container_Adicionar_Produto;
-
-    @FXML
-    private AnchorPane Container_Atualizar_Produto;
-
-    @FXML
-    private AnchorPane Container_Estatisticas_Produto;
-
-    @FXML
-    private AnchorPane Container_Remover_Produto;
-
-    @FXML
-    private AnchorPane Container_AlertaEstoque;
-
-    @FXML
-    private TextField Pesquisar_AlertaEstoque;
-
-    @FXML
-    private Label Alerta_Nome;
-
-    @FXML
-    private Label Alerta_Codigo_Produto;
-
-    @FXML
-    private Label Alerta_Marca;
-
-    @FXML
-    private Label Alerta_Estoque_Label;
-
-    @FXML
-    private Label Alerta_EstoqueMinimo;
-
-    @FXML
-    private Label Alerta_Vendidos;
-
-    @FXML
-    private Label Alerta_Categoria;
-
-    @FXML
-    private Label Alerta_Descricao;
-
-    @FXML
-    private Label Alerta_Loja;
-
-    @FXML
-    private Label Alerta_Preco;
-
-    @FXML
-    private ImageView Image_Alerta_Produto;
+    @FXML private TextField input_Atualizar_Vendidos;
+    @FXML private Button btnFechar;
+    @FXML private Button btnMinimizer;
+    @FXML private AnchorPane Container_Adicionar_Produto;
+    @FXML private AnchorPane Container_Atualizar_Produto;
+    @FXML private AnchorPane Container_Estatisticas_Produto;
+    @FXML private AnchorPane Container_Remover_Produto;
+    @FXML private AnchorPane Container_AlertaEstoque;
+    @FXML private TextField Pesquisar_AlertaEstoque;
+    @FXML private Label Alerta_Nome;
+    @FXML private Label Alerta_Codigo_Produto;
+    @FXML private Label Alerta_Marca;
+    @FXML private Label Alerta_Estoque_Label;
+    @FXML private Label Alerta_EstoqueMinimo;
+    @FXML private Label Alerta_Vendidos;
+    @FXML private Label Alerta_Categoria;
+    @FXML private Label Alerta_Descricao;
+    @FXML private Label Alerta_Loja;
+    @FXML private Label Alerta_Preco;
+    @FXML private ImageView Image_Alerta_Produto;
+    @FXML private AnchorPane Container_Home;
+    @FXML private GridPane Catalogo;
+    @FXML private TextField Pesquisar_Home;
+    @FXML private ScrollPane Scroll_Catalogo;
 
     private List<Produto> produtos; // Definindo produtos como um atributo da classe
     private List<Produto> alertaEstoque;
@@ -333,6 +303,7 @@ public class ProdutoController extends Component implements Initializable {
         Container_Remover_Produto.setVisible(false);
         Container_Estatisticas_Produto.setVisible(false);
         Container_AlertaEstoque.setVisible(false);
+        Container_Home.setVisible(false);
     }
 
     @FXML
@@ -341,6 +312,7 @@ public class ProdutoController extends Component implements Initializable {
         Container_Atualizar_Produto.setVisible(true);
         Container_Remover_Produto.setVisible(false);
         Container_AlertaEstoque.setVisible(false);
+        Container_Home.setVisible(false);
     }
 
     @FXML
@@ -350,6 +322,7 @@ public class ProdutoController extends Component implements Initializable {
         Container_Remover_Produto.setVisible(false);
         Container_Estatisticas_Produto.setVisible(true);
         Container_AlertaEstoque.setVisible(false);
+        Container_Home.setVisible(false);
     }
 
     @FXML
@@ -359,10 +332,21 @@ public class ProdutoController extends Component implements Initializable {
         Container_Remover_Produto.setVisible(true);
         Container_Estatisticas_Produto.setVisible(false);
         Container_AlertaEstoque.setVisible(false);
+        Container_Home.setVisible(false);
     }
     @FXML
      public void Estoque_Alerta(){
         Container_AlertaEstoque.setVisible(true);
+        Container_Adicionar_Produto.setVisible(false);
+        Container_Atualizar_Produto.setVisible(false);
+        Container_Remover_Produto.setVisible(false);
+        Container_Estatisticas_Produto.setVisible(false);
+        Container_Home.setVisible(false);
+    }
+
+    @FXML public void Home(){
+        Container_Home.setVisible(true);
+        Container_AlertaEstoque.setVisible(false);
         Container_Adicionar_Produto.setVisible(false);
         Container_Atualizar_Produto.setVisible(false);
         Container_Remover_Produto.setVisible(false);
@@ -1030,6 +1014,89 @@ public class ProdutoController extends Component implements Initializable {
         filtroPesquisaAdicionar(); // Filtro da textfield Pesquisa
         filtroPesquisaAtualizar(); // FIltro da textfileld Pesquisa
         filtroPesquisaAlerta(); // FIltro da textfileld Pesquisa
+        criarCatalogo();
+    }
+
+    public void criarCatalogo(){
+        Scroll_Catalogo.setFitToWidth(true);  // Faz com que a largura do conteúdo se ajuste ao ScrollPane
+        Scroll_Catalogo.setFitToHeight(false); // Permite rolagem vertical
+
+        // Ajusta o GridPane para expandir corretamente dentro do ScrollPane
+        Catalogo.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        Catalogo.setPrefHeight(Region.USE_COMPUTED_SIZE);
+        Catalogo.setHgap(10);  // Espaço horizontal entre os cards
+        Catalogo.setVgap(10);  // Espaço vertical entre os cards
+        Catalogo.setStyle("-fx-padding: 10;");
+
+        // Limpar colunas e linhas do GridPane
+        Catalogo.getColumnConstraints().clear();
+        Catalogo.getRowConstraints().clear();
+
+        produtos = ProdutoDAO.listarProdutos();
+        int numCols = 3;  // Defina o número de colunas desejado (por exemplo, 3)
+        int row = 0;
+        int col = 0;
+
+        for (Produto produto : produtos) {
+            // Adiciona os cards no GridPane com a lógica de posicionamento em linhas e colunas
+            VBox card = criarCardProduto(produto);
+            // Ajuste do tamanho do card para ocupar toda a célula
+            card.setMaxWidth(Double.MAX_VALUE);
+            //card.setMaxHeight(Double.MAX_VALUE);
+            Catalogo.add(card, col, row);
+
+            col++;
+            if(col > numCols){
+                col = 0;
+                row++;
+            }
+        }
+    }
+
+    VBox criarCardProduto(Produto produto) {
+        VBox card = new VBox();
+        card.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-background-color: #f9f9f9; -fx-background-radius: 10; -fx-cursor: hand;");
+        card.setAlignment(Pos.CENTER);
+
+        ImageView imageView;
+
+        if (produto.getFoto() != null) {
+            Image image = new Image(new ByteArrayInputStream(produto.getFoto()));
+            imageView = new ImageView(image);
+        } else{
+            imageView = new ImageView(new Image("icon/image.png"));
+        }
+
+        imageView.setFitWidth(150);
+        imageView.setFitHeight(150);
+        imageView.setPreserveRatio(true); // Mantém a proporção da imagem
+
+        Label nomeLabel = new Label(produto.getNome());
+        nomeLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+
+        Label precoLabel = new Label("R$ " + String.format("%.2f", produto.getPreco()));
+        precoLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: green;");
+
+        Label descricaoLabel = new Label(produto.getDescricao());
+        descricaoLabel.setWrapText(true);
+
+        card.getChildren().addAll(imageView,nomeLabel, precoLabel, descricaoLabel);
+
+        // Evento de clique para retornar o produto selecionado
+        card.setOnMouseClicked(event -> {
+            getProdutoSelecionado(produto);
+            // Remove seleção de todos os outros cards
+            Catalogo.getChildren().forEach(node -> node.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-background-color: #f9f9f9; -fx-background-radius: 10; -fx-cursor: hand;"));
+            // Destaca o card selecionado
+            card.setStyle("-fx-padding: 10; -fx-border-color: #000; -fx-border-radius: 10; -fx-background-color: #f9f9f9; -fx-background-radius: 10; -fx-cursor: hand;");
+        });
+
+        return card;
+    }
+
+    // Metodo que retorna o produto selecionado
+    private Produto getProdutoSelecionado(Produto produto) {
+        return produto;
     }
 
     @Override
@@ -1037,5 +1104,6 @@ public class ProdutoController extends Component implements Initializable {
         atualizarDados();
         configurarColunasTabela(); // Configura as colunas da TableView
         eventos(); // Adiciona eventos de teclado
+        criarCatalogo();
     }
 }
