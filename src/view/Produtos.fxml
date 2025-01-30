@@ -316,7 +316,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="Container_Adicionar_Produto" layoutX="9.0" prefHeight="532.0" prefWidth="882.0" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="10.399999999999977" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="10.199999999999932" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Container_Adicionar_Produto" layoutX="9.0" prefHeight="532.0" prefWidth="882.0" stylesheets="@../style/cadastroProdutos.css" visible="false" AnchorPane.bottomAnchor="10.399999999999977" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="10.199999999999932" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane prefHeight="288.0" prefWidth="878.0" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="259.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
@@ -440,7 +440,7 @@
                               <String fx:value="shadow" />
                            </styleClass>
                         </AnchorPane>
-                        <AnchorPane fx:id="Container_Atualizar_Produto" layoutX="130.0" layoutY="152.0" prefHeight="542.4" prefWidth="888.8" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Container_Atualizar_Produto" layoutX="130.0" layoutY="152.0" prefHeight="542.4" prefWidth="888.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="10.0" layoutY="11.0" prefHeight="521.0" prefWidth="876.0" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="10.600000000000023" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.799999999999955" AnchorPane.topAnchor="11.0">
                                  <styleClass>
@@ -460,12 +460,12 @@
                                        </font>
                                     </Label>
                                     <TextField fx:id="input_Atualizar_Preco" layoutX="43.0" layoutY="460.0" promptText="Preço" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
-                                    <Label alignment="CENTER" layoutX="225.0" layoutY="375.0" prefHeight="20.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Categoria:">
+                                    <Label alignment="CENTER" layoutX="225.0" layoutY="436.0" prefHeight="20.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Categoria:">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="input_Atualizar_Categoria" layoutX="226.0" layoutY="399.0" prefWidth="150.0" promptText="Vazio" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
+                                    <ComboBox fx:id="input_Atualizar_Categoria" layoutX="226.0" layoutY="460.0" prefWidth="150.0" promptText="Vazio" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
                                     <Label alignment="CENTER" layoutX="42.0" layoutY="375.0" prefHeight="20.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Marca:">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
@@ -477,7 +477,7 @@
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextArea fx:id="input_Atualizar_Descricao" layoutX="407.0" layoutY="338.0" prefHeight="63.0" prefWidth="149.6" promptText="Descrição" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
+                                    <TextArea fx:id="input_Atualizar_Descricao" layoutX="407.0" layoutY="338.0" prefHeight="88.0" prefWidth="150.0" promptText="Descrição" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" wrapText="true" />
                                     <TextField fx:id="input_Atualizar_Estoque" layoutX="226.0" layoutY="283.0" promptText="Estoque" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
                                     <Label alignment="CENTER" layoutX="42.0" layoutY="259.0" prefHeight="20.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Código Produto">
                                        <font>
@@ -493,27 +493,26 @@
                                        <children>
                                           <TableView fx:id="Tabela_Produto_Atualizar" layoutX="9.0" layoutY="57.0" prefHeight="178.0" prefWidth="857.0" stylesheets="@../style/cadastroProdutos.css">
                                              <columns>
-                                                <TableColumn prefWidth="86.39998245239258" text="Código" />
-                                                <TableColumn prefWidth="81.60000610351562" text="Nome" />
-                                                <TableColumn prefWidth="75.99998474121094" text="Preço" />
-                                                <TableColumn prefWidth="103.20001220703125" text="Categoria" />
-                                                <TableColumn prefWidth="72.0" text="Marca" />
-                                                <TableColumn prefWidth="72.0" text="Descrição" />
-                                                <TableColumn prefWidth="61.5999755859375" text="Estoque" />
-                                                <TableColumn prefWidth="64.79998779296875" text="Vendidos" />
-                                                <TableColumn prefWidth="63.2000732421875" text="Foto" />
-                                                <TableColumn prefWidth="82.39996337890625" text="Fornecedor(CNPJ)" />
-                                                <TableColumn prefWidth="91.20009765625002" text="Loja(CNPJ)" />
+                                                <TableColumn fx:id="colunaCodigoAtualizar" prefWidth="86.39998245239258" text="Código" />
+                                                <TableColumn fx:id="colunaNomeAtualizar" prefWidth="81.60000610351562" text="Nome" />
+                                                <TableColumn fx:id="colunaPrecoAtualizar" prefWidth="75.99998474121094" text="Preço" />
+                                                <TableColumn fx:id="colunaCategoriaAtualizar" prefWidth="103.20001220703125" text="Categoria" />
+                                                <TableColumn fx:id="colunaMarcaAtualizar" prefWidth="72.0" text="Marca" />
+                                                <TableColumn fx:id="colunaDescricaoAtualizar" prefWidth="72.0" text="Descrição" />
+                                                <TableColumn fx:id="colunaEstoqueAtualizar" prefWidth="61.5999755859375" text="Estoque" />
+                                                <TableColumn fx:id="colunaEstoqueMinimoAtualizar" prefWidth="107.20001220703125" text="Estoque_Min" />
+                                                <TableColumn fx:id="colunaVendidosAtualizar" prefWidth="82.39996337890625" text="Vendidos" />
+                                                <TableColumn fx:id="colunaLojaAtualizar" prefWidth="108.800048828125" text="Loja(CNPJ)" />
                                              </columns>
                                              <styleClass>
                                                 <String fx:value="white" />
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                           </TableView>
-                                          <TextField fx:id="Pesquisar_Remover_Produto1" layoutX="14.0" layoutY="15.0" prefHeight="30.0" prefWidth="200.0" promptText="Pesquisar" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
+                                          <TextField fx:id="Pesquisar_Atualizar_Produto" layoutX="14.0" layoutY="15.0" prefHeight="30.0" prefWidth="200.0" promptText="Pesquisar" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
                                           <Button layoutX="172.0" layoutY="14.0" mnemonicParsing="false" styleClass="nav-btn" stylesheets="@../style/cadastroProdutos.css">
                                              <graphic>
-                                                <ImageView fx:id="Pesquisar_Atualizar_Produto" fitHeight="22.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" styleClass="nav-btn">
+                                                <ImageView fitHeight="22.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" styleClass="nav-btn">
                                                    <image>
                                                       <Image url="@../icon/search.png" />
                                                    </image>
@@ -525,23 +524,17 @@
                                           </Button>
                                        </children>
                                     </AnchorPane>
-                                    <Label alignment="CENTER" layoutX="226.0" layoutY="259.0" prefHeight="20.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Estoque">
+                                    <Label alignment="CENTER" layoutX="224.0" layoutY="259.0" prefHeight="20.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Estoque">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label alignment="CENTER" layoutX="226.0" layoutY="315.0" prefHeight="20.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Vendidos">
+                                    <Label alignment="CENTER" layoutX="226.0" layoutY="376.0" prefHeight="20.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Vendidos">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="input_Atualizar_Vendidos" layoutX="226.0" layoutY="338.0" promptText="Estoque" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
-                                    <Label alignment="CENTER" layoutX="226.0" layoutY="433.0" prefHeight="20.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Fornecedor (CNPJ):">
-                                       <font>
-                                          <Font name="System Bold" size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="input_Atualizar_Fornecedor" layoutX="226.0" layoutY="460.0" promptText="Fornecedor (CNPJ)" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
+                                    <TextField fx:id="input_Atualizar_Vendidos" layoutX="226.0" layoutY="399.0" promptText="Vendidos" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
                                     <Label alignment="CENTER" layoutX="405.0" layoutY="259.0" prefHeight="20.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Loja (CNPJ):">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
@@ -550,7 +543,7 @@
                                     <TextField fx:id="input_Atualizar_Loja" layoutX="406.0" layoutY="283.0" promptText="Loja (CNPJ)" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
                                     <AnchorPane layoutX="583.0" layoutY="285.0" prefHeight="180.0" prefWidth="150.0" stylesheets="@../style/cadastroProdutos.css">
                                        <children>
-                                          <Button fx:id="Importar_Atualizar_Produto" layoutX="10.0" layoutY="149.0" mnemonicParsing="false" prefWidth="130.0" stylesheets="@../style/cadastroProdutos.css" text="Importar">
+                                          <Button layoutX="10.0" layoutY="149.0" mnemonicParsing="false" onAction="#Importar_Atualizar_Produto" prefWidth="130.0" stylesheets="@../style/cadastroProdutos.css" text="Importar">
                                              <styleClass>
                                                 <String fx:value="btn-operacao" />
                                                 <String fx:value="shadow" />
@@ -558,7 +551,7 @@
                                              <font>
                                                 <Font name="Tahoma Bold" size="12.0" />
                                              </font></Button>
-                                          <ImageView fx:id="Image_Atualizar_Produto" fitHeight="143.0" fitWidth="150.0" layoutX="4.0" opacity="0.25" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="Image_Atualizar_Produto" fitHeight="137.0" fitWidth="143.0" layoutX="7.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@../icon/image2.png" />
                                              </image></ImageView>
@@ -574,11 +567,11 @@
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="Limpar_Atualizar_Produto" layoutX="759.0" layoutY="305.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="102.0" styleClass="btn-limpar" stylesheets="@../style/cadastroProdutos.css" text="Limpar">
+                                    <Button layoutX="759.0" layoutY="305.0" mnemonicParsing="false" onAction="#Limpar_Atualizar_Produto" prefHeight="53.0" prefWidth="102.0" styleClass="btn-limpar" stylesheets="@../style/cadastroProdutos.css" text="Limpar">
                                        <font>
                                           <Font name="Tahoma Bold" size="14.0" />
                                        </font></Button>
-                                    <Button fx:id="btn_Atualizar_Produto" layoutX="759.0" layoutY="392.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="102.0" stylesheets="@../style/cadastroProdutos.css" text="Atualizar">
+                                    <Button layoutX="759.0" layoutY="392.0" mnemonicParsing="false" onAction="#btn_Atualizar_Produto" prefHeight="53.0" prefWidth="102.0" stylesheets="@../style/cadastroProdutos.css" text="Atualizar">
                                        <styleClass>
                                           <String fx:value="btn-operacao" />
                                           <String fx:value="shadow" />
@@ -586,12 +579,12 @@
                                        <font>
                                           <Font name="Tahoma Bold" size="14.0" />
                                        </font></Button>
-                                    <Label alignment="CENTER" layoutX="407.0" layoutY="409.0" prefHeight="20.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Atualizar Código">
+                                    <Label alignment="CENTER" layoutX="225.0" layoutY="317.0" prefHeight="20.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Estoque Mínimo">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="input_Atualizar_Codigo" layoutX="407.0" layoutY="433.0" promptText="Atualizar Código" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
+                                    <TextField fx:id="input_Atualizar_EstoqueMinimo" layoutX="226.0" layoutY="340.0" promptText="Estoque Mínimo" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
                                  </children>
                               </AnchorPane>
                            </children>
@@ -618,9 +611,8 @@
                                           <TableColumn fx:id="colunaDescricao" prefWidth="72.0" text="Descrição" />
                                           <TableColumn fx:id="colunaEstoque" prefWidth="61.5999755859375" text="Estoque" />
                                           <TableColumn fx:id="colunaEstoque_Minimo" prefWidth="93.5999755859375" text="Estoque_Min" />
-                                          <TableColumn fx:id="colunaVendidos" prefWidth="79.199951171875" text="Vendidos" />
-                                          <TableColumn fx:id="colunaFoto" prefWidth="70.4000244140625" text="Foto" />
-                                          <TableColumn fx:id="colunaLoja" prefWidth="61.5999755859375" text="Loja(CNPJ)" />
+                                          <TableColumn fx:id="colunaVendidos" prefWidth="103.2000732421875" text="Vendidos" />
+                                          <TableColumn fx:id="colunaLoja" prefWidth="109.5999755859375" text="Loja(CNPJ)" />
                                        </columns>
                                        <styleClass>
                                           <String fx:value="white" />

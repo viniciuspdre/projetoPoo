@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.converter.ByteStringConverter;
 import model.entity.Produto;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -28,12 +27,8 @@ import java.io.*;
 import java.awt.*;
 import java.net.URL;
 import java.nio.file.Files;
-import java.sql.Blob;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class ProdutoController extends Component implements Initializable {
 
@@ -92,7 +87,7 @@ public class ProdutoController extends Component implements Initializable {
     private Button Limpar_Remover_Produto;
 
     @FXML
-    private ImageView Pesquisar_Atualizar_Produto;
+    private TextField Pesquisar_Atualizar_Produto;
 
     @FXML
     private ImageView Imagem_Produto_Adicionar;
@@ -176,6 +171,39 @@ public class ProdutoController extends Component implements Initializable {
     private TableColumn<Produto, Integer> colunaVendidos_Adicionar;
 
     @FXML
+    private TableView<Produto> Tabela_Produto_Atualizar;
+
+    @FXML
+    private TableColumn<Produto, String> colunaCategoriaAtualizar;
+
+    @FXML
+    private TableColumn<Produto, String> colunaCodigoAtualizar;
+
+    @FXML
+    private TableColumn<Produto, String> colunaDescricaoAtualizar;
+
+    @FXML
+    private TableColumn<Produto, Integer> colunaEstoqueAtualizar;
+
+    @FXML
+    private TableColumn<Produto, Integer> colunaEstoqueMinimoAtualizar;
+
+    @FXML
+    private TableColumn<Produto, String> colunaLojaAtualizar;
+
+    @FXML
+    private TableColumn<Produto, String> colunaMarcaAtualizar;
+
+    @FXML
+    private TableColumn<Produto, String> colunaNomeAtualizar;
+
+    @FXML
+    private TableColumn<Produto, Double> colunaPrecoAtualizar;
+
+    @FXML
+    private TableColumn<Produto, Integer> colunaVendidosAtualizar;
+
+    @FXML
     private Label Total_Produtos;
 
     @FXML
@@ -185,13 +213,10 @@ public class ProdutoController extends Component implements Initializable {
     private Button btn_Adicionar_Produto;
 
     @FXML
-    private Button btn_Atualizar_Produto;
-
-    @FXML
     private ComboBox<String> input_Atualizar_Categoria;
 
     @FXML
-    private TextField input_Atualizar_Codigo;
+    private TextField input_Atualizar_EstoqueMinimo;
 
     @FXML
     private TextField input_Atualizar_Codigo_Produto;
@@ -241,9 +266,11 @@ public class ProdutoController extends Component implements Initializable {
     private ObservableList<String> categoriasObservableList;
     private ObservableList<Produto> DadosTabelaProdutoRemover = FXCollections.observableArrayList();
     private ObservableList<Produto> DadosTabelaProdutoAdicionar = FXCollections.observableArrayList();
+    private ObservableList<Produto> DadosTabelaProdutoAtualizar = FXCollections.observableArrayList();
 
     private FilteredList<Produto> filteredListRemover = new FilteredList<>(DadosTabelaProdutoRemover, p -> true);
     private FilteredList<Produto> filteredListAdicionar = new FilteredList<>(DadosTabelaProdutoAdicionar, p -> true);
+    private FilteredList<Produto> filteredListAtualizar = new FilteredList<>(DadosTabelaProdutoAtualizar, p -> true);
 
   private byte[] imagemBytes;
 
@@ -299,6 +326,25 @@ public class ProdutoController extends Component implements Initializable {
     }
 
     @FXML
+    public byte[] Importar_Atualizar_Produto() {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Carregar Imagem");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imagens", "*.png", "*.jpg", "*.jpeg"));
+            File file = fileChooser.showOpenDialog(null);
+
+            if (file != null) {
+                Image_Atualizar_Produto.setImage(new Image(file.toURI().toString()));
+                imagemBytes = Files.readAllBytes(file.toPath());
+                return imagemBytes;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    @FXML
     private void close() {
         // Obter a janela atual
         Stage stage = (Stage) btnFechar.getScene().getWindow();
@@ -329,8 +375,24 @@ public class ProdutoController extends Component implements Initializable {
         Adicionar_Produto_Descricao.setText(null);
         Adicionar_Produto_Estoque_Minimo.setText(null);
         Imagem_Produto_Adicionar.setImage(new Image(new File("src/icon/image2.png").toURI().toString()));
-
     }
+
+    @FXML
+    private void Limpar_Atualizar_Produto() {
+        Pesquisar_Atualizar_Produto.setText(null);
+        input_Atualizar_Nome.setText(null);
+        input_Atualizar_Marca.setText(null);
+        input_Atualizar_Preco.setText(null);
+        input_Atualizar_Estoque.setText(null);
+        input_Atualizar_EstoqueMinimo.setText(null);
+        input_Atualizar_Vendidos.setText(null);
+        input_Atualizar_Categoria.setValue(null);
+        input_Atualizar_Loja.setText(null);
+        input_Atualizar_Descricao.setText(null);
+        input_Atualizar_Codigo_Produto.setText(null);
+        Image_Atualizar_Produto.setImage(new Image(new File("src/icon/image2.png").toURI().toString()));
+    }
+
     @FXML
     private void btn_Adicionar_Produto() throws FileNotFoundException {
         String codigo = gerarCodigoProduto();// Gera automaticamente o código do produto
@@ -343,7 +405,7 @@ public class ProdutoController extends Component implements Initializable {
         String categoria = Adicionar_Produto_Categorias.getSelectionModel().getSelectedItem();
         String descricao = Adicionar_Produto_Descricao.getText();
         String cnpj_loja = "23.456.789/0001-95";
-        int vendidos = 0;
+        int vendidos = gerarNumeroVendas();
         byte[] fotoBytes = imagemBytes;
 
         // Validação de campos obrigatórios
@@ -398,7 +460,84 @@ public class ProdutoController extends Component implements Initializable {
         }
     }
 
+    @FXML
+    private void btn_Atualizar_Produto(){
+        // Obtém o código do produto a ser atualizado
+        String codigo = input_Atualizar_Codigo_Produto.getText();
+        System.out.println(codigo);
+        // Obtém os valores dos outros campos
+        String nome = input_Atualizar_Nome.getText();
+        String precoTexto = input_Atualizar_Preco.getText();
+        String marca = input_Atualizar_Marca.getText();
+        String estoqueTexto = input_Atualizar_Estoque.getText();
+        String estoqueMinimoTexto = input_Atualizar_EstoqueMinimo.getText();
+        String categoria = input_Atualizar_Categoria.getValue();
+        String descricao = input_Atualizar_Descricao.getText();
+        String vendidosTexto = input_Atualizar_Vendidos.getText();
+        String loja = input_Atualizar_Loja.getText();
+        byte[] fotoBytes = imagemBytes;
 
+        // Validação de campos obrigatórios
+        if (codigo.trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Campos Obrigatórios");
+            alert.setHeaderText(null);
+            alert.setContentText("Preencha todos os campos obrigatórios.");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            // Conversão de valores
+            double preco = Double.parseDouble(precoTexto);
+            int estoque = Integer.parseInt(estoqueTexto);
+            int estoqueMinimo = Integer.parseInt(estoqueMinimoTexto);
+            int vendidos = Integer.parseInt(vendidosTexto);
+
+            // Criação do objeto Produto com os dados atualizados
+            Produto produtoAtualizado = new Produto(codigo, nome, preco, estoque, estoqueMinimo, vendidos, categoria, marca, descricao, fotoBytes, loja);
+
+            // Chama o metodo do DAO para atualizar o produto
+            ProdutoDAO produtoDAO = new ProdutoDAO();
+            boolean sucesso = produtoDAO.atualizarProduto(produtoAtualizado);
+
+            if (sucesso) {
+                // Feedback para o usuário
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Sucesso");
+                alert.setHeaderText(null);
+                alert.setContentText("Produto atualizado com sucesso! Código: " + codigo);
+                alert.showAndWait();
+            } else {
+                // Caso o produto não seja encontrado
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erro");
+                alert.setHeaderText(null);
+                alert.setContentText("Produto não encontrado para o código fornecido.");
+                alert.showAndWait();
+            }
+
+            // Limpar os campos após a atualização
+            Limpar_Atualizar_Produto();
+            produtos = ProdutoDAO.listarProdutos();
+            carregarDadosTabelaProduto();
+            carregarListaCategorias();
+
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText(null);
+            alert.setContentText("Preço e estoque devem ser valores numéricos.");
+            alert.showAndWait();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText(null);
+            alert.setContentText("Erro ao atualizar o produto: " + e.getMessage());
+            System.out.println(e.getMessage());
+            alert.showAndWait();
+        }
+    }
 
     @FXML
     private void btn_Remover_Produto(){
@@ -430,8 +569,10 @@ public class ProdutoController extends Component implements Initializable {
             // Atualiza a tabela após a remoção do produto
             DadosTabelaProdutoRemover.removeIf(produto -> produto.getCodigo().equals(codigo));
             DadosTabelaProdutoAdicionar.removeIf(produto -> produto.getCodigo().equals(codigo));
+            DadosTabelaProdutoAtualizar.removeIf(produto -> produto.getCodigo().equals(codigo));
             Tabela_Produto_Remover.refresh(); // Atualiza a tabela para refletir a exclusão
             Tabela_Produto_Adicionar.refresh();
+            Tabela_Produto_Atualizar.refresh();
 
             // Atualiza quantidade de produto na janela de estatísticas
             produtos = ProdutoDAO.listarProdutos();
@@ -474,6 +615,11 @@ public class ProdutoController extends Component implements Initializable {
         return String.format("%s-%s-%s", prefixo, ano, sequencialFormatado);
     }
 
+    private int gerarNumeroVendas(){
+        Random gerador = new Random();
+        return gerador.nextInt(151);
+    }
+
 
     private void carregarListaCategorias(){
         // Limpando a lista de categorias para evitar duplicações
@@ -499,10 +645,12 @@ public class ProdutoController extends Component implements Initializable {
         // Limpa os dados antes de carregar
         DadosTabelaProdutoRemover.clear();
         DadosTabelaProdutoAdicionar.clear();
+        DadosTabelaProdutoAtualizar.clear();
 
         // Adiciona todos os produtos à lista
         DadosTabelaProdutoRemover.addAll(produtos);
         DadosTabelaProdutoAdicionar.addAll(produtos);
+        DadosTabelaProdutoAtualizar.addAll(produtos);
     }
 
     // Metodo para configurar as colunas da TableView
@@ -530,6 +678,18 @@ public class ProdutoController extends Component implements Initializable {
         colunaMarca_Adicionar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMarca()));
         colunaDescricao_Adicionar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
         colunaLoja_Adicionar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCnpj_loja()));
+
+        //Configuração Tabela Pagina de remover produto
+        colunaNomeAtualizar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNome()));
+        colunaCodigoAtualizar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCodigo()));
+        colunaPrecoAtualizar.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPreco()).asObject());
+        colunaEstoqueAtualizar.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getEstoque()).asObject());
+        colunaEstoqueMinimoAtualizar.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getEstoque_minimo()).asObject());
+        colunaVendidosAtualizar.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getVendidos()).asObject());
+        colunaCategoriaAtualizar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCategoria()));
+        colunaMarcaAtualizar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMarca()));
+        colunaDescricaoAtualizar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
+        colunaLojaAtualizar.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCnpj_loja()));
     }
 
     public void eventos(){
@@ -541,6 +701,7 @@ public class ProdutoController extends Component implements Initializable {
         // Ao clicar em uma linha da tabela tranfere o código dela para o textfield
         Tabela_Produto_Remover.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
+                Limpar_Remover_Produto();
                 // Captura os dados da linha selecionada
                 Produto produtoSelecionado_Remover = newValue;
                 Input_Remover_Produto.setText(produtoSelecionado_Remover.getCodigo());
@@ -551,6 +712,7 @@ public class ProdutoController extends Component implements Initializable {
         Tabela_Produto_Adicionar.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 // Captura os dados da linha selecionada
+                Limpar_Adicionar_Produto();
                 Produto produtoSelecionado_Adicionar = newValue;
                 Adicionar_Produto_Nome.setText(produtoSelecionado_Adicionar.getNome());
                 Adicionar_Produto_Preco.setText(String.valueOf(produtoSelecionado_Adicionar.getPreco()));
@@ -560,8 +722,34 @@ public class ProdutoController extends Component implements Initializable {
                 Adicionar_Produto_Categorias.setValue(produtoSelecionado_Adicionar.getCategoria());
                 Adicionar_Produto_Descricao.setText(produtoSelecionado_Adicionar.getDescricao());
                 //Pegar Imagem
-                Image image = new Image(new ByteArrayInputStream(produtoSelecionado_Adicionar.getFoto()));
-                Imagem_Produto_Adicionar.setImage(image);
+                if (produtoSelecionado_Adicionar.getFoto() != null) {
+                    Image image = new Image(new ByteArrayInputStream(produtoSelecionado_Adicionar.getFoto()));
+                    Imagem_Produto_Adicionar.setImage(image);
+                }
+            }
+        });
+
+        // Ao clicar em uma linha da tabela tranfere o código dela para o textfield
+        Tabela_Produto_Atualizar.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                // Captura os dados da linha selecionada
+                Limpar_Atualizar_Produto();
+                Produto produtoSelecionado_Atualizar = newValue;
+                input_Atualizar_Nome.setText(produtoSelecionado_Atualizar.getNome());
+                input_Atualizar_Preco.setText(String.valueOf(produtoSelecionado_Atualizar.getPreco()));
+                input_Atualizar_Marca.setText(produtoSelecionado_Atualizar.getMarca());
+                input_Atualizar_Estoque.setText(String.valueOf(produtoSelecionado_Atualizar.getEstoque()));
+                input_Atualizar_EstoqueMinimo.setText(String.valueOf(produtoSelecionado_Atualizar.getEstoque_minimo()));
+                input_Atualizar_Vendidos.setText(String.valueOf(produtoSelecionado_Atualizar.getVendidos()));
+                input_Atualizar_Categoria.setValue(produtoSelecionado_Atualizar.getCategoria());
+                input_Atualizar_Descricao.setText(produtoSelecionado_Atualizar.getDescricao());
+                input_Atualizar_Loja.setText(produtoSelecionado_Atualizar.getCnpj_loja());
+                input_Atualizar_Codigo_Produto.setText(produtoSelecionado_Atualizar.getCodigo());
+                //Pegar Imagem
+                if (produtoSelecionado_Atualizar.getFoto() != null) {
+                    Image image = new Image(new ByteArrayInputStream(produtoSelecionado_Atualizar.getFoto()));
+                    Image_Atualizar_Produto.setImage(image);
+                }
             }
         });
 
@@ -574,6 +762,46 @@ public class ProdutoController extends Component implements Initializable {
         }));
 
         Adicionar_Produto_Estoque.setTextFormatter(new TextFormatter<>(change -> {
+            String caracteresPermitidos = "0123456789";
+            if (change.getText().matches("[" + caracteresPermitidos + "]*")) {
+                return change; // Aceita a mudança
+            }
+            return null; // Rejeita a mudança
+        }));
+
+        Adicionar_Produto_Estoque_Minimo.setTextFormatter(new TextFormatter<>(change -> {
+            String caracteresPermitidos = "0123456789";
+            if (change.getText().matches("[" + caracteresPermitidos + "]*")) {
+                return change; // Aceita a mudança
+            }
+            return null; // Rejeita a mudança
+        }));
+
+        input_Atualizar_Preco.setTextFormatter(new TextFormatter<>(change -> {
+            String caracteresPermitidos = "0123456789.";
+            if (change.getText().matches("[" + caracteresPermitidos + "]*")) {
+                return change; // Aceita a mudança
+            }
+            return null; // Rejeita a mudança
+        }));
+
+        input_Atualizar_Vendidos.setTextFormatter(new TextFormatter<>(change -> {
+            String caracteresPermitidos = "0123456789";
+            if (change.getText().matches("[" + caracteresPermitidos + "]*")) {
+                return change; // Aceita a mudança
+            }
+            return null; // Rejeita a mudança
+        }));
+
+        input_Atualizar_Estoque.setTextFormatter(new TextFormatter<>(change -> {
+            String caracteresPermitidos = "0123456789";
+            if (change.getText().matches("[" + caracteresPermitidos + "]*")) {
+                return change; // Aceita a mudança
+            }
+            return null; // Rejeita a mudança
+        }));
+
+        input_Atualizar_EstoqueMinimo.setTextFormatter(new TextFormatter<>(change -> {
             String caracteresPermitidos = "0123456789";
             if (change.getText().matches("[" + caracteresPermitidos + "]*")) {
                 return change; // Aceita a mudança
@@ -640,6 +868,35 @@ public class ProdutoController extends Component implements Initializable {
         Tabela_Produto_Adicionar.setItems(filteredListAdicionar);
     }
 
+    public void filtroPesquisaAtualizar(){
+        // Criação da lista filtrada
+        filteredListAtualizar = new FilteredList<>(DadosTabelaProdutoAtualizar, p -> true); // Inicialmente, sem filtro
+
+        // Adiciona um listener ao TextField de pesquisa para filtrar os produtos
+        Pesquisar_Atualizar_Produto.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredListAtualizar.setPredicate(produto -> {
+                // Se o texto de pesquisa estiver vazio, mostra todos os produtos
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Converte o texto de pesquisa para minúsculas
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Filtra os produtos com base no nome ou no código
+                return produto.getNome().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getCodigo().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getCategoria().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getMarca().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getDescricao().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getCnpj_loja().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
+
+        // Configura a TableView para usar o filtro
+        Tabela_Produto_Atualizar.setItems(filteredListAtualizar);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         produtos = ProdutoDAO.listarProdutos();
@@ -648,6 +905,7 @@ public class ProdutoController extends Component implements Initializable {
         configurarColunasTabela(); // Configura as colunas da TableView
         filtroPesquisaRemover(); // Filtro da textfield Pesquisa
         filtroPesquisaAdicionar(); // Filtro da textfield Pesquisa
+        filtroPesquisaAtualizar(); // FIltro da textfileld Pesquisa
         carregarListaCategorias(); // Carrega a lista de categorias da combobox
         carregarDadosTabelaProduto(); // Carrega os dados para a tabela
         eventos(); // Adiciona eventos de teclado
