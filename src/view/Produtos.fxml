@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
@@ -272,7 +273,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                           </AnchorPane>
-                                          <AnchorPane layoutX="587.0" layoutY="12.0" prefHeight="150.0" prefWidth="260.0" stylesheets="@../style/cadastroProdutos.css">
+                                          <AnchorPane layoutX="587.0" layoutY="12.0" onMouseClicked="#Estoque_Alerta" prefHeight="150.0" prefWidth="260.0" stylesheets="@../style/cadastroProdutos.css">
                                              <styleClass>
                                                 <String fx:value="card" />
                                                 <String fx:value="shadow" />
@@ -286,17 +287,20 @@
                                                       <ColorAdjust brightness="1.0" />
                                                    </effect>
                                                 </ImageView>
-                                                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="59.0" layoutY="106.0" prefHeight="30.0" prefWidth="208.0" text="Sem estoque" textAlignment="CENTER" textFill="WHITE">
+                                                <Label fx:id="Alerta_Estoque" alignment="CENTER" contentDisplay="CENTER" layoutX="59.0" layoutY="106.0" prefHeight="30.0" prefWidth="208.0" text="Alerta Estoque" textAlignment="CENTER" textFill="WHITE">
                                                    <font>
                                                       <Font name="Tahoma" size="20.0" />
                                                    </font>
                                                 </Label>
-                                                <Label fx:id="Sem_Estoque" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="47.0" layoutY="15.0" prefHeight="18.0" prefWidth="209.0" text="0" textFill="WHITE">
+                                                <Label fx:id="Alerta_Estoque" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="47.0" layoutY="15.0" prefHeight="18.0" prefWidth="209.0" text="0" textFill="WHITE">
                                                    <font>
                                                       <Font name="Arial" size="25.0" />
                                                    </font>
                                                 </Label>
                                              </children>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
                                           </AnchorPane>
                                        </children>
                                     </AnchorPane>
@@ -651,6 +655,186 @@
                                     <ColorAdjust brightness="0.79" />
                                  </effect>
                               </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="Container_AlertaEstoque" layoutX="9.0" layoutY="5.0" prefHeight="534.0" prefWidth="850.0" stylesheets="@../style/cadastroProdutos.css">
+                           <styleClass>
+                              <String fx:value="shadow" />
+                              <String fx:value="white" />
+                           </styleClass>
+                           <children>
+                              <AnchorPane prefHeight="528.0" prefWidth="547.0" stylesheets="@../style/cadastroProdutos.css">
+                                 <styleClass>
+                                    <String fx:value="shadow" />
+                                    <String fx:value="white" />
+                                 </styleClass>
+                                 <children>
+                                    <TableView fx:id="Table_AlertaEstoque" layoutX="92.8" layoutY="50.4" prefHeight="478.0" prefWidth="549.0" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="50.0">
+                                      <columns>
+                                        <TableColumn fx:id="colunaCodigoAlerta" prefWidth="54.39998149871826" text="Código" />
+                                          <TableColumn fx:id="colunaNomeAlerta" prefWidth="55.199981689453125" text="Nome" />
+                                          <TableColumn fx:id="colunaPrecoAlerta" prefWidth="52.79998779296875" text="Preço" />
+                                          <TableColumn fx:id="colunaCategoriaAlerta" prefWidth="68.800048828125" text="Categoria" />
+                                          <TableColumn fx:id="colunaMarcaAlerta" prefWidth="79.20001220703125" text="Marca" />
+                                          <TableColumn fx:id="colunaEstoqueAlerta" prefWidth="57.60003662109375" text="Estoque" />
+                                          <TableColumn fx:id="colunaEstoqueMinimoAlerta" prefWidth="94.39996337890625" text="Estoque_Min" />
+                                          <TableColumn fx:id="colunaVendidosAlerta" prefWidth="94.39996337890625" text="Vendidos" />
+                                      </columns>
+                                       <styleClass>
+                                          <String fx:value="white" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                    </TableView>
+                                    <TextField fx:id="Pesquisar_AlertaEstoque" layoutX="5.0" layoutY="12.0" prefHeight="30.0" prefWidth="200.0" stylesheets="@../style/cadastroProdutos.css">
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="white" />
+                                       </styleClass>
+                                    </TextField>
+                                    <ImageView fitHeight="22.0" fitWidth="25.0" layoutX="178.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icon/search.png" />
+                                       </image>
+                                       <effect>
+                                          <ColorAdjust brightness="0.86" />
+                                       </effect>
+                                    </ImageView>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="550.0" prefHeight="528.0" prefWidth="329.0">
+                                 <children>
+                                    <Label fx:id="Alerta_Descricao" alignment="CENTER" layoutX="11.0" layoutY="436.0" prefHeight="80.0" prefWidth="310.0" stylesheets="@../style/cadastroProdutos.css" text="Descrição" wrapText="true">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="13.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="textfield" />
+                                       </styleClass>
+                                       <padding>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="Alerta_Loja" alignment="CENTER" layoutX="11.0" layoutY="407.0" prefHeight="20.0" prefWidth="310.0" stylesheets="@../style/cadastroProdutos.css" text="CNPJ Loja">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="13.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="textfield" />
+                                       </styleClass>
+                                       <padding>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="Alerta_Preco" alignment="CENTER" layoutX="11.0" layoutY="378.0" prefHeight="20.0" prefWidth="310.0" stylesheets="@../style/cadastroProdutos.css" text="Preço">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="13.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="textfield" />
+                                       </styleClass>
+                                       <padding>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="Alerta_Estoque_Label" alignment="CENTER" layoutX="11.0" layoutY="291.0" prefHeight="20.0" prefWidth="310.0" stylesheets="@../style/cadastroProdutos.css" text="Estoque">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="13.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="textfield" />
+                                       </styleClass>
+                                       <padding>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="Alerta_Vendidos" alignment="CENTER" layoutX="10.0" layoutY="348.0" prefHeight="20.0" prefWidth="310.0" stylesheets="@../style/cadastroProdutos.css" text="Vendidos">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="13.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="textfield" />
+                                       </styleClass>
+                                       <padding>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="Alerta_Categoria" alignment="CENTER" layoutX="10.0" layoutY="261.0" prefHeight="20.0" prefWidth="310.0" stylesheets="@../style/cadastroProdutos.css" text="Categoria">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="13.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="textfield" />
+                                       </styleClass>
+                                       <padding>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="Alerta_Nome" alignment="CENTER" layoutX="10.0" layoutY="203.0" prefHeight="20.0" prefWidth="310.0" stylesheets="@../style/cadastroProdutos.css" text="Nome">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="13.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="textfield" />
+                                       </styleClass>
+                                       <padding>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="Alerta_Marca" alignment="CENTER" layoutX="10.0" layoutY="231.0" prefHeight="20.0" prefWidth="310.0" stylesheets="@../style/cadastroProdutos.css" text="Marca">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="13.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="textfield" />
+                                       </styleClass>
+                                       <padding>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </padding>
+                                    </Label>
+                                    <AnchorPane layoutX="96.0" layoutY="44.0" prefHeight="100.0" prefWidth="150.0" stylesheets="@../style/cadastroProdutos.css">
+                                       <styleClass>
+                                          <String fx:value="white" />
+                                          <String fx:value="shadow" />
+                                          <String fx:value="textfield" />
+                                       </styleClass>
+                                       <children>
+                                          <ImageView fx:id="Image_Alerta_Produto" fitHeight="150.0" fitWidth="140.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+                                       </children>
+                                    </AnchorPane>
+                                    <Label fx:id="Alerta_Codigo_Produto" alignment="CENTER" layoutX="10.0" layoutY="14.0" prefHeight="20.0" prefWidth="310.0" stylesheets="@../style/cadastroProdutos.css" text="Código">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="13.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="textfield" />
+                                       </styleClass>
+                                       <padding>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="Alerta_EstoqueMinimo" alignment="CENTER" layoutX="10.0" layoutY="320.0" prefHeight="20.0" prefWidth="310.0" stylesheets="@../style/cadastroProdutos.css" text="Estoque Mínimo">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="13.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="textfield" />
+                                       </styleClass>
+                                       <padding>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
                            </children>
                         </AnchorPane>
                      </children>

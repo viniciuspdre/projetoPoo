@@ -3,8 +3,9 @@ package dao;
 import dao.conexao.ConexaoDB;
 import model.entity.Produto;
 
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.FileNotFoundException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.*;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class ProdutoDAO {
     public void cadastrarProduto(Produto produto) {
-        String sql = "INSERT INTO PRODUTO (COD, NOME, PRECO, ESTOQUE,ESTOQUE_MINIMO, VENDIDOS, CATEGORIA, MARCA, DESCRICAO, FOTO_PRODUTO, TAMANHO_IMAGEM, CNPJ_LOJA) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO PRODUTO (COD, NOME, PRECO, ESTOQUE,ESTOQUE_MINIMO, VENDIDOS, CATEGORIA, MARCA, DESCRICAO, FOTO_PRODUTO, CNPJ_LOJA) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = null;
 
         try{
@@ -27,9 +28,8 @@ public class ProdutoDAO {
             ps.setString(7, produto.getCategoria());
             ps.setString(8, produto.getMarca());
             ps.setString(9, produto.getDescricao());
-            ps.setBlob(10, produto.getFoto(), (int)produto.getTamanho_imagem());
-            ps.setLong(11,produto.getTamanho_imagem());
-            ps.setString(12, produto.getCnpj_loja());
+            ps.setBytes(10, produto.getFoto());
+            ps.setString(11, produto.getCnpj_loja());
             ps.executeUpdate();
 
         } catch (SQLException e) {
@@ -37,8 +37,90 @@ public class ProdutoDAO {
         }
     }
 
+    public boolean atualizarProduto(Produto produto) {
+        String sql = "UPDATE produto SET  NOME = ?, PRECO = ?, CATEGORIA = ?, MARCA = ?, DESCRICAO = ?, FOTO_PRODUTO = ?, ESTOQUE = ?, ESTOQUE_MINIMO = ?, VENDIDOS = ?, CNPJ_LOJA = ? WHERE COD = ?";
+
+        try (Connection conn = ConexaoDB.getConexao();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            if(produto.getNome() != null && !produto.getNome().isEmpty()){
+                ps.setString(1, produto.getNome());
+            } else{
+                ps.setNull(1, java.sql.Types.VARCHAR);
+            }
+
+            if (produto.getPreco() != 0.0) {
+                ps.setDouble(2, produto.getPreco());
+            } else {
+                ps.setNull(2, java.sql.Types.DOUBLE);
+            }
+            if(produto.getCategoria() != null && !produto.getCategoria().isEmpty()){
+                ps.setString(3, produto.getCategoria());
+            } else{
+                ps.setNull(3, java.sql.Types.VARCHAR);
+            }
+
+            if(produto.getMarca() != null && !produto.getMarca().isEmpty()){
+                ps.setString(4, produto.getMarca());
+            } else{
+                ps.setNull(4, java.sql.Types.VARCHAR);
+            }
+
+            if(produto.getDescricao() != null && !produto.getDescricao().isEmpty()){
+                ps.setString(5, produto.getDescricao());
+            } else{
+                ps.setNull(5, java.sql.Types.VARCHAR);
+            }
+
+            if (produto.getFoto().length != 0) {
+                ps.setBytes(6, produto.getFoto());
+            } else {
+                ps.setNull(6, java.sql.Types.BINARY);
+            }
+
+            if (produto.getEstoque() != 0) {
+                ps.setInt(7, produto.getEstoque());
+            } else {
+                ps.setNull(7, java.sql.Types.INTEGER);
+            }
+
+            if (produto.getEstoque_minimo() != 0) {
+                ps.setInt(8, produto.getEstoque_minimo());
+            } else {
+                ps.setNull(8, java.sql.Types.INTEGER);
+            }
+
+            if (produto.getVendidos() != 0) {
+                ps.setInt(9, produto.getVendidos());
+            } else {
+                ps.setNull(9, java.sql.Types.INTEGER);
+            }
+
+            if (produto.getCnpj_loja() != null && !produto.getCnpj_loja().isEmpty()) {
+                ps.setString(10, produto.getCnpj_loja());
+            } else {
+                ps.setString(10, produto.getCnpj_loja());
+            }
+
+            if (produto.getCodigo() != null && !produto.getCodigo().isEmpty()) {
+                ps.setString(11, produto.getCodigo());
+            } else {
+                ps.setNull(11, java.sql.Types.VARCHAR);
+            }
+
+            int rowsAffected = ps.executeUpdate();
+
+            // Retorna verdadeiro se o produto foi atualizado com sucesso
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar produto: " + e.getMessage());
+            return false;
+        }
+    }
+
     public static List<Produto> listarProdutos() {
-        String sql = "SELECT COD, NOME, PRECO, ESTOQUE, ESTOQUE_MINIMO, VENDIDOS, CATEGORIA, MARCA, DESCRICAO, FOTO_PRODUTO, TAMANHO_IMAGEM, CNPJ_LOJA FROM PRODUTO";
+        String sql = "SELECT COD, NOME, PRECO, ESTOQUE, ESTOQUE_MINIMO, VENDIDOS, CATEGORIA, MARCA, DESCRICAO, FOTO_PRODUTO, CNPJ_LOJA FROM PRODUTO";
         List<Produto> produtos = new ArrayList<>();
 
         try (Connection conexao = ConexaoDB.getConexao();
@@ -56,8 +138,38 @@ public class ProdutoDAO {
                         rs.getString("CATEGORIA"),
                         rs.getString("MARCA"),
                         rs.getString("DESCRICAO"),
-                        (FileInputStream) rs.getBinaryStream("FOTO_PRODUTO"),
-                        rs.getInt("TAMANHO_IMAGEM"),
+                        rs.getBytes("FOTO_PRODUTO"),
+                        rs.getString("CNPJ_LOJA")
+                ));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Substitua por um logger para melhor controle de erros
+            throw new RuntimeException("Erro ao listar os produtos cadastrados.", e);
+        }
+        return produtos;
+    }
+
+    public static List<Produto> listarAlertaEstoque() {
+        String sql = "SELECT COD, NOME, PRECO, ESTOQUE, ESTOQUE_MINIMO, VENDIDOS, CATEGORIA, MARCA, DESCRICAO, FOTO_PRODUTO, CNPJ_LOJA FROM PRODUTO WHERE ESTOQUE <= ESTOQUE_MINIMO";
+        List<Produto> produtos = new ArrayList<>();
+
+        try (Connection conexao = ConexaoDB.getConexao();
+             PreparedStatement ps = conexao.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                produtos.add(new Produto(
+                        rs.getString("COD"),
+                        rs.getString("NOME"),
+                        rs.getDouble("PRECO"),
+                        rs.getInt("ESTOQUE"),
+                        rs.getInt("ESTOQUE_MINIMO"),
+                        rs.getInt("VENDIDOS"),
+                        rs.getString("CATEGORIA"),
+                        rs.getString("MARCA"),
+                        rs.getString("DESCRICAO"),
+                        rs.getBytes("FOTO_PRODUTO"),
                         rs.getString("CNPJ_LOJA")
                 ));
             }
