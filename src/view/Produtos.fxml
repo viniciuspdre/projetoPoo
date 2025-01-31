@@ -448,7 +448,7 @@
                               <String fx:value="shadow" />
                            </styleClass>
                         </AnchorPane>
-                        <AnchorPane fx:id="Container_Atualizar_Produto" layoutX="130.0" layoutY="152.0" prefHeight="542.4" prefWidth="888.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Container_Atualizar_Produto" layoutX="130.0" layoutY="152.0" prefHeight="542.4" prefWidth="888.8" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="10.0" layoutY="11.0" prefHeight="521.0" prefWidth="876.0" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="10.600000000000023" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.799999999999955" AnchorPane.topAnchor="11.0">
                                  <styleClass>
@@ -859,17 +859,11 @@
                                     <ColorAdjust brightness="0.75" />
                                  </effect>
                               </ImageView>
-                              <AnchorPane layoutY="57.0" prefHeight="40.0" prefWidth="868.0" stylesheets="@../style/cadastroProdutos.css">
-                                 <styleClass>
-                                    <String fx:value="shadow" />
-                                    <String fx:value="card" />
-                                 </styleClass>
-                              </AnchorPane>
-                            <AnchorPane layoutY="97.0" minHeight="0.0" minWidth="0.0" prefHeight="421.0" prefWidth="868.0">
+                            <AnchorPane layoutY="56.0" minHeight="0.0" minWidth="0.0" prefHeight="463.0" prefWidth="868.0">
                                  <children>
-                                    <ScrollPane fx:id="Scroll_Catalogo" prefHeight="421.6" prefWidth="868.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ScrollPane fx:id="Scroll_Catalogo" layoutY="-44.0" prefHeight="466.0" prefWidth="868.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <content>
-                                          <GridPane fx:id="Catalogo" prefHeight="421.0" prefWidth="868.0">
+                                          <GridPane fx:id="Catalogo" prefHeight="462.0" prefWidth="866.0">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -886,7 +880,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="6.0" layoutY="7.0" prefHeight="530.0" prefWidth="882.0" stylesheets="@../style/cadastroProdutos.css" visible="false">
+                        <AnchorPane layoutX="6.0" layoutY="7.0" prefHeight="530.0" prefWidth="882.0" stylesheets="@../style/cadastroProdutos.css">
                            <styleClass>
                               <String fx:value="shadow" />
                               <String fx:value="white" />

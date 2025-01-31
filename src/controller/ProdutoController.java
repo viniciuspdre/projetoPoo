@@ -1083,7 +1083,7 @@ public class ProdutoController extends Component implements Initializable {
 
     VBox criarCardProduto(Produto produto) {
         VBox card = new VBox();
-        card.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-background-color: #f9f9f9; -fx-background-radius: 10; -fx-cursor: hand;");
+        card.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-background-color: #f9f9f9; -fx-background-radius: 10; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 6,0,0,0);");
         card.setAlignment(Pos.CENTER);
 
         ImageView imageView;
@@ -1103,10 +1103,11 @@ public class ProdutoController extends Component implements Initializable {
         nomeLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
         Label precoLabel = new Label("R$ " + String.format("%.2f", produto.getPreco()));
-        precoLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: green;");
+        precoLabel.setStyle("-fx-font-size: 15px; -fx-text-fill: #1f67b9; -fx-font-weight: bold;");
 
         Label descricaoLabel = new Label(produto.getDescricao());
         descricaoLabel.setWrapText(true);
+        descricaoLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #000;");
 
         card.getChildren().addAll(imageView,nomeLabel, precoLabel, descricaoLabel);
 
@@ -1114,10 +1115,13 @@ public class ProdutoController extends Component implements Initializable {
         card.setOnMouseClicked(event -> {
             catalogo_Produto = produto;
             System.out.println(catalogo_Produto.getCodigo());
+        });
+
+        card.setOnMouseEntered(event -> {
             // Remove seleção de todos os outros cards
-            Catalogo.getChildren().forEach(node -> node.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-background-color: #f9f9f9; -fx-background-radius: 10; -fx-cursor: hand;"));
+            Catalogo.getChildren().forEach(node -> node.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-background-color: #f9f9f9; -fx-background-radius: 10; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 6,0,0,0);"));
             // Destaca o card selecionado
-            card.setStyle("-fx-padding: 10; -fx-border-color: #000; -fx-border-radius: 10; -fx-background-color: #f9f9f9; -fx-background-radius: 10; -fx-cursor: hand;");
+            card.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-background-color: linear-gradient(to bottom right, #f9f9f9, #5090de); -fx-background-radius: 10; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 6,0,0,0);");
         });
 
         return card;

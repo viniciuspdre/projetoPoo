@@ -120,7 +120,7 @@ public class ProdutoDAO {
     }
 
     public static List<Produto> listarProdutos() {
-        String sql = "SELECT COD, NOME, PRECO, ESTOQUE, ESTOQUE_MINIMO, VENDIDOS, CATEGORIA, MARCA, DESCRICAO, FOTO_PRODUTO, CNPJ_LOJA FROM PRODUTO";
+        String sql = "SELECT COD, NOME, PRECO, ESTOQUE, ESTOQUE_MINIMO, VENDIDOS, CATEGORIA, MARCA, DESCRICAO, FOTO_PRODUTO, CNPJ_LOJA FROM PRODUTO ORDER BY NOME ASC";
         List<Produto> produtos = new ArrayList<>();
 
         try (Connection conexao = ConexaoDB.getConexao();
