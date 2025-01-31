@@ -1,0 +1,96 @@
+.text-field {
+    -fx-background-color: white;    /* Fundo branco */
+    -fx-border-color: none;         /* Cor da borda */
+    -fx-border-width: 0px 0px 2px 0px;          /* Espessura da borda */
+    -fx-border-radius: 10px;        /* Bordas arredondadas */
+    -fx-background-radius: 10px;    /* Fundo arredondado */
+    -fx-padding: 8px;               /* Espaço interno para não cortar o texto */
+    -fx-font-size: 14px;            /* Tamanho da fonte */
+    -fx-focus-color: transparent;   /* Remove efeito azul padrão */
+}
+
+.text-field:focused {
+    -fx-border-color: #031926;         /* Borda azul ao focar */
+    -fx-border-width: 0px 0px 2px 0px;
+}
+
+.button-white-background {
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-background-color: #fff;
+    -fx-color-label-visible: #031926;
+    -fx-font-size: 15px;
+    -fx-font-family: "Avignon Pro Demi";
+}
+
+.button-blue-background {
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-background-color: #031926;
+    -fx-color-label-visible: #fff;
+    -fx-font-size: 15px;
+    -fx-font-family: "Avignon Pro Demi";
+}
+
+.hbox-custom {
+    -fx-background-color: #fff;  /* Cor de fundo azul */
+    -fx-border-color: #031926;      /* Cor da borda */
+    -fx-border-width: 2px;          /* Espessura da borda */
+    -fx-border-radius: 10px;        /* Borda arredondada */
+    -fx-background-radius: 10px;    /* Fundo arredondado */
+    -fx-padding: 10px;              /* Espaçamento interno */
+}
+
+.combo-box {
+    -fx-background-color: #031926;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-font-family: "Avignon Pro Demi";
+    -fx-font-style: #fff;
+    -fx-text-fill: #fff;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent; /* Remove fundo */
+    -fx-border-color: transparent; /* Remove borda */
+    -fx-background-radius: 100px;
+    -fx-border-radius: 100px;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: #eaeaea; /* Remove fundo interno */
+    -fx-background-radius: 10px;
+}
+
+/* Barra de rolagem vertical */
+.scroll-bar:vertical {
+    -fx-background-color: transparent; /* Fundo da barra */
+}
+
+/* Barra de rolagem horizontal */
+.scroll-bar:horizontal {
+    -fx-background-color: transparent; /* Fundo da barra */
+}
+
+/* Thumb (a parte que se move da barra) */
+.scroll-bar .thumb {
+    -fx-background-color: rgba(255, 255, 255, 0.5); /* Cor branca semi-transparente */
+    -fx-background-radius: 5px; /* Bordas arredondadas */
+}
+
+/* Quando o mouse passa por cima do thumb */
+.scroll-bar .thumb:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.8); /* Fica mais visível */
+}
+
+/* Track (trilho da barra) */
+.scroll-bar .track {
+    -fx-background-color: transparent; /* Remove o fundo do trilho */
+}
+
+/* Botões das extremidades (para subir/descer ou ir para os lados) */
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent; /* Remove fundo */
+    -fx-background-radius: 5px;
+}
