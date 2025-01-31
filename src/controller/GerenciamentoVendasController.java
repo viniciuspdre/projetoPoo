@@ -31,7 +31,7 @@ public class GerenciamentoVendasController {
     private Button btGerarFatura;
 
     @FXML
-    private ImageView imageUsuario;
+    private ImageView imageUser;
 
     public void initialize() {
     }
