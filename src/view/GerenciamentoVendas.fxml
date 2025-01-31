@@ -13,9 +13,9 @@
    <children>
       <AnchorPane layoutY="-3.0" prefHeight="731.0" prefWidth="295.0" style="-fx-background-color: #031926;">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="73.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="73.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true" fx:id="imageUsuario">
                <image>
-                  <Image url="@../../icon/user_white.png" />
+                  <Image url="@../icon/user_white.png" />
                </image>
             </ImageView>
             <Label alignment="CENTER" layoutX="111.0" layoutY="249.0" text="Usuário" textFill="WHITE">

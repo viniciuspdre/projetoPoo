@@ -16,7 +16,7 @@
          <children>
             <ImageView fx:id="imageLogo" fitHeight="197.0" fitWidth="227.0" layoutX="167.0" layoutY="271.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../icon/loja-online.png" />
+                  <Image url="@../icon/loja-online.png" />
                </image>
             </ImageView>
             <Label layoutX="182.0" layoutY="217.0" text="TekMark" textFill="#eaeaea">
