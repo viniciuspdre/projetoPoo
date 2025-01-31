@@ -282,17 +282,20 @@ public class ProdutoController extends Component implements Initializable {
     private List<Produto> produtos; // Definindo produtos como um atributo da classe
     private List<Produto> alertaEstoque;
     private List<String> categorias = new ArrayList<String>();
+    private Produto catalogo_Produto;
 
     private ObservableList<String> categoriasObservableList;
     private ObservableList<Produto> DadosTabelaProdutoRemover = FXCollections.observableArrayList();
     private ObservableList<Produto> DadosTabelaProdutoAdicionar = FXCollections.observableArrayList();
     private ObservableList<Produto> DadosTabelaProdutoAtualizar = FXCollections.observableArrayList();
     private ObservableList<Produto> DadosTabelaProdutoAlerta = FXCollections.observableArrayList();
+    private ObservableList<Produto> listaProdutos = FXCollections.observableArrayList();
 
     private FilteredList<Produto> filteredListRemover = new FilteredList<>(DadosTabelaProdutoRemover, p -> true);
     private FilteredList<Produto> filteredListAdicionar = new FilteredList<>(DadosTabelaProdutoAdicionar, p -> true);
     private FilteredList<Produto> filteredListAtualizar = new FilteredList<>(DadosTabelaProdutoAtualizar, p -> true);
     private FilteredList<Produto> filteredListAlerta = new FilteredList<>(DadosTabelaProdutoAlerta, p -> true);
+    private FilteredList<Produto> filteredListCatalogo = new FilteredList<>(listaProdutos, p -> true);;
 
     private byte[] imagemBytes;
 
@@ -687,12 +690,14 @@ public class ProdutoController extends Component implements Initializable {
         DadosTabelaProdutoAdicionar.clear();
         DadosTabelaProdutoAtualizar.clear();
         DadosTabelaProdutoAlerta.clear();
+        listaProdutos.clear();
 
         // Adiciona todos os produtos à lista
         DadosTabelaProdutoRemover.addAll(produtos);
         DadosTabelaProdutoAdicionar.addAll(produtos);
         DadosTabelaProdutoAtualizar.addAll(produtos);
         DadosTabelaProdutoAlerta.addAll(alertaEstoque);
+        listaProdutos.addAll(ProdutoDAO.listarProdutos());
     }
 
     // Metodo para configurar as colunas da TableView
@@ -1001,6 +1006,27 @@ public class ProdutoController extends Component implements Initializable {
         Table_AlertaEstoque.setItems(filteredListAlerta);
     }
 
+    public void filtroPesquisaProduto() {
+        Pesquisar_Home.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredListCatalogo.setPredicate(produto -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true; // Mostra todos os produtos se o campo estiver vazio
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                return produto.getNome().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getCodigo().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getCategoria().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getMarca().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getDescricao().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getCnpj_loja().toLowerCase().contains(lowerCaseFilter);
+            });
+
+            criarCatalogo(); // Atualiza o catálogo com os produtos filtrados
+        });
+    }
+
     public void atualizarDados(){
         produtos = ProdutoDAO.listarProdutos();
         Total_Produtos.setText(String.valueOf(produtos.size()));
@@ -1014,12 +1040,15 @@ public class ProdutoController extends Component implements Initializable {
         filtroPesquisaAdicionar(); // Filtro da textfield Pesquisa
         filtroPesquisaAtualizar(); // FIltro da textfileld Pesquisa
         filtroPesquisaAlerta(); // FIltro da textfileld Pesquisa
+        filtroPesquisaProduto();
         criarCatalogo();
     }
 
     public void criarCatalogo(){
         Scroll_Catalogo.setFitToWidth(true);  // Faz com que a largura do conteúdo se ajuste ao ScrollPane
         Scroll_Catalogo.setFitToHeight(false); // Permite rolagem vertical
+
+        Catalogo.getChildren().clear(); // Limpa o GridPane antes de adicionar novos produtos
 
         // Ajusta o GridPane para expandir corretamente dentro do ScrollPane
         Catalogo.setPrefWidth(Region.USE_COMPUTED_SIZE);
@@ -1037,12 +1066,11 @@ public class ProdutoController extends Component implements Initializable {
         int row = 0;
         int col = 0;
 
-        for (Produto produto : produtos) {
+        for (Produto produto : filteredListCatalogo) {
             // Adiciona os cards no GridPane com a lógica de posicionamento em linhas e colunas
             VBox card = criarCardProduto(produto);
             // Ajuste do tamanho do card para ocupar toda a célula
             card.setMaxWidth(Double.MAX_VALUE);
-            //card.setMaxHeight(Double.MAX_VALUE);
             Catalogo.add(card, col, row);
 
             col++;
@@ -1084,7 +1112,8 @@ public class ProdutoController extends Component implements Initializable {
 
         // Evento de clique para retornar o produto selecionado
         card.setOnMouseClicked(event -> {
-            getProdutoSelecionado(produto);
+            catalogo_Produto = produto;
+            System.out.println(catalogo_Produto.getCodigo());
             // Remove seleção de todos os outros cards
             Catalogo.getChildren().forEach(node -> node.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-background-color: #f9f9f9; -fx-background-radius: 10; -fx-cursor: hand;"));
             // Destaca o card selecionado
@@ -1094,17 +1123,10 @@ public class ProdutoController extends Component implements Initializable {
         return card;
     }
 
-    // Metodo que retorna o produto selecionado
-    private Produto getProdutoSelecionado(Produto produto) {
-        System.out.println(produto);
-        return produto;
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         atualizarDados();
         configurarColunasTabela(); // Configura as colunas da TableView
         eventos(); // Adiciona eventos de teclado
-        criarCatalogo();
     }
 }
