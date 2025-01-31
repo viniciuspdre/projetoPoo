@@ -1096,6 +1096,7 @@ public class ProdutoController extends Component implements Initializable {
 
     // Metodo que retorna o produto selecionado
     private Produto getProdutoSelecionado(Produto produto) {
+        System.out.println(produto);
         return produto;
     }
 

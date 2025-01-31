@@ -886,7 +886,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="6.0" layoutY="7.0" prefHeight="530.0" prefWidth="882.0" stylesheets="@../style/cadastroProdutos.css">
+                        <AnchorPane layoutX="6.0" layoutY="7.0" prefHeight="530.0" prefWidth="882.0" stylesheets="@../style/cadastroProdutos.css" visible="false">
                            <styleClass>
                               <String fx:value="shadow" />
                               <String fx:value="white" />
