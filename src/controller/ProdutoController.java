@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.javafx.charts.Legend;
 import dao.ProdutoDAO;
 import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Pos;
@@ -262,6 +261,7 @@ public class ProdutoController extends Component implements Initializable {
     @FXML private AnchorPane Container_Estatisticas_Produto;
     @FXML private AnchorPane Container_Remover_Produto;
     @FXML private AnchorPane Container_AlertaEstoque;
+    @FXML private AnchorPane Container_Produto;
     @FXML private TextField Pesquisar_AlertaEstoque;
     @FXML private Label Alerta_Nome;
     @FXML private Label Alerta_Codigo_Produto;
@@ -278,6 +278,16 @@ public class ProdutoController extends Component implements Initializable {
     @FXML private GridPane Catalogo;
     @FXML private TextField Pesquisar_Home;
     @FXML private ScrollPane Scroll_Catalogo;
+    @FXML private Label nome_Produto;
+    @FXML private ImageView view;
+    @FXML private Label preco_Produto;
+    @FXML private Label descricao_Produto;
+    @FXML private Label parcelamento_Produto;
+    @FXML private Label estoque_Produto;
+    @FXML private Label entrega_Produtos;
+    @FXML private Label codigo_Produto;
+    @FXML private Label marca_Produtos;
+    @FXML private AnchorPane Container_Pagamentos;
 
     private List<Produto> produtos; // Definindo produtos como um atributo da classe
     private List<Produto> alertaEstoque;
@@ -306,7 +316,9 @@ public class ProdutoController extends Component implements Initializable {
         Container_Remover_Produto.setVisible(false);
         Container_Estatisticas_Produto.setVisible(false);
         Container_AlertaEstoque.setVisible(false);
+        Container_Produto.setVisible(false);
         Container_Home.setVisible(false);
+        Container_Pagamentos.setVisible(false);
     }
 
     @FXML
@@ -316,6 +328,8 @@ public class ProdutoController extends Component implements Initializable {
         Container_Remover_Produto.setVisible(false);
         Container_AlertaEstoque.setVisible(false);
         Container_Home.setVisible(false);
+        Container_Produto.setVisible(false);
+        Container_Pagamentos.setVisible(false);
     }
 
     @FXML
@@ -326,6 +340,8 @@ public class ProdutoController extends Component implements Initializable {
         Container_Estatisticas_Produto.setVisible(true);
         Container_AlertaEstoque.setVisible(false);
         Container_Home.setVisible(false);
+        Container_Produto.setVisible(false);
+        Container_Pagamentos.setVisible(false);
     }
 
     @FXML
@@ -336,6 +352,8 @@ public class ProdutoController extends Component implements Initializable {
         Container_Estatisticas_Produto.setVisible(false);
         Container_AlertaEstoque.setVisible(false);
         Container_Home.setVisible(false);
+        Container_Produto.setVisible(false);
+        Container_Pagamentos.setVisible(false);
     }
     @FXML
      public void Estoque_Alerta(){
@@ -345,6 +363,8 @@ public class ProdutoController extends Component implements Initializable {
         Container_Remover_Produto.setVisible(false);
         Container_Estatisticas_Produto.setVisible(false);
         Container_Home.setVisible(false);
+        Container_Produto.setVisible(false);
+        Container_Pagamentos.setVisible(false);
     }
 
     @FXML public void Home(){
@@ -354,7 +374,11 @@ public class ProdutoController extends Component implements Initializable {
         Container_Atualizar_Produto.setVisible(false);
         Container_Remover_Produto.setVisible(false);
         Container_Estatisticas_Produto.setVisible(false);
+        Container_Produto.setVisible(false);
+        Container_Pagamentos.setVisible(false);
     }
+
+    @FXML public void Comprar(){}
 
     @FXML
     public byte[] Importar_Foto_Adicionar_Produto() {
@@ -395,10 +419,21 @@ public class ProdutoController extends Component implements Initializable {
     }
 
     @FXML
+    void btn_meio_Pagamento() {
+        Container_Pagamentos.setVisible(true);
+        Container_Home.setVisible(false);
+        Container_AlertaEstoque.setVisible(false);
+        Container_Adicionar_Produto.setVisible(false);
+        Container_Atualizar_Produto.setVisible(false);
+        Container_Remover_Produto.setVisible(false);
+        Container_Estatisticas_Produto.setVisible(false);
+        Container_Produto.setVisible(true);
+    }
+
+    @FXML
     private void close() {
         // Obter a janela atual
-        Stage stage = (Stage) btnFechar.getScene().getWindow();
-        stage.close(); // Fecha a janela
+        Container_Pagamentos.setVisible(false);
     }
 
     @FXML
@@ -1114,7 +1149,27 @@ public class ProdutoController extends Component implements Initializable {
         // Evento de clique para retornar o produto selecionado
         card.setOnMouseClicked(event -> {
             catalogo_Produto = produto;
-            System.out.println(catalogo_Produto.getCodigo());
+            Container_Produto.setVisible(true);
+            nome_Produto.setText(catalogo_Produto.getNome());
+            nome_Produto.setWrapText(true);
+            descricao_Produto.setText(catalogo_Produto.getDescricao());
+            descricao_Produto.setWrapText(true);
+            preco_Produto.setText("R$ " + String.format("%.2f", catalogo_Produto.getPreco()));
+            double precoProduto = catalogo_Produto.getPreco();
+            double valorMinParcela = 25.0;
+            int maxParcelas = 12;
+            int parcelasPossiveis = (int) Math.min(maxParcelas, precoProduto / valorMinParcela);
+            parcelamento_Produto.setText("O produto pode ser parcelado em até " + parcelasPossiveis + "x de R$ " + String.format("%.2f", (precoProduto / parcelasPossiveis)));
+            estoque_Produto.setText("Estoque disponível: " + catalogo_Produto.getEstoque());
+            entrega_Produtos.setText(entrega());
+            codigo_Produto.setText(catalogo_Produto.getCodigo());
+            marca_Produtos.setText("Vendido por " + catalogo_Produto.getMarca());
+            if (catalogo_Produto.getFoto() != null) {
+                Image image = new Image(new ByteArrayInputStream(catalogo_Produto.getFoto()));
+                view.setImage(image);
+            } else{
+                view.setImage(new Image("icon/image.png"));
+            }
         });
 
         card.setOnMouseEntered(event -> {
@@ -1127,8 +1182,45 @@ public class ProdutoController extends Component implements Initializable {
         return card;
     }
 
+    public String entrega(){
+        Random random = new Random();
+
+        // Lista de dias da semana úteis
+        String[] diasSemana = {"segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira"};
+
+        // Gerar dois dias aleatórios diferentes
+        int indiceDia1 = random.nextInt(diasSemana.length);
+        int indiceDia2;
+        do {
+            indiceDia2 = random.nextInt(diasSemana.length);
+        } while (indiceDia1 == indiceDia2); // Garante que os dias sejam diferentes
+
+        // Ordena os dias para exibir em ordem cronológica
+        int menorDia = Math.min(indiceDia1, indiceDia2);
+        int maiorDia = Math.max(indiceDia1, indiceDia2);
+
+        // Gerar preços aleatórios dentro do intervalo
+        double precoMin = 30.00; // Valor mínimo possível
+        double precoMax = 100.00; // Valor máximo possível
+        double preco1 = precoMin + (precoMax - precoMin) * random.nextDouble();
+        double preco2 = precoMin + (precoMax - precoMin) * random.nextDouble();
+
+        // Garante que os preços sejam exibidos em ordem crescente
+        double menorPreco = Math.min(preco1, preco2);
+        double maiorPreco = Math.max(preco1, preco2);
+
+        // Criar mensagem formatada
+        String mensagem = String.format("Chegará entre %s e %s por R$ %.2f",
+                diasSemana[menorDia], diasSemana[maiorDia], menorPreco);
+
+
+        // Exibir a mensagem
+        return mensagem;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Container_Home.setVisible(true);
         atualizarDados();
         configurarColunasTabela(); // Configura as colunas da TableView
         eventos(); // Adiciona eventos de teclado
