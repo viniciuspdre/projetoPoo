@@ -73,13 +73,13 @@
 
 /* Thumb (a parte que se move da barra) */
 .scroll-bar .thumb {
-    -fx-background-color: rgba(255, 255, 255, 0.5); /* Cor branca semi-transparente */
+    -fx-background-color: #b8b7b7; /* Cor branca semi-transparente */
     -fx-background-radius: 5px; /* Bordas arredondadas */
 }
 
 /* Quando o mouse passa por cima do thumb */
 .scroll-bar .thumb:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.8); /* Fica mais visível */
+    -fx-background-color: #787676; /* Fica mais visível */
 }
 
 /* Track (trilho da barra) */
@@ -92,4 +92,42 @@
 .scroll-bar .decrement-button {
     -fx-background-color: transparent; /* Remove fundo */
     -fx-background-radius: 5px;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-font-family: "Arial";
+    -fx-font-size: 12px;
+    -fx-text-fill: #031926;
+    -fx-border-color: #c1c1c1;
+    -fx-border-width: 0;
+    -fx-background-radius: 10px;
+}
+
+.table-column {
+    -fx-background-color: #eaeaea;  /* Torna o fundo das colunas transparente */
+    -fx-border-color: none;  /* Cor da borda */
+    -fx-border-width: none;   /* Espessura da borda */
+    -fx-border-radius: 0px; /* Borda arredondada */
+    -fx-pref-width: 90px;
+    -fx-pref-height: 40px;
+}
+
+/* Estilo das células da TableView */
+.table-cell {
+    -fx-text-fill: #031926;
+    -fx-background-radius: 10px;
+    -fx-background-color: transparent;
+}
+
+/* Estilo das células quando estão selecionadas */
+.table-row-cell:selected {
+    -fx-background-color: #b8d9e3;  /* cor de fundo da linha selecionada */
+    -fx-text-fill: #031926;
+}
+
+/* Estilo de foco nas células */
+.table-row-cell:focused {
+    -fx-border-color: #6fa3d1;
+    -fx-border-width: 2px;
 }
