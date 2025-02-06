@@ -3,12 +3,14 @@
     <CLASSES>
       <root url="file://$PROJECT_DIR$" />
       <root url="jar://$PROJECT_DIR$/lib/mysql-connector-j-9.1.0.jar!/" />
-      <root url="file://$PROJECT_DIR$/lib/javafx-sdk-21.0.6/lib" />
+      <root url="file://$USER_HOME$/Downloads/aquiascoisas/javafx-sdk-21/lib" />
+      <root url="file://$USER_HOME$/Downloads/aquiascoisas/javafx-sdk-21/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="file://$PROJECT_DIR$/src" />
     </SOURCES>
-    <jarDirectory url="file://$PROJECT_DIR$/lib/javafx-sdk-21.0.6/lib" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/Downloads/aquiascoisas/javafx-sdk-21/lib" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/Downloads/aquiascoisas/javafx-sdk-21/lib" recursive="false" />
   </library>
 </component>
