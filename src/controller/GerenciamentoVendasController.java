@@ -81,15 +81,17 @@ public class GerenciamentoVendasController {
         return fxmlLoader;
     }
 
-    private void abrirPopup(String fxml) {
+    private void abrirPopup(String fxml, String tituloTela) {
         try {
             FXMLLoader loader = loadFrame(fxml);
             Parent root = loader.getRoot(); // Obtém o root carregado
 
             Stage stage = new Stage();
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            //scene.getStylesheets().add(getClass().getResource("C:\\Users\\Pedro Lira\\Documents\\projetos\\projetoPoo\\src\\style\\style.css").toExternalForm());
+            stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL); // Bloqueia a janela principal enquanto o popup está aberto
-            stage.setTitle("Popup");
+            stage.setTitle(tituloTela);
             stage.showAndWait(); // Aguarda o usuário fechar o popup antes de continuar
         } catch (IOException e) {
             e.printStackTrace();
@@ -98,7 +100,7 @@ public class GerenciamentoVendasController {
 
     @FXML
     private void abrirCadastrarVenda() {
-        abrirPopup("CadastroVenda");
+        abrirPopup("CadastroVenda", "Cadastrar Venda");
     }
 
 

@@ -1,14 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.CadastroVendaController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastroVendaController">
+   <children>
+      <AnchorPane prefHeight="83.0" prefWidth="800.0" style="-fx-background-color: #031926;">
+         <children>
+            <Label layoutX="36.0" layoutY="27.0" text="Cadastro de Vendas" textFill="WHITE">
+               <font>
+                  <Font name="Avignon Pro Demi" size="26.0" />
+               </font>
+            </Label>
+            <Label fx:id="dataHorario" layoutX="525.0" layoutY="27.0" text="Data / Hora" textFill="WHITE">
+               <font>
+                  <Font name="Avignon Pro Demi" size="26.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <ComboBox fx:id="catalagoClientes" layoutX="60.0" layoutY="181.0" prefHeight="36.0" prefWidth="179.0" promptText="Adicione um cliente" styleClass="choice-box" stylesheets="@../style/style.css" />
+      <TextField fx:id="adicionarDesconto" layoutX="520.0" layoutY="181.0" prefHeight="30.0" prefWidth="179.0" promptText="Porcentagem de desconto" styleClass="text-field" stylesheets="@../style/style.css" />
+      <ComboBox fx:id="formaPagamento" layoutX="520.0" layoutY="321.0" prefHeight="36.0" prefWidth="179.0" promptText="Forma de pagamento" styleClass="choice-box" stylesheets="@../style/style.css" />
+      <ScrollPane layoutX="60.0" layoutY="235.0" prefHeight="304.0" prefWidth="270.0" stylesheets="@../style/style.css">
+         <content>
+            <AnchorPane fx:id="todosProdutos" prefHeight="299.0" prefWidth="247.0" style="-fx-background-radius: 10px;" stylesheets="@../style/style.css">
+               <children>
+                  <ComboBox fx:id="catalogoProduto1" layoutX="14.0" layoutY="55.0" onAction="#adicionarProdutosCatalogo" prefHeight="36.0" prefWidth="179.0" promptText="Adicione um produto" styleClass="choice-box" stylesheets="@../style/style.css" />
+                  <Label layoutX="14.0" layoutY="14.0" text="Adicione produtos:">
+                     <font>
+                        <Font name="Avignon Pro Demi" size="16.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="maisProduto" layoutX="203.0" layoutY="9.0" mnemonicParsing="false" onMouseClicked="#adicionarNovoProduto" prefHeight="22.0" prefWidth="24.0" style="-fx-background-radius: 100%; -fx-background-color: #28485b; -fx-border-radius: 100%; -fx-border-width: 1px; -fx-border-color: #28485b;" styleClass="button-blue-background" stylesheets="@../style/style.css" text="+" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                  <TextField fx:id="quantidadeProduto" layoutX="198.0" layoutY="55.0" prefHeight="36.0" prefWidth="40.0" promptText="Qtd">
+                     <font>
+                        <Font name="Avignon Pro Demi" size="15.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+      <Label layoutX="520.0" layoutY="235.0" text="Valor total:" textFill="#031926">
+         <font>
+            <Font name="Avignon Pro Demi" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="btConcluir" layoutX="520.0" layoutY="442.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="179.0" styleClass="button-blue-background" stylesheets="@../style/style.css" text="Concluir" textFill="WHITE" />
+      <Button fx:id="btCancelar" layoutX="520.0" layoutY="493.0" mnemonicParsing="false" onMouseClicked="#fecharTela" prefHeight="36.0" prefWidth="179.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Cancelar" textFill="#031926" />
+      <Line endX="13.0" endY="407.0" fill="#031926" layoutX="387.0" layoutY="141.0" startX="13.0" startY="-25.0" />
+      <Label fx:id="valorCompra" layoutX="520.0" layoutY="272.0" text="Valor " textFill="#031926">
+         <font>
+            <Font name="Avignon Pro Demi" size="18.0" />
+         </font>
+      </Label>
+   </children>
 </AnchorPane>

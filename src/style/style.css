@@ -131,3 +131,13 @@
     -fx-border-color: #6fa3d1;
     -fx-border-width: 2px;
 }
+
+.choice-box {
+    -fx-border-color: #031926;
+    -fx-background-radius: 10px;
+    -fx-font-family: "Avignon Pro Demi";
+    -fx-background-color: #fff;
+    -fx-text-fill: #031926;
+    -fx-border-radius: 10px;
+    -fx-border-width: 1px;
+}

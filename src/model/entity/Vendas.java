@@ -12,6 +12,8 @@ public class Vendas {
     private float valor;
     private FormaPagamento forma_pagamento;
     private String data_vencimento;
+    private EstadoVenda estado_venda;
+    
 
     public int getIdVenda() {
         return idVenda;
