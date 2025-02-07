@@ -14,7 +14,7 @@ public class Telas extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("GerenciamentoVendas.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("CadastroVenda.fxml"));
 
         mainScene = new Scene(root);
 

@@ -29,6 +29,8 @@ public class Produto {
         this.foto = foto;
     }
 
+    public Produto(){}
+
     public String getCodigo() {
         return codigo;
     }

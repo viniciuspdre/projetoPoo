@@ -3,7 +3,6 @@ package controller;
 import dao.ProdutoDAO;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -34,7 +33,7 @@ public class CadastroVendaController {
     private ComboBox<Cliente> catalogoClientes;
 
     @FXML
-    private ComboBox<Produto> catalogoProduto1;
+    private ComboBox<String> catalogoProduto1;
 
     @FXML
     private Button maisProduto;
@@ -69,6 +68,7 @@ public class CadastroVendaController {
         );
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        adicionarProdutosCatalogo();
     }
 
     @FXML
@@ -90,7 +90,7 @@ public class CadastroVendaController {
         numeroId++;
         layoutYProduto += 50;
 
-        ComboBox<Produto> novoCatalogoProduto = new ComboBox<>();
+        ComboBox<String> novoCatalogoProduto = new ComboBox<>();
         novoCatalogoProduto.getItems().addAll(catalogoProduto1.getItems());
         novoCatalogoProduto.setPromptText("Adicione um produto");
         novoCatalogoProduto.getStyleClass().add("choice-box");
@@ -119,20 +119,19 @@ public class CadastroVendaController {
 
     @FXML
     private void cadastrarProdutos() {
-        List<ComboBox<Produto>> listaCatalogoProdutos = new ArrayList<>();
+        List<ComboBox<String>> listaCatalogoProdutos = new ArrayList<>();
         listaCatalogoProdutos.add(catalogoProduto1);
 
     }
 
     @FXML
     private void adicionarProdutosCatalogo() {
-        List<Produto> produtos = new ArrayList<>();
-        produtos = ProdutoDAO.listarProdutos();
-
+        List<Produto> produtos = ProdutoDAO.listarProdutos();
         catalogoProduto1.getItems().clear();
 
         for (Produto produto1 : produtos) {
-            catalogoProduto1.getItems().add(produto1);
+            catalogoProduto1.getItems().add(produto1.getNome());
         }
+
     }
 }
