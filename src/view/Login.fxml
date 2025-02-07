@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: #EAEAEA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginCadastro">
+<AnchorPane prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: #EAEAEA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
       <AnchorPane prefHeight="720.0" prefWidth="512.0" style="-fx-background-color: #031926;">
          <children>
@@ -20,11 +20,11 @@
                </font>
             </Label>
          </children></AnchorPane>
-      <TextField fx:id="jfUsernameLog" layoutX="570.0" layoutY="248.0" prefHeight="47.0" prefWidth="413.0" promptText="Insira seu nome de usuário" style="-fx-border-radius: 10px;">
+      <TextField fx:id="campoUsuarioLogin" layoutX="570.0" layoutY="248.0" prefHeight="47.0" prefWidth="413.0" promptText="Insira seu nome de usuário" style="-fx-border-radius: 10px;">
          <font>
             <Font name="Avignon Pro Demi" size="15.0" />
          </font></TextField>
-      <PasswordField fx:id="jfPasswordLog" layoutX="570.0" layoutY="317.0" prefHeight="47.0" prefWidth="413.0" promptText="Insira sua senha" style="-fx-border-radius: 10px;">
+      <PasswordField fx:id="campoSenhaLogin" layoutX="570.0" layoutY="317.0" prefHeight="47.0" prefWidth="413.0" promptText="Insira sua senha" style="-fx-border-radius: 10px;">
          <font>
             <Font name="Avignon Pro Demi" size="15.0" />
          </font></PasswordField>
@@ -38,7 +38,7 @@
             <Font name="Avignon Pro Demi" size="42.0" />
          </font>
       </Label>
-      <Button fx:id="jbLog" layoutX="707.0" layoutY="395.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="140.0" style="-fx-border-radius: 20px; -fx-background-color: #031926;" text="Entrar" textFill="WHITE">
+      <Button id="botaoLogin" fx:id="botaoLogin" layoutX="707.0" layoutY="395.0" mnemonicParsing="false" onAction="#botaoEnterLogin" prefHeight="47.0" prefWidth="140.0" style="-fx-border-radius: 20px; -fx-background-color: #031926;" text="Entrar" textFill="WHITE">
          <font>
             <Font name="Avignon Pro Demi" size="18.0" />
          </font>
