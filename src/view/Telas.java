@@ -19,7 +19,7 @@ public class Telas extends Application {
 
         mainScene = new Scene(root);
 
-        stage.setTitle("Gerenciamento de vendas");
+        stage.setTitle("Login");
         stage.setResizable(false);
         stage.setScene(mainScene);
         stage.show();

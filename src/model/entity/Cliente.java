@@ -1,8 +1,11 @@
 package model.entity;
 
 public class Cliente {
+    private int id;
     private String login_usuario;
-    private String status;
+    private String cpf;
+    private String estado;
+    private String status_cliente;
 
     public String getLogin_usuario() {
         return login_usuario;
@@ -13,10 +16,23 @@ public class Cliente {
     }
 
     public String getStatus() {
-        return status;
+        return status_cliente;
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.status_cliente = status;
     }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
+
+    public String getCpf() { return cpf; }
+
+    public void setCpf(String cpf) { this.cpf = cpf; }
+
+    public String getEstado() { return estado; }
+
+    public void setEstado(String estado) { this.estado = estado; }
+
 }

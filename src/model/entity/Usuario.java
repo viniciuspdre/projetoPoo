@@ -1,10 +1,9 @@
 package model.entity;
 
-public class Usuario {
+public class Usuario { // removi a parte de idade
     private String login;
     private String senha;
     private String nome;
-    private int idade;
     private String cpf;
     private String dataNascimento; // (01/02/2004)
     private String pais;
@@ -15,6 +14,16 @@ public class Usuario {
     private String numero;
     private String cep;
     private String cnpj_loja;
+
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    private TipoUsuario tipoUsuario;
 
     public String getLogin() {
         return login;
@@ -38,14 +47,6 @@ public class Usuario {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public int getIdade() {
-        return idade;
-    }
-
-    public void setIdade(int idade) {
-        this.idade = idade;
     }
 
     public String getPais() {

@@ -1,14 +1,33 @@
 package model.entity;
 
+import java.io.File;
+
 public class Produto {
     private String codigo;
     private String nome;
     private double preco;
+    private int estoque;
+    private int vendidos;
+    private int estoque_minimo;
     private String categoria;
     private String marca;
     private String descricao;
-    private String dataEntrega;
     private String cnpj_loja;
+    private byte[] foto;
+
+    public Produto(String codigo, String nome, double preco, int estoque, int estoque_minimo, int vendidos, String categoria, String marca, String descricao, byte[] foto, String cnpj_loja) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.preco = preco;
+        this.categoria = categoria;
+        this.marca = marca;
+        this.descricao = descricao;
+        this.cnpj_loja = cnpj_loja;
+        this.vendidos = vendidos;
+        this.estoque = estoque;
+        this.estoque_minimo = estoque_minimo;
+        this.foto = foto;
+    }
 
     public String getCodigo() {
         return codigo;
@@ -42,14 +61,6 @@ public class Produto {
         this.categoria = categoria;
     }
 
-    public String getDataEntrega() {
-        return dataEntrega;
-    }
-
-    public void setDataEntrega(String dataEntrega) {
-        this.dataEntrega = dataEntrega;
-    }
-
     public String getDescricao() {
         return descricao;
     }
@@ -72,5 +83,37 @@ public class Produto {
 
     public void setCnpj_loja(String cnpj_loja) {
         this.cnpj_loja = cnpj_loja;
+    }
+
+    public int getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(int estoque) {
+        this.estoque = estoque;
+    }
+
+    public int getVendidos() {
+        return vendidos;
+    }
+
+    public void setVendidos(int vendidos) {
+        this.vendidos = vendidos;
+    }
+
+    public void setEstoque_minimo(int estoque_minimo) {
+        this.estoque_minimo = estoque_minimo;
+    }
+
+    public int getEstoque_minimo() {
+        return estoque_minimo;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
+    public byte[] getFoto() {
+        return foto;
     }
 }
