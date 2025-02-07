@@ -3,11 +3,10 @@ package controller;
 import dao.ProdutoDAO;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -33,10 +32,7 @@ public class CadastroVendaController {
     private ComboBox<Cliente> catalogoClientes;
 
     @FXML
-    private ComboBox<String> catalogoProduto1;
-
-    @FXML
-    private Button maisProduto;
+    private Button addProduto;
 
     @FXML
     private TextField adicionarDesconto;
@@ -60,6 +56,33 @@ public class CadastroVendaController {
     private TextField quantidadeProduto;
 
     @FXML
+    private TableView<Produto> tabelaProdutos;
+
+    @FXML
+    private TableColumn<Produto, String> colunaCod;
+
+    @FXML
+    private TableColumn<Produto, String> colunaNome;
+
+    @FXML
+    private TableColumn<Produto, String> colunaPreco;
+
+    @FXML
+    private TableView<Produto> tabelaCarrinho;
+
+    @FXML
+    private TableColumn<Produto, String> colunaCodCarrinho;
+
+    @FXML
+    private TableColumn<Produto, String> colunaNomeCarrinho;
+
+    @FXML
+    private TableColumn<Produto, String> colunaValor;
+
+    @FXML
+    private TableColumn<Produto, String> colunaQtd;
+
+    @FXML
     public void initialize() {
         mudarDataHorario();
 
@@ -68,7 +91,8 @@ public class CadastroVendaController {
         );
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-        adicionarProdutosCatalogo();
+        configurarTabela();
+        adicionarProdutosTabela();
     }
 
     @FXML
@@ -86,52 +110,39 @@ public class CadastroVendaController {
     }
 
     @FXML
-    private void adicionarNovoProduto() {
-        numeroId++;
-        layoutYProduto += 50;
+    private void configurarTabela() {
+        colunaCod.setCellValueFactory(new PropertyValueFactory<>("codigo")); // aqui ele basicamente adapta as celulas da coluna codigo a funcionar para pegar o codigo
+        colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colunaPreco.setCellValueFactory(cellData -> new SimpleStringProperty(String.format("R$ %.2f", cellData.getValue().getPreco())));
 
-        ComboBox<String> novoCatalogoProduto = new ComboBox<>();
-        novoCatalogoProduto.getItems().addAll(catalogoProduto1.getItems());
-        novoCatalogoProduto.setPromptText("Adicione um produto");
-        novoCatalogoProduto.getStyleClass().add("choice-box");
-        novoCatalogoProduto.setPrefHeight(36);
-        novoCatalogoProduto.setPrefWidth(179);
-        novoCatalogoProduto.setId("catalogoProduto" + numeroId);
+        colunaCodCarrinho.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+        colunaNomeCarrinho.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colunaValor.setCellValueFactory(cellData -> {
+            Produto produto = cellData.getValue();
+            int quantidade = Integer.parseInt(quantidadeProduto.getText());
+            double valorTotal = produto.getPreco() * quantidade;
 
-        novoCatalogoProduto.setLayoutX(layoutXProduto);
-        novoCatalogoProduto.setLayoutY(layoutYProduto);
-
-        todosProdutos.getChildren().add(novoCatalogoProduto);
-
-        TextField novaQuantidadeProduto = new TextField();
-        novaQuantidadeProduto.setPromptText("Qtd");
-        novaQuantidadeProduto.setLayoutX(layoutXQuantidade);
-        novaQuantidadeProduto.setLayoutY(layoutYProduto);
-        novaQuantidadeProduto.setPrefHeight(36);
-        novaQuantidadeProduto.setPrefWidth(40);
-        novaQuantidadeProduto.setId("quantidadeProduto" + numeroId);
-        novaQuantidadeProduto.getStyleClass().add("text-field");
-        novaQuantidadeProduto.setStyle("-fx-font-family: 'Avignon Pro Demi'");
-
-        todosProdutos.getChildren().add(novaQuantidadeProduto);
-
+            return new SimpleStringProperty(String.format("%.2f", valorTotal));
+        });
+        colunaQtd.setCellValueFactory(cellData -> {
+            String quantidade = quantidadeProduto.getText().trim();
+            return new SimpleStringProperty(quantidade.isEmpty() ? "1" : quantidade);
+        });
     }
 
-    @FXML
-    private void cadastrarProdutos() {
-        List<ComboBox<String>> listaCatalogoProdutos = new ArrayList<>();
-        listaCatalogoProdutos.add(catalogoProduto1);
-
-    }
 
     @FXML
-    private void adicionarProdutosCatalogo() {
+    private void adicionarProdutosTabela() {
         List<Produto> produtos = ProdutoDAO.listarProdutos();
-        catalogoProduto1.getItems().clear();
+        tabelaProdutos.getItems().setAll(produtos);
+    }
 
-        for (Produto produto1 : produtos) {
-            catalogoProduto1.getItems().add(produto1.getNome());
+    @FXML
+    private void addProdutoCarrinho() {
+        Produto produto = tabelaProdutos.getSelectionModel().getSelectedItem();
+
+        if (produto != null) {
+            tabelaCarrinho.getItems().add(produto);
         }
-
     }
 }
