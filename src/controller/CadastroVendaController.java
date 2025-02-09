@@ -4,6 +4,8 @@ import dao.ProdutoDAO;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,10 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CadastroVendaController {
-    private static int numeroId = 1;
-    private double layoutXProduto = 14;
-    private double layoutYProduto = 55;
-    private double layoutXQuantidade = 198;
 
     @FXML
     private Label dataHorario;
@@ -68,6 +66,9 @@ public class CadastroVendaController {
     private TableColumn<Produto, String> colunaPreco;
 
     @FXML
+    private TableColumn<Produto, String> colunaEstoque;
+
+    @FXML
     private TableView<Produto> tabelaCarrinho;
 
     @FXML
@@ -83,6 +84,12 @@ public class CadastroVendaController {
     private TableColumn<Produto, String> colunaQtd;
 
     @FXML
+    private Button subProduto;
+
+    private int index = 0;
+    private double valorTotal = 0;
+
+    @FXML
     public void initialize() {
         mudarDataHorario();
 
@@ -91,8 +98,10 @@ public class CadastroVendaController {
         );
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-        configurarTabela();
+        configurarTabelaCombo();
         adicionarProdutosTabela();
+        adicionarFormasPagamento();
+        adicionarDesconto.setDisable(true);
     }
 
     @FXML
@@ -110,24 +119,40 @@ public class CadastroVendaController {
     }
 
     @FXML
-    private void configurarTabela() {
+    private void configurarTabelaCombo() {
         colunaCod.setCellValueFactory(new PropertyValueFactory<>("codigo")); // aqui ele basicamente adapta as celulas da coluna codigo a funcionar para pegar o codigo
         colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colunaPreco.setCellValueFactory(cellData -> new SimpleStringProperty(String.format("R$ %.2f", cellData.getValue().getPreco())));
+        colunaEstoque.setCellValueFactory(new PropertyValueFactory<>("estoque"));
 
         colunaCodCarrinho.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colunaNomeCarrinho.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        colunaValor.setCellValueFactory(cellData -> {
-            Produto produto = cellData.getValue();
-            int quantidade = Integer.parseInt(quantidadeProduto.getText());
-            double valorTotal = produto.getPreco() * quantidade;
-
-            return new SimpleStringProperty(String.format("%.2f", valorTotal));
-        });
         colunaQtd.setCellValueFactory(cellData -> {
             String quantidade = quantidadeProduto.getText().trim();
             return new SimpleStringProperty(quantidade.isEmpty() ? "1" : quantidade);
         });
+        colunaValor.setCellValueFactory(cellData -> {
+            Produto produto = cellData.getValue();
+            double valorTotal = produto.getPreco() * Integer.parseInt(colunaQtd.getCellData(produto));
+            return new SimpleStringProperty(String.format("%.2f", valorTotal));
+        });
+
+        formaPagamento.setCellFactory(listView -> new ListCell<>() {
+            @Override
+            protected void updateItem(FormaPagamento formaPagamento, boolean vazio) {
+                super.updateItem(formaPagamento, vazio);
+                setText((vazio || formaPagamento == null) ? null : formaPagamento.getPagamento());
+            }
+        });
+
+        formaPagamento.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(FormaPagamento formaPagamento, boolean vazio) {
+                super.updateItem(formaPagamento, vazio);
+                setText((vazio || formaPagamento == null) ? null : formaPagamento.getPagamento());
+            }
+        });
+
     }
 
 
@@ -141,8 +166,41 @@ public class CadastroVendaController {
     private void addProdutoCarrinho() {
         Produto produto = tabelaProdutos.getSelectionModel().getSelectedItem();
 
-        if (produto != null) {
-            tabelaCarrinho.getItems().add(produto);
+        if (quantidadeProduto.getText().matches("\\d*") || quantidadeProduto.getText().isEmpty()) {
+            if (produto != null) {
+                tabelaCarrinho.getItems().add(produto);
+            }
+            somarProdutosCarrinho();
+            return;
+        }
+        Alert alerta = new Alert(Alert.AlertType.WARNING);
+        alerta.setTitle("Valor inválido");
+        alerta.setHeaderText(null);
+        alerta.setContentText("Você deve inserir um valor numérico no campo quantidade.");
+        alerta.showAndWait();
+    }
+
+    @FXML
+    private void somarProdutosCarrinho() {
+        ObservableList<Produto> produto = tabelaCarrinho.getItems();
+        double valor = Double.parseDouble(colunaValor.getCellData(produto.get(index)).replace(",", "."));
+        valorTotal += valor;
+        System.out.println(colunaValor.getCellData(produto.get(index)).replace(",", "."));
+        valorCompra.setText(String.format("%.2f", valorTotal));
+        index++;
+    }
+
+    @FXML
+    private void adicionarFormasPagamento() {
+        formaPagamento.setItems(FXCollections.observableArrayList(FormaPagamento.values()));
+    }
+
+    @FXML
+    private void AdicionarDescontoCompra() {
+        if (formaPagamento.getSelectionModel().getSelectedItem() != null) {
+            adicionarDesconto.setDisable(false);
+            double valorDesconto = Double.parseDouble(adicionarDesconto.getText().trim());
+            valorTotal = valorDesconto * valorDesconto/100;
         }
     }
 }

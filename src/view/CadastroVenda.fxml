@@ -31,7 +31,7 @@
          <font>
             <Font name="Avignon Pro Demi" size="12.0" />
          </font></TextField>
-      <ComboBox fx:id="formaPagamento" layoutX="416.0" layoutY="454.0" prefHeight="36.0" prefWidth="179.0" promptText="Forma de pagamento" styleClass="choice-box" stylesheets="@../style/style.css" />
+      <ComboBox fx:id="formaPagamento" layoutX="416.0" layoutY="454.0" onMouseClicked="#AdicionarDescontoCompra" prefHeight="36.0" prefWidth="179.0" promptText="Forma de pagamento" styleClass="choice-box" stylesheets="@../style/style.css" />
       <Label layoutX="416.0" layoutY="414.0" text="Valor total:" textFill="#031926">
          <font>
             <Font name="Avignon Pro Demi" size="18.0" />
@@ -40,7 +40,7 @@
       <Button fx:id="btConcluir" layoutX="416.0" layoutY="513.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="179.0" styleClass="button-blue-background" stylesheets="@../style/style.css" text="Concluir" textFill="WHITE" />
       <Button fx:id="btCancelar" layoutX="609.0" layoutY="513.0" mnemonicParsing="false" onMouseClicked="#fecharTela" prefHeight="36.0" prefWidth="179.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Cancelar" textFill="#031926" />
       <Line endX="13.0" endY="407.0" fill="#031926" layoutX="387.0" layoutY="141.0" startX="13.0" startY="-25.0" />
-      <Label fx:id="valorCompra" layoutX="518.0" layoutY="414.0" text="Valor " textFill="#031926">
+      <Label fx:id="valorCompra" layoutX="518.0" layoutY="414.0" text="R$ 0,00" textFill="#031926">
          <font>
             <Font name="Avignon Pro Demi" size="18.0" />
          </font>
@@ -57,14 +57,18 @@
       </Label>
       <Button fx:id="addProduto" layoutX="285.0" layoutY="196.0" mnemonicParsing="false" onMouseClicked="#addProdutoCarrinho" prefHeight="22.0" prefWidth="24.0" style="-fx-background-radius: 100%; -fx-background-color: #28485b; -fx-border-radius: 100%; -fx-border-width: 1px; -fx-border-color: #28485b;" styleClass="button-blue-background" stylesheets="@../style/style.css" text="+" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="Arial Italic" size="12.0" />
          </font>
       </Button>
-      <TableView fx:id="tabelaProdutos" layoutX="60.0" layoutY="236.0" prefHeight="253.0" prefWidth="270.0" style="-fx-background-color: transparent;" stylesheets="@../style/style.css">
+      <TableView fx:id="tabelaProdutos" layoutX="20.0" layoutY="235.0" prefHeight="254.0" prefWidth="362.0" style="-fx-background-color: transparent;" stylesheets="@../style/style.css">
         <columns>
           <TableColumn fx:id="colunaCod" prefWidth="75.0" text="Código" />
-          <TableColumn fx:id="colunaNome" prefWidth="180.0" text="Nome do produto" />
-            <TableColumn fx:id="colunaPreco" minWidth="0.0" prefWidth="145.60001220703123" text="Preço" />
+          <TableColumn fx:id="colunaNome" minWidth="0.0" prefWidth="0.0" text="Nome do produto" />
+            <TableColumn fx:id="colunaPreco" minWidth="0.0" prefWidth="180.0" text="Preço">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="Column X" />
+               </columns></TableColumn>
+            <TableColumn fx:id="colunaEstoque" prefWidth="75.0" text="Estoque" />
         </columns>
       </TableView>
       <TableView fx:id="tabelaCarrinho" layoutX="414.0" layoutY="154.0" prefHeight="229.0" prefWidth="362.0" style="-fx-background-color: transparent;" stylesheets="@../style/style.css">
@@ -75,10 +79,15 @@
             <TableColumn fx:id="colunaQtd" prefWidth="75.0" text="Quantidade" />
          </columns>
       </TableView>
-      <Label layoutX="414.0" layoutY="126.0" text="Carrinho:">
+      <Label layoutX="437.0" layoutY="126.0" text="Carrinho:">
          <font>
             <Font name="Avignon Pro Demi" size="16.0" />
          </font>
       </Label>
+      <Button fx:id="subProduto" layoutX="699.0" layoutY="120.0" mnemonicParsing="false" onMouseClicked="#addProdutoCarrinho" prefHeight="22.0" prefWidth="30.0" style="-fx-background-radius: 100%; -fx-background-color: #ca6048; -fx-border-radius: 100%; -fx-border-width: 1px; -fx-border-color: #ca6048;" styleClass="button-blue-background" stylesheets="@../style/style.css" text="-" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

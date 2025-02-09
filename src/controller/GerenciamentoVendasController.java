@@ -92,6 +92,7 @@ public class GerenciamentoVendasController {
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL); // Bloqueia a janela principal enquanto o popup está aberto
             stage.setTitle(tituloTela);
+            stage.setResizable(false);
             stage.showAndWait(); // Aguarda o usuário fechar o popup antes de continuar
         } catch (IOException e) {
             e.printStackTrace();
