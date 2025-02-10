@@ -1,8 +1,8 @@
-package model.entity;
+package model;
 
-public class Cliente {
+public class Administrador {
     private String login_usuario;
-    private String status;
+    private String cargo;
 
     public String getLogin_usuario() {
         return login_usuario;
@@ -12,11 +12,11 @@ public class Cliente {
         this.login_usuario = login_usuario;
     }
 
-    public String getStatus() {
-        return status;
+    public String getCargo() {
+        return cargo;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
 }

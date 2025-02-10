@@ -1,8 +1,8 @@
-package model.entity;
+package model;
 
-public class EmailsUsuario {
+public class TelefonesUsuario {
     private String login_usuario;
-    private String email;
+    private String telefone;
 
     public String getLogin_usuario() {
         return login_usuario;
@@ -12,11 +12,11 @@ public class EmailsUsuario {
         this.login_usuario = login_usuario;
     }
 
-    public String getEmail() {
-        return email;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 }

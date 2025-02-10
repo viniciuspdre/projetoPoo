@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import model.entity.Usuario;
+import model.Usuario;
 
 import java.util.Calendar;
 
@@ -30,6 +30,12 @@ public class CadastroController {
     private ComboBox<String> comboAno;
     @FXML
     private ImageView imageLogo;
+    @FXML
+    private RadioButton radioAdmin;
+    @FXML
+    private RadioButton radioPadrao;
+    @FXML
+    private ToggleGroup tipo_usuario;
 
     private int flag = 0;
     private String mesAtual = null;
@@ -45,7 +51,7 @@ public class CadastroController {
     private boolean validarCampos() {
         if (campoCPF.getText().isEmpty() || campoSenha.getText().isEmpty() ||
         campoNome.getText().isEmpty() || campoUsuario.getText().isEmpty() ||
-        comboDia.getValue() == null || comboMes.getValue() == null || comboAno.getValue() == null) {
+        comboDia.getValue() == null || comboMes.getValue() == null || comboAno.getValue() == null || (!radioAdmin.isSelected() && !radioPadrao.isSelected())) {
             return false;
         }   return true;
     }
@@ -149,6 +155,7 @@ public class CadastroController {
 
     private void enviandoValoresCadastro(Usuario usuario) {
         String cpf = campoCPF.getText();
+        RadioButton radioSelecionado = (RadioButton) tipo_usuario.getSelectedToggle();
         cpf = cpf.replaceAll("\\D", "");
         usuario.setCpf(cpf);
         usuario.setNome(campoNome.getText());
@@ -161,6 +168,7 @@ public class CadastroController {
         String ano = comboAno.getSelectionModel().getSelectedItem();
         usuario.setDataNascimento(dia+"/"+mes+"/"+ano);
         usuario.setLogin(campoUsuario.getText());
+        usuario.setTipoUsuario(radioSelecionado.getText());
     }
 
     private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensagem) {

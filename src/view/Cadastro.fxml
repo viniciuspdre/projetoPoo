@@ -4,7 +4,9 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -42,14 +44,14 @@
             <Font name="Avignon Pro Demi" size="12.0" />
          </font>
       </PasswordField>
-      <Button fx:id="botaoCadastro" layoutX="187.0" layoutY="570.0" mnemonicParsing="false" onAction="#cadastrarUsuario" prefHeight="47.0" prefWidth="140.0" style="-fx-background-color: #031926; -fx-background-radius: 10;" text="Cadastrar" textFill="WHITE">
+      <Button fx:id="botaoCadastro" layoutX="186.0" layoutY="613.0" mnemonicParsing="false" onAction="#cadastrarUsuario" prefHeight="47.0" prefWidth="140.0" style="-fx-background-color: #031926; -fx-background-radius: 10;" text="Cadastrar" textFill="WHITE">
          <font>
             <Font name="Avignon Pro Demi" size="18.0" />
          </font>
       </Button>
-      <ComboBox fx:id="comboDia" layoutX="50.0" layoutY="491.0" onAction="#atualizarCalendario" prefHeight="47.0" prefWidth="84.0" promptText="Dia" style="-fx-background-color: #fff; -fx-background-radius: 10; -fx-font-family: 'Avignon Pro'; -fx-font-size: 14px;" />
-      <ComboBox fx:id="comboMes" layoutX="165.0" layoutY="491.0" onAction="#atualizarCalendario" prefHeight="47.0" prefWidth="84.0" promptText="Mês" style="-fx-background-color: #fff; -fx-background-radius: 10; -fx-font-family: 'Avignon Pro'; -fx-font-size: 14px;" />
-      <ComboBox fx:id="comboAno" layoutX="283.0" layoutY="491.0" onAction="#atualizarCalendario" prefHeight="47.0" prefWidth="180.0" promptText="Ano" style="-fx-background-color: #fff; -fx-background-radius: 10; -fx-font-family: 'Avignon Pro'; -fx-font-size: 14px;" />
+      <ComboBox fx:id="comboDia" layoutX="49.0" layoutY="538.0" onAction="#atualizarCalendario" prefHeight="47.0" prefWidth="84.0" promptText="Dia" style="-fx-background-color: #fff; -fx-background-radius: 10; -fx-font-family: 'Avignon Pro'; -fx-font-size: 14px;" />
+      <ComboBox fx:id="comboMes" layoutX="165.0" layoutY="538.0" onAction="#atualizarCalendario" prefHeight="47.0" prefWidth="84.0" promptText="Mês" style="-fx-background-color: #fff; -fx-background-radius: 10; -fx-font-family: 'Avignon Pro'; -fx-font-size: 14px;" />
+      <ComboBox fx:id="comboAno" layoutX="284.0" layoutY="538.0" onAction="#atualizarCalendario" prefHeight="47.0" prefWidth="180.0" promptText="Ano" style="-fx-background-color: #fff; -fx-background-radius: 10; -fx-font-family: 'Avignon Pro'; -fx-font-size: 14px;" />
       <Label layoutX="71.0" layoutY="110.0" text="Cadastre sua conta" textFill="#031926">
          <font>
             <Font name="Avignon Pro" size="42.0" />
@@ -60,5 +62,18 @@
             <Font name="Avignon Pro Demi" size="42.0" />
          </font>
       </Label>
+      <RadioButton fx:id="radioAdmin" layoutX="50.0" layoutY="484.0" mnemonicParsing="false" stylesheets="@../style/style.css" text="Admin" textFill="#031926">
+         <font>
+            <Font name="Avignon Pro Demi" size="14.0" />
+         </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="tipo_usuario" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="radioPadrao" layoutX="172.0" layoutY="484.0" mnemonicParsing="false" selected="true" stylesheets="@../style/style.css" text="Padrão" textFill="#031926" toggleGroup="$tipo_usuario">
+         <font>
+            <Font name="Avignon Pro Demi" size="15.0" />
+         </font>
+      </RadioButton>
    </children>
 </AnchorPane>

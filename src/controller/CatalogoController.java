@@ -6,7 +6,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
-import model.entity.Produto;
+import model.Produto;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;

@@ -1,11 +1,8 @@
 package dao;
 
 import dao.conexao.ConexaoDB;
-import model.entity.Produto;
+import model.Produto;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.*;

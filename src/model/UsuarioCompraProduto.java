@@ -1,4 +1,4 @@
-package model.entity;
+package model;
 
 public class UsuarioCompraProduto {
     private String login_usuario;

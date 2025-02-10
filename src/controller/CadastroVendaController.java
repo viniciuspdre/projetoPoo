@@ -12,13 +12,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.entity.Cliente;
-import model.entity.FormaPagamento;
-import model.entity.Produto;
+import model.Cliente;
+import model.FormaPagamento;
+import model.Produto;
+import model.Usuario;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CadastroVendaController {
@@ -87,7 +87,7 @@ public class CadastroVendaController {
     private Button subProduto;
 
     private int index = 0;
-    private double valorTotal = 0;
+    double valorTotal = 0;
 
     @FXML
     public void initialize() {
@@ -101,6 +101,7 @@ public class CadastroVendaController {
         configurarTabelaCombo();
         adicionarProdutosTabela();
         adicionarFormasPagamento();
+        adicionarDesconto.setDisable(true);
     }
 
     private void gerarAlertas(Alert.AlertType tipo, String conteudo, String titulo) {
@@ -187,6 +188,12 @@ public class CadastroVendaController {
         }
 
         if (quantidadeProduto.getText().matches("\\d*") || quantidadeProduto.getText().trim().isEmpty()) {
+            for (Produto produto1 : tabelaCarrinho.getItems()) {
+                if (produto.getCodigo().equals(produto1.getCodigo())) {
+                    gerarAlertas(Alert.AlertType.INFORMATION, "Para inserir o mesmo produto você deve remover o colocar novamente na quantidade correta", "Remova e adicione novamente.");
+                    return;
+                }
+            }
             tabelaCarrinho.getItems().add(produto);
             int estoque = quantidadeProduto.getText().trim().isEmpty() ? produto.getEstoque() - 1 : produto.getEstoque() - Integer.parseInt(quantidadeProduto.getText().trim());
             produto.setEstoque(estoque);
@@ -194,6 +201,7 @@ public class CadastroVendaController {
             produto.setQuantidadeNoCarrinho(qtdCarrinho);
             tabelaProdutos.refresh();
             somarProdutosCarrinho();
+            index++;
             return;
         }
         gerarAlertas(Alert.AlertType.WARNING, "Você deve inserir um valor numérico válido no campo quantidade", "Valor inválido");
@@ -202,11 +210,11 @@ public class CadastroVendaController {
     @FXML
     private void somarProdutosCarrinho() {
         ObservableList<Produto> produto = tabelaCarrinho.getItems();
+        Produto produto1 = tabelaProdutos.getSelectionModel().getSelectedItem();
         double valor = Double.parseDouble(colunaValor.getCellData(produto.get(index)).replace(",", "."));
         valorTotal += valor;
         System.out.println(colunaValor.getCellData(produto.get(index)).replace(",", "."));
         valorCompra.setText(String.format("%.2f", valorTotal));
-        index++;
     }
 
     @FXML
@@ -231,6 +239,15 @@ public class CadastroVendaController {
                 }
             }
             tabelaProdutos.refresh();
+        }
+    }
+
+    @FXML
+    private void adicionarDescontoVenda(Usuario usuario) {
+        if (usuario.getTipoUsuario().equals("admin")) {
+            adicionarDesconto.setDisable(false);
+            String valorDesconto = adicionarDesconto.getText().trim().replace("\\D", "");
+            valorTotal *= Double.parseDouble(valorDesconto)/100;
         }
     }
 

@@ -1,4 +1,4 @@
-package model.entity;
+package model;
 
 public class Usuario { // removi a parte de idade
     private String login;
@@ -15,15 +15,15 @@ public class Usuario { // removi a parte de idade
     private String cep;
     private String cnpj_loja;
 
-    public TipoUsuario getTipoUsuario() {
+    public String getTipoUsuario() {
         return tipoUsuario;
     }
 
-    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+    public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
 
-    private TipoUsuario tipoUsuario;
+    private String tipoUsuario;
 
     public String getLogin() {
         return login;

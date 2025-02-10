@@ -1,8 +1,7 @@
 package dao;
 
 import dao.conexao.ConexaoDB;
-import model.entity.DadosBancariosUsuario;
-import model.entity.Usuario;
+import model.DadosBancariosUsuario;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

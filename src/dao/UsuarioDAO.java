@@ -1,7 +1,7 @@
 package dao;
 
 import dao.conexao.ConexaoDB;
-import model.entity.Usuario;
+import model.Usuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 public class UsuarioDAO {
     public static void cadastroInicial(Usuario usuario) {
-        String sql = "INSERT INTO USUARIO (LOGIN, SENHA, NOME, CPF, DATA_NASCIMENTO) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO USUARIO (LOGIN, SENHA, NOME, CPF, DATA_NASCIMENTO, TIPO_USUARIO) VALUES (?,?,?,?,?,?)";
         PreparedStatement ps = null;
 
         String dataNascimento = tratarDataParaBD(usuario);
@@ -23,6 +23,7 @@ public class UsuarioDAO {
             ps.setString(3, usuario.getNome());
             ps.setString(4, usuario.getCpf());
             ps.setString(5, dataNascimento);
+            ps.setString(6, usuario.getTipoUsuario());
 
             ps.executeUpdate();
             ps.close();

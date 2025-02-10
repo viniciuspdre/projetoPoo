@@ -1,7 +1,7 @@
 package dao;
 
 import dao.conexao.ConexaoDB;
-import model.entity.AdministradorGerenciaAdministrador;
+import model.AdministradorGerenciaAdministrador;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

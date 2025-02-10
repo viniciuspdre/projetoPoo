@@ -1,4 +1,4 @@
-package model.entity;
+package model;
 
 public class Dependente {
     private String login_usuario;

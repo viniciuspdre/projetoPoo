@@ -1,8 +1,8 @@
-package model.entity;
+package model;
 
-public class Administrador {
+public class EmailsUsuario {
     private String login_usuario;
-    private String cargo;
+    private String email;
 
     public String getLogin_usuario() {
         return login_usuario;
@@ -12,11 +12,11 @@ public class Administrador {
         this.login_usuario = login_usuario;
     }
 
-    public String getCargo() {
-        return cargo;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

@@ -1,8 +1,7 @@
 package dao;
 
 import dao.conexao.ConexaoDB;
-import model.entity.Produto;
-import model.entity.ProdutoVendas;
+import model.ProdutoVendas;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

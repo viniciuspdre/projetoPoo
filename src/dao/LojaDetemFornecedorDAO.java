@@ -1,7 +1,7 @@
 package dao;
 
 import dao.conexao.ConexaoDB;
-import model.entity.LojaDetemFornecedor;
+import model.LojaDetemFornecedor;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

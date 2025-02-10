@@ -1,4 +1,7 @@
-package model.entity;
+package model;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 import java.io.File;
 
@@ -14,16 +17,19 @@ public class Produto {
     private String descricao;
     private String cnpj_loja;
     private byte[] foto;
+    private IntegerProperty quantidadeNoCarrinho = new SimpleIntegerProperty(1);
 
-    public int getQuantidadeNoCarrinho() {
+    public IntegerProperty quantidadeNoCarrinhoProperty() {
         return quantidadeNoCarrinho;
     }
 
-    public void setQuantidadeNoCarrinho(int quantidadeNoCarrinho) {
-        this.quantidadeNoCarrinho = quantidadeNoCarrinho;
+    public int getQuantidadeNoCarrinho() {
+        return quantidadeNoCarrinho.get();
     }
 
-    private int quantidadeNoCarrinho;
+    public void setQuantidadeNoCarrinho(int quantidade) {
+        this.quantidadeNoCarrinho.set(quantidade);
+    }
 
     public Produto(String codigo, String nome, double preco, int estoque, int estoque_minimo, int vendidos, String categoria, String marca, String descricao, byte[] foto, String cnpj_loja) {
         this.codigo = codigo;

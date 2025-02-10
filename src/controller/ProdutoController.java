@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.javafx.charts.Legend;
 import dao.ProdutoDAO;
 import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Pos;
@@ -16,7 +15,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.entity.Produto;
+import model.Produto;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;

@@ -1,8 +1,8 @@
-package model.entity;
+package model;
 
-public class TelefonesUsuario {
+public class Cliente {
     private String login_usuario;
-    private String telefone;
+    private String status;
 
     public String getLogin_usuario() {
         return login_usuario;
@@ -12,11 +12,11 @@ public class TelefonesUsuario {
         this.login_usuario = login_usuario;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public String getStatus() {
+        return status;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

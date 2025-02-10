@@ -1,4 +1,4 @@
-package model.entity;
+package model;
 
 public class ProdutoVendas {
     private int id_venda;

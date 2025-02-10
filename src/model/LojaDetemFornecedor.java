@@ -1,4 +1,4 @@
-package model.entity;
+package model;
 
 public class LojaDetemFornecedor {
     private String cnpj_loja;
