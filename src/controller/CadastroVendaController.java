@@ -1,5 +1,6 @@
 package controller;
 
+import dao.ClienteDAO;
 import dao.ProdutoDAO;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -26,7 +27,7 @@ public class CadastroVendaController {
     private Label dataHorario;
 
     @FXML
-    private ComboBox<Cliente> catalogoClientes;
+    private ComboBox<String> catalogoClientes;
 
     @FXML
     private Button addProduto;
@@ -100,6 +101,7 @@ public class CadastroVendaController {
         configurarTabelaCombo();
         adicionarProdutosTabela();
         adicionarFormasPagamento();
+        adicionandoClientesCombo();
         adicionarDesconto.setDisable(true);
     }
 
@@ -248,6 +250,18 @@ public class CadastroVendaController {
             String valorDesconto = adicionarDesconto.getText().trim().replace("\\D", "");
             valorTotal *= Double.parseDouble(valorDesconto)/100;
         }
+    }
+
+    @FXML
+    private void adicionandoClientesCombo() {
+        List<String> clientesCPF = ClienteDAO.buscarCPFCliente();
+        if (clientesCPF.isEmpty()) {
+            System.out.print("A lista de clientes está vazia");
+            return;
+        }
+
+        System.out.println("Clientes encontrados: " + clientesCPF);
+        catalogoClientes.setItems(FXCollections.observableArrayList(clientesCPF));
     }
 
     @FXML

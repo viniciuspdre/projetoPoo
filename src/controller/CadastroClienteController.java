@@ -1,4 +1,4 @@
-package controller;
+/*package controller;
 
 
 import dao.ClienteDAO;
@@ -248,3 +248,4 @@ public class CadastroClienteController {
     }
 }
 
+*/

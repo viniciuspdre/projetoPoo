@@ -26,7 +26,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <ComboBox fx:id="catalagoClientes" layoutX="60.0" layoutY="136.0" prefHeight="36.0" prefWidth="179.0" promptText="Adicione um cliente" styleClass="choice-box" stylesheets="@../style/style.css" />
+      <ComboBox fx:id="catalogoClientes" layoutX="60.0" layoutY="136.0" prefHeight="36.0" prefWidth="179.0" promptText="Adicione um cliente" styleClass="choice-box" stylesheets="@../style/style.css" />
       <TextField fx:id="adicionarDesconto" layoutX="609.0" layoutY="454.0" prefHeight="30.0" prefWidth="179.0" promptText="Porcentagem de desconto" styleClass="text-field" stylesheets="@../style/style.css">
          <font>
             <Font name="Avignon Pro Demi" size="12.0" />
