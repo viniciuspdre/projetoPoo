@@ -27,7 +27,7 @@ public class App extends Application {
         System.out.println(screenWidth + " " + screenHeight);
 
         // Configura o título e a cena
-        stage.setTitle("TelaPrincipal");
+        stage.setTitle("GerenciamentoClientes");
         stage.setScene(scene);
         stage.show();
     }

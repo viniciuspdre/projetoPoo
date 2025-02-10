@@ -57,13 +57,16 @@ CREATE TABLE produto #Comando DDL (Linguagem de Definicao de Dados) para criacao
 
 CREATE TABLE cliente #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
 (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    login_usuario VARCHAR(80),
-    cpf VARCHAR(14) NOT NULL UNIQUE,
-    estado CHAR(2),
+    nome VARCHAR(70),
+    cpf VARCHAR(14),
+    estado ENUM ( 'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB',
+                  'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO') NOT NULL,
+    sexo ENUM('MASCULINO', 'FEMININO', 'OUTROS') NOT NULL,
+    data_registro DATE,
+    data_nascimento DATE,
     status_cliente VARCHAR(10),
-    FOREIGN KEY (login_usuario) REFERENCES usuario(login)
-    );
+    PRIMARY KEY (cpf)
+);
 
 select * from produto;
 select categoria from produto order by categoria ASC;
