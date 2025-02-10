@@ -15,6 +15,16 @@ public class Produto {
     private String cnpj_loja;
     private byte[] foto;
 
+    public int getQuantidadeNoCarrinho() {
+        return quantidadeNoCarrinho;
+    }
+
+    public void setQuantidadeNoCarrinho(int quantidadeNoCarrinho) {
+        this.quantidadeNoCarrinho = quantidadeNoCarrinho;
+    }
+
+    private int quantidadeNoCarrinho;
+
     public Produto(String codigo, String nome, double preco, int estoque, int estoque_minimo, int vendidos, String categoria, String marca, String descricao, byte[] foto, String cnpj_loja) {
         this.codigo = codigo;
         this.nome = nome;

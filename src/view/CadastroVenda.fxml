@@ -31,7 +31,7 @@
          <font>
             <Font name="Avignon Pro Demi" size="12.0" />
          </font></TextField>
-      <ComboBox fx:id="formaPagamento" layoutX="416.0" layoutY="454.0" onMouseClicked="#AdicionarDescontoCompra" prefHeight="36.0" prefWidth="179.0" promptText="Forma de pagamento" styleClass="choice-box" stylesheets="@../style/style.css" />
+      <ComboBox fx:id="formaPagamento" layoutX="416.0" layoutY="454.0" prefHeight="36.0" prefWidth="179.0" promptText="Forma de pagamento" styleClass="choice-box" stylesheets="@../style/style.css" />
       <Label layoutX="416.0" layoutY="414.0" text="Valor total:" textFill="#031926">
          <font>
             <Font name="Avignon Pro Demi" size="18.0" />
@@ -64,10 +64,7 @@
         <columns>
           <TableColumn fx:id="colunaCod" prefWidth="75.0" text="Código" />
           <TableColumn fx:id="colunaNome" minWidth="0.0" prefWidth="0.0" text="Nome do produto" />
-            <TableColumn fx:id="colunaPreco" minWidth="0.0" prefWidth="180.0" text="Preço">
-               <columns>
-                  <TableColumn prefWidth="75.0" text="Column X" />
-               </columns></TableColumn>
+            <TableColumn fx:id="colunaPreco" minWidth="0.0" prefWidth="180.0" text="Preço" />
             <TableColumn fx:id="colunaEstoque" prefWidth="75.0" text="Estoque" />
         </columns>
       </TableView>
@@ -84,7 +81,7 @@
             <Font name="Avignon Pro Demi" size="16.0" />
          </font>
       </Label>
-      <Button fx:id="subProduto" layoutX="699.0" layoutY="120.0" mnemonicParsing="false" onMouseClicked="#addProdutoCarrinho" prefHeight="22.0" prefWidth="30.0" style="-fx-background-radius: 100%; -fx-background-color: #ca6048; -fx-border-radius: 100%; -fx-border-width: 1px; -fx-border-color: #ca6048;" styleClass="button-blue-background" stylesheets="@../style/style.css" text="-" textFill="WHITE">
+      <Button fx:id="subProduto" layoutX="699.0" layoutY="120.0" mnemonicParsing="false" onMouseClicked="#removerProdutoCarrinho" prefHeight="22.0" prefWidth="30.0" style="-fx-background-radius: 100%; -fx-background-color: #ca6048; -fx-border-radius: 100%; -fx-border-width: 1px; -fx-border-color: #ca6048;" styleClass="button-blue-background" stylesheets="@../style/style.css" text="-" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

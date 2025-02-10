@@ -101,7 +101,14 @@ public class CadastroVendaController {
         configurarTabelaCombo();
         adicionarProdutosTabela();
         adicionarFormasPagamento();
-        adicionarDesconto.setDisable(true);
+    }
+
+    private void gerarAlertas(Alert.AlertType tipo, String conteudo, String titulo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(conteudo);
+        alert.showAndWait();
     }
 
     @FXML
@@ -133,7 +140,7 @@ public class CadastroVendaController {
         });
         colunaValor.setCellValueFactory(cellData -> {
             Produto produto = cellData.getValue();
-            double valorTotal = produto.getPreco() * Integer.parseInt(colunaQtd.getCellData(produto));
+            double valorTotal = produto.getPreco() * produto.getQuantidadeNoCarrinho();
             return new SimpleStringProperty(String.format("%.2f", valorTotal));
         });
 
@@ -166,18 +173,30 @@ public class CadastroVendaController {
     private void addProdutoCarrinho() {
         Produto produto = tabelaProdutos.getSelectionModel().getSelectedItem();
 
-        if (quantidadeProduto.getText().matches("\\d*") || quantidadeProduto.getText().isEmpty()) {
-            if (produto != null) {
-                tabelaCarrinho.getItems().add(produto);
+        if (!quantidadeProduto.getText().trim().isEmpty()) {
+
+            try {
+                if (Integer.parseInt(quantidadeProduto.getText()) > produto.getEstoque()) {
+                    gerarAlertas(Alert.AlertType.WARNING, "Você inseriu uma quantidade de produtos que não temos em estoque", "Estoque insuficiente");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                gerarAlertas(Alert.AlertType.WARNING, "A quantidade deve ser um número inteiro válido.", "Valor inválido");
+                return;
             }
+        }
+
+        if (quantidadeProduto.getText().matches("\\d*") || quantidadeProduto.getText().trim().isEmpty()) {
+            tabelaCarrinho.getItems().add(produto);
+            int estoque = quantidadeProduto.getText().trim().isEmpty() ? produto.getEstoque() - 1 : produto.getEstoque() - Integer.parseInt(quantidadeProduto.getText().trim());
+            produto.setEstoque(estoque);
+            int qtdCarrinho = quantidadeProduto.getText().trim().isEmpty() ? 1 : Integer.parseInt(quantidadeProduto.getText().trim());
+            produto.setQuantidadeNoCarrinho(qtdCarrinho);
+            tabelaProdutos.refresh();
             somarProdutosCarrinho();
             return;
         }
-        Alert alerta = new Alert(Alert.AlertType.WARNING);
-        alerta.setTitle("Valor inválido");
-        alerta.setHeaderText(null);
-        alerta.setContentText("Você deve inserir um valor numérico no campo quantidade.");
-        alerta.showAndWait();
+        gerarAlertas(Alert.AlertType.WARNING, "Você deve inserir um valor numérico válido no campo quantidade", "Valor inválido");
     }
 
     @FXML
@@ -196,11 +215,23 @@ public class CadastroVendaController {
     }
 
     @FXML
-    private void AdicionarDescontoCompra() {
-        if (formaPagamento.getSelectionModel().getSelectedItem() != null) {
-            adicionarDesconto.setDisable(false);
-            double valorDesconto = Double.parseDouble(adicionarDesconto.getText().trim());
-            valorTotal = valorDesconto * valorDesconto/100;
+    private void removerProdutoCarrinho() {
+        Produto produto = tabelaCarrinho.getSelectionModel().getSelectedItem();
+        if (produto != null) {
+            tabelaCarrinho.getItems().remove(produto);
+            valorTotal -= Double.parseDouble(colunaValor.getCellData(produto).replace(",", "."));
+            valorCompra.setText(String.format("%.2f", valorTotal));
+            index--;
+
+            String cod = produto.getCodigo();
+            for (Produto produto1 : tabelaProdutos.getItems()) {
+                if (produto1.getCodigo().equals(cod)) {
+                    produto1.setEstoque(produto1.getQuantidadeNoCarrinho() + produto1.getEstoque());
+                    break;
+                }
+            }
+            tabelaProdutos.refresh();
         }
     }
+
 }
