@@ -12,12 +12,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.Cliente;
-import model.FormaPagamento;
-import model.Produto;
-import model.Usuario;
+import model.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -249,6 +248,17 @@ public class CadastroVendaController {
             String valorDesconto = adicionarDesconto.getText().trim().replace("\\D", "");
             valorTotal *= Double.parseDouble(valorDesconto)/100;
         }
+    }
+
+    @FXML
+    private void enviarDadosVenda(Vendas venda, ProdutoVendas produtoVenda) {
+        LocalDate data = LocalDate.now();
+        LocalTime hora = LocalTime.now();
+        venda.setData_venda(String.valueOf(data));
+        venda.setCnpj("23.456.789/0001-95");
+        venda.setForma_pagamento(formaPagamento.getValue());
+        venda.setValor((float)valorTotal);
+        venda.setHorario(hora);
     }
 
 }

@@ -3,6 +3,7 @@ package dao;
 import dao.conexao.ConexaoDB;
 import model.Vendas;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -16,13 +17,15 @@ public class VendasDAO {
 
         String dataVenda = tratarDataParaBD(venda, 1);
         String dataVencimento = tratarDataParaBD(venda, 2);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String hora = venda.getHorario().format(formatter);
 
         try {
             stmt = ConexaoDB.getConexao().prepareStatement(sql);
             stmt.setString(1, venda.getCnpj());
             stmt.setString(2, venda.getLogin_usuario());
             stmt.setString(3, dataVenda);
-            stmt.setString(4, String.valueOf(venda.getHorario()));
+            stmt.setString(4, hora);
             stmt.setFloat(5, venda.getValor());
             stmt.setString(6, String.valueOf(venda.getForma_pagamento()));
             stmt.setString(7, dataVencimento);
