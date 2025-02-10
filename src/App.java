@@ -21,13 +21,13 @@ public class App extends Application {
         double alturaAjustada = screenHeight - barraTituloAltura;
 
         // Carrega o arquivo FXML
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Produtos.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/TelaPrincipal.fxml"));
 
         Scene scene = new Scene(root/*, screenWidth,alturaAjustada*/);
         System.out.println(screenWidth + " " + screenHeight);
 
         // Configura o título e a cena
-        stage.setTitle("Minha Tela JavaFX");
+        stage.setTitle("GerenciamentoClientes");
         stage.setScene(scene);
         stage.show();
     }

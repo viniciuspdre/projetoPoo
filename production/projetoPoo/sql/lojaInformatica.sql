@@ -55,19 +55,6 @@ CREATE TABLE produto #Comando DDL (Linguagem de Definicao de Dados) para criacao
 	FOREIGN KEY (cnpj_loja) REFERENCES loja (cnpj) # Chave Estrangeira
 );
 
-CREATE TABLE cliente #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
-(
-    nome VARCHAR(70),
-    cpf VARCHAR(14),
-    estado ENUM ( 'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB',
-                  'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO') NOT NULL,
-    sexo ENUM('MASCULINO', 'FEMININO', 'OUTROS') NOT NULL,
-    data_registro DATE,
-    data_nascimento DATE,
-    status_cliente VARCHAR(10),
-    PRIMARY KEY (cpf)
-);
-
 select * from produto;
 select categoria from produto order by categoria ASC;
 
@@ -103,6 +90,14 @@ CREATE TABLE administrador #Comando DDL (Linguagem de Definicao de Dados) para c
 (
 	login_usuario VARCHAR(80), # NOT NULL = garante que a coluna nao tenha valor nulo.
 	cargo VARCHAR(50),
+	PRIMARY KEY (login_usuario), # Chave Primaria
+	FOREIGN KEY (login_usuario) REFERENCES usuario (login) # Chave Estrangeira
+);
+
+CREATE TABLE cliente #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
+(
+	login_usuario VARCHAR(80),
+	status VARCHAR(10),
 	PRIMARY KEY (login_usuario), # Chave Primaria
 	FOREIGN KEY (login_usuario) REFERENCES usuario (login) # Chave Estrangeira
 );
