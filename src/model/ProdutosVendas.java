@@ -6,6 +6,14 @@ public class ProdutosVendas {
     private float preco_produto;
     private int quantidade;
 
+    public ProdutosVendas(int idVenda, String codProduto, int quantidade, float precoUnitario) {
+        this.id_venda = idVenda;
+        this.cod_produto = codProduto;
+        this.quantidade = quantidade;
+        this.preco_produto = precoUnitario;
+    }
+    public ProdutosVendas() {}
+
     public int getQuantidade() {
         return quantidade;
     }

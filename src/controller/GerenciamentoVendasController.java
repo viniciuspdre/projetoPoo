@@ -1,5 +1,7 @@
 package controller;
 
+import dao.ProdutoDAO;
+import dao.ProdutosVendasDAO;
 import dao.VendasDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +16,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Produto;
+import model.ProdutosVendas;
 import model.Vendas;
 import view.Telas;
 
@@ -105,6 +109,22 @@ public class GerenciamentoVendasController {
         listarVendas();
     }
 
+    @FXML
+    private void cancelarVenda() {
+        Vendas venda = tabelaVendas.getSelectionModel().getSelectedItem();
+        int idVenda = venda.getIdVenda();
+        List<ProdutosVendas> produtosParaVoltarEstoque = ProdutosVendasDAO.listarProdutoVendasId(idVenda);
+
+        for (ProdutosVendas p : produtosParaVoltarEstoque) {
+            Produto produto = ProdutoDAO.listarUnicoProduto(p.getCod_produto());
+            ProdutoDAO.atualizarEstoque(p.getCod_produto(), produto.getEstoque() + p.getQuantidade());
+        }
+
+        ProdutosVendasDAO.deletarProdutoVendas(idVenda);
+        VendasDAO.deletarVenda(idVenda);
+        listarVendas();
+    }
+
     private FXMLLoader loadFrame(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         String pageFxml = "/view/" + fxml + ".fxml";
@@ -124,7 +144,8 @@ public class GerenciamentoVendasController {
             stage.initModality(Modality.APPLICATION_MODAL); // Bloqueia a janela principal enquanto o popup está aberto
             stage.setTitle(tituloTela);
             stage.setResizable(false);
-            stage.showAndWait(); // Aguarda o usuário fechar o popup antes de continuar
+            stage.setOnHidden(event -> listarVendas());
+            stage.showAndWait();// Aguarda o usuário fechar o popup antes de continuar
         } catch (IOException e) {
             e.printStackTrace();
         }

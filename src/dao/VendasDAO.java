@@ -98,6 +98,23 @@ public class VendasDAO {
         }
     }
 
+    public static void deletarVenda(int idVenda){
+        String sql = "DELETE FROM VENDAS WHERE ID_VENDA = ?";
+
+        try (Connection conexao = ConexaoDB.getConexao();
+            PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setInt(1, idVenda);
+            int linhasAfetas = stmt.executeUpdate();
+            if (linhasAfetas > 0) {
+                System.out.println("Linhas afetadas: " + linhasAfetas);
+            } else {System.out.println("Nenhuma linha afetada.");}
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static String tratarDataParaBD(Vendas vendas, int escolha) {
         String dataStr = (escolha == 1) ? vendas.getData_venda() : vendas.getData_vencimento();
 

@@ -2,6 +2,7 @@ package dao;
 
 import dao.conexao.ConexaoDB;
 import model.Produto;
+import model.ProdutosVendas;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -132,6 +133,39 @@ public class ProdutoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Produto listarUnicoProduto(String codigo) {
+        String sql = "SELECT * FROM produto WHERE cod = ?";
+        Produto produto = null;
+
+        try (Connection conexao = ConexaoDB.getConexao();
+             PreparedStatement ps = conexao.prepareStatement(sql);
+             ) {
+
+            ps.setString(1, codigo);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                produto = new Produto(
+                        rs.getString("COD"),
+                        rs.getString("NOME"),
+                        rs.getDouble("PRECO"),
+                        rs.getInt("ESTOQUE"),
+                        rs.getInt("ESTOQUE_MINIMO"),
+                        rs.getInt("VENDIDOS"),
+                        rs.getString("CATEGORIA"),
+                        rs.getString("MARCA"),
+                        rs.getString("DESCRICAO"),
+                        rs.getBytes("FOTO_PRODUTO"),
+                        rs.getString("CNPJ_LOJA")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Substitua por um logger para melhor controle de erros
+            throw new RuntimeException("Erro ao listar os produtos cadastrados.", e);
+        }
+        return produto;
     }
 
     public static List<Produto> listarProdutos() {
