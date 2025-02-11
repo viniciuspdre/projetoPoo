@@ -2,6 +2,7 @@ package controller;
 
 import dao.ClienteDAO;
 import dao.ProdutoDAO;
+import dao.ProdutosVendasDAO;
 import dao.VendasDAO;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
 
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -270,6 +272,17 @@ public class CadastroVendaController {
         } else {venda.setData_vencimento(venda.getData_venda());}
     }
 
+    private void enviarDadosProdutoVenda(int idVenda) {
+        ProdutosVendas produtosVendas = new ProdutosVendas();
+        for (Carrinho carrinho : tabelaCarrinho.getItems()) {
+            produtosVendas.setId_venda(idVenda);
+            produtosVendas.setCod_produto(carrinho.getCodigo());
+            produtosVendas.setPreco_produto(Float.parseFloat(carrinho.getValor()));
+            produtosVendas.setQuantidade(Integer.parseInt(carrinho.getQuantidade()));
+            ProdutosVendasDAO.cadastrarProdutoVendas(produtosVendas);
+        }
+    }
+
     private boolean checaCamposVazios() {
         if (catalogoClientes.getSelectionModel().isEmpty() || formaPagamento.getSelectionModel().isEmpty()) {
             return false;
@@ -282,9 +295,16 @@ public class CadastroVendaController {
             gerarAlertas(Alert.AlertType.WARNING, "Selecione um cliente e uma forma de pagamento para continuar.", "Preencha os campos necessário.");
             return;
         }
+
         Vendas venda = new Vendas();
         enviarDadosVenda(venda);
-        VendasDAO.CadastrarVenda(venda);
+        int idVenda = VendasDAO.CadastrarVenda(venda);
+
+        if (idVenda != -1) {
+            enviarDadosProdutoVenda(idVenda);
+        } else {    gerarAlertas(Alert.AlertType.WARNING, "Erro ao cadastrar a sua venda", "Erro ao cadastrar a sua venda."); }
+
+        gerarAlertas(Alert.AlertType.INFORMATION,"Sua venda foi cadastrada no sistema com sucesso! Verifique se já pode concluir ela.", "Venda cadastrada com sucesso!");
         Stage stage = (Stage) btConcluir.getScene().getWindow();
         stage.close();
     }

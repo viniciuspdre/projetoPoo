@@ -14,6 +14,20 @@ public class Vendas {
     private String data_vencimento;
     private String CPFCliente;
 
+    public Vendas() {}
+
+    public Vendas(String cnpjLoja, String dataVenda, LocalTime horario, float valorTotal, String formaPagamento, String dataVencimento, String estadoVenda, String cpfCliente, Object o, int idVenda) {
+        this.cnpj = cnpjLoja;
+        this.idVenda = idVenda;
+        this.data_venda = dataVenda;
+        this.horario = horario;
+        this.valor = valorTotal;
+        this.forma_pagamento = formaPagamento;
+        this.data_vencimento = dataVencimento;
+        this.CPFCliente = cpfCliente;
+        this.estado_venda = estadoVenda;
+    }
+
     public String getCPFCliente() {
         return CPFCliente;
     }

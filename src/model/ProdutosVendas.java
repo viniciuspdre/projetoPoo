@@ -1,6 +1,6 @@
 package model;
 
-public class ProdutoVendas {
+public class ProdutosVendas {
     private int id_venda;
     private String cod_produto;
     private float preco_produto;

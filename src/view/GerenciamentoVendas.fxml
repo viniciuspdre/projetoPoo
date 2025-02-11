@@ -39,17 +39,18 @@
          <children>
             <ScrollPane fx:id="painelVendas" layoutX="41.0" layoutY="269.0" prefHeight="326.0" prefWidth="655.0" style="-fx-background-radius: 10px;" stylesheets="@../style/style.css">
                <content>
-                  <TableView fx:id="tabelaVendas" prefHeight="324.0" prefWidth="807.0" style="-fx-background-radius: 10px;" stylesheets="@../style/style.css">
+                  <TableView fx:id="tabelaVendas" prefHeight="324.0" prefWidth="900.0" style="-fx-background-radius: 10px;" stylesheets="@../style/style.css">
                     <columns>
                       <TableColumn fx:id="colLoja" prefWidth="75.0" text="Loja" />
                       <TableColumn fx:id="colCliente" prefWidth="75.0" text="Cliente" />
                         <TableColumn fx:id="colProduto" prefWidth="75.0" text="Produtos" />
                         <TableColumn fx:id="colDataVenda" prefWidth="75.0" text="Data venda" />
                         <TableColumn fx:id="colHora" prefWidth="75.0" text="Hora" />
-                        <TableColumn fx:id="colDesconto" prefWidth="75.0" text="Desconto %" />
                         <TableColumn fx:id="colFormaPagamento" prefWidth="75.0" text="Forma pagamento" />
                         <TableColumn fx:id="colVencimento" prefWidth="75.0" text="Vencimento" />
-                        <TableColumn fx:id="colValor" prefWidth="75.0" text="Valor" />
+                        <TableColumn fx:id="colValor" prefWidth="104.4000244140625" text="Valor" />
+                        <TableColumn fx:id="colunaEstadoVenda" prefWidth="75.5999755859375" text="Estado venda" />
+                        <TableColumn prefWidth="75.0" text="ID Venda" />
                     </columns>
                   </TableView>
                </content>

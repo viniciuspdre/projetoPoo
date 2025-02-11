@@ -1,14 +1,14 @@
 package dao;
 
 import dao.conexao.ConexaoDB;
-import model.ProdutoVendas;
+import model.ProdutosVendas;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ProdutosVendasDAO {
 
-    public static void cadastrarProdutoVendas(ProdutoVendas produtoVendas) {
+    public static void cadastrarProdutoVendas(ProdutosVendas produtoVendas) {
         String sql = "INSERT INTO PRODUTO_VENDAS (ID_VENDA, COD_PRODUTO, QUANTIDADE, PRECO_UNITARIO) VALUES (?, ?, ?, ?)";
         PreparedStatement stmt = null;
 
