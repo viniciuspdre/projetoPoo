@@ -8,7 +8,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -17,7 +16,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
 
-import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -259,11 +257,12 @@ public class CadastroVendaController {
         LocalDate data = LocalDate.now();
         LocalTime hora = LocalTime.now();
         DateTimeFormatter formatterSaida = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm:ss");
         venda.setData_venda(data.format(formatterSaida));
         venda.setCnpj("23.456.789/0001-95");
         venda.setForma_pagamento(formaPagamento.getSelectionModel().getSelectedItem());
         venda.setValor((float)valorTotal);
-        venda.setHorario(hora);
+        venda.setHorario(hora.format(formatterHora));
         venda.setEstado_venda("Em andamento");
         venda.setCPFCliente(catalogoClientes.getValue());
         venda.setForma_pagamento(formaPagamento.getValue());
@@ -290,7 +289,7 @@ public class CadastroVendaController {
     }
 
     @FXML
-    private void concluirVenda() {
+    private void concluirVenda() { // ainda falta atualizar estoque no banco de dados
         if (!checaCamposVazios()) {
             gerarAlertas(Alert.AlertType.WARNING, "Selecione um cliente e uma forma de pagamento para continuar.", "Preencha os campos necessário.");
             return;

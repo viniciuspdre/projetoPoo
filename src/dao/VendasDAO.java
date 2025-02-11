@@ -79,6 +79,25 @@ public class VendasDAO {
         } return vendas;
     }
 
+    public static void concluirVenda(int idVenda, String estadoAtual){
+        String sql = "UPDATE VENDAS SET ESTADO_VENDA = ? WHERE ID_VENDA = ?";
+
+        try (Connection conexao = ConexaoDB.getConexao();
+            PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setString(1, estadoAtual);
+            stmt.setInt(2, idVenda);
+            int linhasAfetas = stmt.executeUpdate();
+
+            if (linhasAfetas > 0) {
+                System.out.println("Linhas afetadas: " + linhasAfetas);
+            } else {System.out.println("Nenhuma linha afetada.");}
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static String tratarDataParaBD(Vendas vendas, int escolha) {
         String dataStr = (escolha == 1) ? vendas.getData_venda() : vendas.getData_vencimento();
 

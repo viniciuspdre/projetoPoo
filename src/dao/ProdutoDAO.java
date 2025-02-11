@@ -116,6 +116,24 @@ public class ProdutoDAO {
         }
     }
 
+    public static void atualizarEstoque(Produto produto) {
+        String sql = "UPDATE produto SET estoque = ? WHERE codigo = ?";
+
+        try (Connection conexao = ConexaoDB.getConexao();
+            PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setInt(1, produto.getEstoque());
+            stmt.setString(2, produto.getCodigo());
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                System.out.println("Estoque atualizado com sucesso!");
+            } else {System.out.println("Código do produto não encontrado");}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static List<Produto> listarProdutos() {
         String sql = "SELECT COD, NOME, PRECO, ESTOQUE, ESTOQUE_MINIMO, VENDIDOS, CATEGORIA, MARCA, DESCRICAO, FOTO_PRODUTO, CNPJ_LOJA FROM PRODUTO";
         List<Produto> produtos = new ArrayList<>();

@@ -1,22 +1,18 @@
 package model;
 
-import java.time.LocalTime;
-
 public class Vendas {
     private int idVenda;
     private String cnpj;
     private String login_usuario;
     private String nome_usuario;
     private String data_venda;
-    private LocalTime horario;
+    private String horario;
     private float valor;
     private String forma_pagamento;
     private String data_vencimento;
     private String CPFCliente;
 
-    public Vendas() {}
-
-    public Vendas(String cnpjLoja, String dataVenda, LocalTime horario, float valorTotal, String formaPagamento, String dataVencimento, String estadoVenda, String cpfCliente, Object o, int idVenda) {
+    public Vendas(String cnpjLoja, String dataVenda, String horario, float valorTotal, String formaPagamento, String dataVencimento, String estadoVenda, String cpfCliente, int idVenda) {
         this.cnpj = cnpjLoja;
         this.idVenda = idVenda;
         this.data_venda = dataVenda;
@@ -27,6 +23,8 @@ public class Vendas {
         this.CPFCliente = cpfCliente;
         this.estado_venda = estadoVenda;
     }
+
+    public Vendas(){}
 
     public String getCPFCliente() {
         return CPFCliente;
@@ -87,11 +85,11 @@ public class Vendas {
         this.data_venda = data_venda;
     }
 
-    public LocalTime getHorario() {
+    public String getHorario() {
         return horario;
     }
 
-    public void setHorario(LocalTime horario) {
+    public void setHorario(String horario) {
         this.horario = horario;
     }
 
