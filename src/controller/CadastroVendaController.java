@@ -273,12 +273,22 @@ public class CadastroVendaController {
 
     private void enviarDadosProdutoVenda(int idVenda) {
         ProdutosVendas produtosVendas = new ProdutosVendas();
+        int valorSeraSetadoEstoque = 0;
         for (Carrinho carrinho : tabelaCarrinho.getItems()) {
             produtosVendas.setId_venda(idVenda);
             produtosVendas.setCod_produto(carrinho.getCodigo());
             produtosVendas.setPreco_produto(Float.parseFloat(carrinho.getValor()));
             produtosVendas.setQuantidade(Integer.parseInt(carrinho.getQuantidade()));
             ProdutosVendasDAO.cadastrarProdutoVendas(produtosVendas);
+            for (Produto produto : tabelaProdutos.getItems()) {
+                if (produto.getCodigo().equals(carrinho.getCodigo())) {
+                    produto.setEstoque(produto.getEstoque());
+                    valorSeraSetadoEstoque = produto.getEstoque();
+                    break;
+                }
+            }
+            // aqui irei modificar o estoque dos produtos
+            ProdutoDAO.atualizarEstoque(carrinho.getCodigo(), valorSeraSetadoEstoque);
         }
     }
 

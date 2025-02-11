@@ -116,14 +116,14 @@ public class ProdutoDAO {
         }
     }
 
-    public static void atualizarEstoque(Produto produto) {
-        String sql = "UPDATE produto SET estoque = ? WHERE codigo = ?";
+    public static void atualizarEstoque(String codigo, int estoque) {
+        String sql = "UPDATE produto SET estoque = ? WHERE cod = ?";
 
         try (Connection conexao = ConexaoDB.getConexao();
             PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
-            stmt.setInt(1, produto.getEstoque());
-            stmt.setString(2, produto.getCodigo());
+            stmt.setInt(1, estoque);
+            stmt.setString(2, codigo);
             int linhasAfetadas = stmt.executeUpdate();
 
             if (linhasAfetadas > 0) {
