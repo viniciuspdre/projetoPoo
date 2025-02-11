@@ -2,6 +2,7 @@ package controller;
 
 import dao.ClienteDAO;
 import dao.ProdutoDAO;
+import dao.VendasDAO;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
@@ -39,7 +40,7 @@ public class CadastroVendaController {
     private Label valorCompra;
 
     @FXML
-    private ComboBox<FormaPagamento> formaPagamento;
+    private ComboBox<String> formaPagamento;
 
     @FXML
     private Button btConcluir;
@@ -69,19 +70,19 @@ public class CadastroVendaController {
     private TableColumn<Produto, String> colunaEstoque;
 
     @FXML
-    private TableView<Produto> tabelaCarrinho;
+    private TableView<Carrinho> tabelaCarrinho;
 
     @FXML
-    private TableColumn<Produto, String> colunaCodCarrinho;
+    private TableColumn<Carrinho, String> colunaCodCarrinho;
 
     @FXML
-    private TableColumn<Produto, String> colunaNomeCarrinho;
+    private TableColumn<Carrinho, String> colunaNomeCarrinho;
 
     @FXML
-    private TableColumn<Produto, String> colunaValor;
+    private TableColumn<Carrinho, String> colunaValor;
 
     @FXML
-    private TableColumn<Produto, String> colunaQtd;
+    private TableColumn<Carrinho, String> colunaQtd;
 
     @FXML
     private Button subProduto;
@@ -98,7 +99,7 @@ public class CadastroVendaController {
         );
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-        configurarTabelaCombo();
+        configurarTabela();
         adicionarProdutosTabela();
         adicionarFormasPagamento();
         adicionandoClientesCombo();
@@ -128,7 +129,7 @@ public class CadastroVendaController {
     }
 
     @FXML
-    private void configurarTabelaCombo() {
+    private void configurarTabela() {
         colunaCod.setCellValueFactory(new PropertyValueFactory<>("codigo")); // aqui ele basicamente adapta as celulas da coluna codigo a funcionar para pegar o codigo
         colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colunaPreco.setCellValueFactory(cellData -> new SimpleStringProperty(String.format("R$ %.2f", cellData.getValue().getPreco())));
@@ -136,31 +137,8 @@ public class CadastroVendaController {
 
         colunaCodCarrinho.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colunaNomeCarrinho.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        colunaQtd.setCellValueFactory(cellData -> {
-            String quantidade = quantidadeProduto.getText().trim();
-            return new SimpleStringProperty(quantidade.isEmpty() ? "1" : quantidade);
-        });
-        colunaValor.setCellValueFactory(cellData -> {
-            Produto produto = cellData.getValue();
-            double valorTotal = produto.getPreco() * produto.getQuantidadeNoCarrinho();
-            return new SimpleStringProperty(String.format("%.2f", valorTotal));
-        });
-
-        formaPagamento.setCellFactory(listView -> new ListCell<>() {
-            @Override
-            protected void updateItem(FormaPagamento formaPagamento, boolean vazio) {
-                super.updateItem(formaPagamento, vazio);
-                setText((vazio || formaPagamento == null) ? null : formaPagamento.getPagamento());
-            }
-        });
-
-        formaPagamento.setButtonCell(new ListCell<>() {
-            @Override
-            protected void updateItem(FormaPagamento formaPagamento, boolean vazio) {
-                super.updateItem(formaPagamento, vazio);
-                setText((vazio || formaPagamento == null) ? null : formaPagamento.getPagamento());
-            }
-        });
+        colunaQtd.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
+        colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
 
     }
 
@@ -174,6 +152,12 @@ public class CadastroVendaController {
     @FXML
     private void addProdutoCarrinho() {
         Produto produto = tabelaProdutos.getSelectionModel().getSelectedItem();
+        Carrinho carrinho = new Carrinho();
+        carrinho.setCodigo(produto.getCodigo());
+        carrinho.setNome(produto.getNome());
+        int qtdCampoTexto = quantidadeProduto.getText().trim().isEmpty() ? 1 : Integer.parseInt(quantidadeProduto.getText().trim());
+        carrinho.setQuantidade(String.valueOf(qtdCampoTexto));
+        carrinho.setValor(String.valueOf(produto.getPreco() * qtdCampoTexto));
 
         if (!quantidadeProduto.getText().trim().isEmpty()) {
 
@@ -189,17 +173,23 @@ public class CadastroVendaController {
         }
 
         if (quantidadeProduto.getText().matches("\\d*") || quantidadeProduto.getText().trim().isEmpty()) {
-            for (Produto produto1 : tabelaCarrinho.getItems()) {
-                if (produto.getCodigo().equals(produto1.getCodigo())) {
-                    gerarAlertas(Alert.AlertType.INFORMATION, "Para inserir o mesmo produto você deve remover o colocar novamente na quantidade correta", "Remova e adicione novamente.");
+            for (Carrinho carrinho1 : tabelaCarrinho.getItems()) {
+                if (produto.getCodigo().equals(carrinho1.getCodigo())) {
+                    carrinho1.setQuantidade(String.valueOf(Integer.parseInt(carrinho1.getQuantidade()) + qtdCampoTexto));
+                    int estoque = quantidadeProduto.getText().trim().isEmpty() ? produto.getEstoque() - 1 : produto.getEstoque() - Integer.parseInt(quantidadeProduto.getText().trim());
+                    produto.setEstoque(estoque);
+                    carrinho1.setValor(String.valueOf(produto.getPreco() * Integer.parseInt(carrinho1.getQuantidade())));
+                    somarProdutosCarrinho();
+                    tabelaCarrinho.refresh();
+                    tabelaProdutos.refresh();
                     return;
                 }
             }
-            tabelaCarrinho.getItems().add(produto);
+            tabelaCarrinho.getItems().add(carrinho);
             int estoque = quantidadeProduto.getText().trim().isEmpty() ? produto.getEstoque() - 1 : produto.getEstoque() - Integer.parseInt(quantidadeProduto.getText().trim());
             produto.setEstoque(estoque);
-            int qtdCarrinho = quantidadeProduto.getText().trim().isEmpty() ? 1 : Integer.parseInt(quantidadeProduto.getText().trim());
-            produto.setQuantidadeNoCarrinho(qtdCarrinho);
+
+            produto.setQuantidadeNoCarrinho(qtdCampoTexto);
             tabelaProdutos.refresh();
             somarProdutosCarrinho();
             index++;
@@ -210,22 +200,22 @@ public class CadastroVendaController {
 
     @FXML
     private void somarProdutosCarrinho() {
-        ObservableList<Produto> produto = tabelaCarrinho.getItems();
-        Produto produto1 = tabelaProdutos.getSelectionModel().getSelectedItem();
-        double valor = Double.parseDouble(colunaValor.getCellData(produto.get(index)).replace(",", "."));
-        valorTotal += valor;
-        System.out.println(colunaValor.getCellData(produto.get(index)).replace(",", "."));
+        valorTotal = 0;
+        for (Carrinho carrinho1 : tabelaCarrinho.getItems()) {
+            valorTotal += Double.parseDouble(carrinho1.getValor());
+        }
         valorCompra.setText(String.format("%.2f", valorTotal));
     }
 
     @FXML
     private void adicionarFormasPagamento() {
-        formaPagamento.setItems(FXCollections.observableArrayList(FormaPagamento.values()));
+        List<String> listaFormaPagamento = List.of("Cartão de crédito", "Cartão de débito", "Pix", "Boleto", "Dinheiro");
+        formaPagamento.setItems(FXCollections.observableArrayList(listaFormaPagamento));
     }
 
     @FXML
     private void removerProdutoCarrinho() {
-        Produto produto = tabelaCarrinho.getSelectionModel().getSelectedItem();
+        Carrinho produto = tabelaCarrinho.getSelectionModel().getSelectedItem();
         if (produto != null) {
             tabelaCarrinho.getItems().remove(produto);
             valorTotal -= Double.parseDouble(colunaValor.getCellData(produto).replace(",", "."));
@@ -235,7 +225,7 @@ public class CadastroVendaController {
             String cod = produto.getCodigo();
             for (Produto produto1 : tabelaProdutos.getItems()) {
                 if (produto1.getCodigo().equals(cod)) {
-                    produto1.setEstoque(produto1.getQuantidadeNoCarrinho() + produto1.getEstoque());
+                    produto1.setEstoque(Integer.parseInt(produto.getQuantidade()) + produto1.getEstoque());
                     break;
                 }
             }
@@ -260,19 +250,43 @@ public class CadastroVendaController {
             return;
         }
 
-        System.out.println("Clientes encontrados: " + clientesCPF);
         catalogoClientes.setItems(FXCollections.observableArrayList(clientesCPF));
     }
 
-    @FXML
-    private void enviarDadosVenda(Vendas venda, ProdutoVendas produtoVenda) {
+    private void enviarDadosVenda(Vendas venda) { // talvez precisarei colocar usuario pois tenho q pegar qm fez a venda
         LocalDate data = LocalDate.now();
         LocalTime hora = LocalTime.now();
-        venda.setData_venda(String.valueOf(data));
+        DateTimeFormatter formatterSaida = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        venda.setData_venda(data.format(formatterSaida));
         venda.setCnpj("23.456.789/0001-95");
-        venda.setForma_pagamento(formaPagamento.getValue());
+        venda.setForma_pagamento(formaPagamento.getSelectionModel().getSelectedItem());
         venda.setValor((float)valorTotal);
         venda.setHorario(hora);
+        venda.setEstado_venda("Em andamento");
+        venda.setCPFCliente(catalogoClientes.getValue());
+        venda.setForma_pagamento(formaPagamento.getValue());
+        if (formaPagamento.getSelectionModel().getSelectedItem().equals("Boleto")) {
+            venda.setData_vencimento(LocalDate.now().plusDays(5).format(formatterSaida));
+        } else {venda.setData_vencimento(venda.getData_venda());}
+    }
+
+    private boolean checaCamposVazios() {
+        if (catalogoClientes.getSelectionModel().isEmpty() || formaPagamento.getSelectionModel().isEmpty()) {
+            return false;
+        } return true;
+    }
+
+    @FXML
+    private void concluirVenda() {
+        if (!checaCamposVazios()) {
+            gerarAlertas(Alert.AlertType.WARNING, "Selecione um cliente e uma forma de pagamento para continuar.", "Preencha os campos necessário.");
+            return;
+        }
+        Vendas venda = new Vendas();
+        enviarDadosVenda(venda);
+        VendasDAO.CadastrarVenda(venda);
+        Stage stage = (Stage) btConcluir.getScene().getWindow();
+        stage.close();
     }
 
 }

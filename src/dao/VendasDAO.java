@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 public class VendasDAO {
 
     public static void CadastrarVenda(Vendas venda){
-        String sql = "INSERT INTO VENDAS (CNPJ_LOJA, LOGIN_USUARIO, DATA_VENDA, HORARIO, VALOR_TOTAL, FORMA_PAGAMENTO, DATA_VENCIMENTO) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO VENDAS (CNPJ_LOJA, DATA_VENDA, HORARIO, VALOR_TOTAL, FORMA_PAGAMENTO, DATA_VENCIMENTO, ESTADO_VENDA, CPF_CLIENTE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = null;
 
         String dataVenda = tratarDataParaBD(venda, 1);
@@ -23,12 +23,13 @@ public class VendasDAO {
         try {
             stmt = ConexaoDB.getConexao().prepareStatement(sql);
             stmt.setString(1, venda.getCnpj());
-            stmt.setString(2, venda.getLogin_usuario());
-            stmt.setString(3, dataVenda);
-            stmt.setString(4, hora);
-            stmt.setFloat(5, venda.getValor());
-            stmt.setString(6, String.valueOf(venda.getForma_pagamento()));
-            stmt.setString(7, dataVencimento);
+            stmt.setString(2, dataVenda);
+            stmt.setString(3, hora);
+            stmt.setFloat(4, venda.getValor());
+            stmt.setString(5, String.valueOf(venda.getForma_pagamento()));
+            stmt.setString(6, dataVencimento);
+            stmt.setString(7, venda.getEstado_venda());
+            stmt.setString(8, venda.getCPFCliente());
 
             stmt.executeUpdate();
             stmt.close();
@@ -39,20 +40,18 @@ public class VendasDAO {
     }
 
     public static String tratarDataParaBD(Vendas vendas, int escolha) {
-        if (escolha == 1) {
-            String dataVenda = vendas.getData_venda(); // Data de entrada no formato dd/MM/yyyy
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // Formatador para interpretar a entrada
-            // Converter a data para o formato SQL
-            LocalDate localDate = LocalDate.parse(dataVenda, formatter);
-            dataVenda = localDate.toString();
-            return dataVenda;
+        String dataStr = (escolha == 1) ? vendas.getData_venda() : vendas.getData_vencimento();
+
+        DateTimeFormatter formatterEntrada;
+
+        // Detecta se a data já está no formato correto (yyyy-MM-dd)
+        if (dataStr.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            return dataStr; // Já está no formato correto, não precisa converter
         } else {
-            String dataVencimento = vendas.getData_vencimento(); // Data de entrada no formato dd/MM/yyyy
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // Formatador para interpretar a entrada
-            // Converter a data para o formato SQL
-            LocalDate localDate = LocalDate.parse(dataVencimento, formatter);
-            dataVencimento = localDate.toString();
-            return dataVencimento;
+            formatterEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         }
+
+        LocalDate localDate = LocalDate.parse(dataStr, formatterEntrada);
+        return localDate.toString(); // Retorna no formato yyyy-MM-dd
     }
 }

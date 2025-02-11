@@ -10,9 +10,27 @@ public class Vendas {
     private String data_venda;
     private LocalTime horario;
     private float valor;
-    private FormaPagamento forma_pagamento;
+    private String forma_pagamento;
     private String data_vencimento;
-    private EstadoVenda estado_venda;
+    private String CPFCliente;
+
+    public String getCPFCliente() {
+        return CPFCliente;
+    }
+
+    public void setCPFCliente(String CPFCliente) {
+        this.CPFCliente = CPFCliente;
+    }
+
+    public String getEstado_venda() {
+        return estado_venda;
+    }
+
+    public void setEstado_venda(String estado_venda) {
+        this.estado_venda = estado_venda;
+    }
+
+    private String estado_venda;
     
 
     public int getIdVenda() {
@@ -71,11 +89,11 @@ public class Vendas {
         this.valor = valor;
     }
 
-    public FormaPagamento getForma_pagamento() {
+    public String getForma_pagamento() {
         return forma_pagamento;
     }
 
-    public void setForma_pagamento(FormaPagamento forma_pagamento) {
+    public void setForma_pagamento(String forma_pagamento) {
         this.forma_pagamento = forma_pagamento;
     }
 

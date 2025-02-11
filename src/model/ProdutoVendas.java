@@ -3,7 +3,6 @@ package model;
 public class ProdutoVendas {
     private int id_venda;
     private String cod_produto;
-    private String nome_produto;
     private float preco_produto;
     private int quantidade;
 
@@ -21,14 +20,6 @@ public class ProdutoVendas {
 
     public void setPreco_produto(float preco_produto) {
         this.preco_produto = preco_produto;
-    }
-
-    public String getNome_produto() {
-        return nome_produto;
-    }
-
-    public void setNome_produto(String nome_produto) {
-        this.nome_produto = nome_produto;
     }
 
     public String getCod_produto() {

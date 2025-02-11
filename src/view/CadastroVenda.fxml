@@ -37,7 +37,7 @@
             <Font name="Avignon Pro Demi" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="btConcluir" layoutX="416.0" layoutY="513.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="179.0" styleClass="button-blue-background" stylesheets="@../style/style.css" text="Concluir" textFill="WHITE" />
+      <Button fx:id="btConcluir" layoutX="416.0" layoutY="513.0" mnemonicParsing="false" onMouseClicked="#concluirVenda" prefHeight="36.0" prefWidth="179.0" styleClass="button-blue-background" stylesheets="@../style/style.css" text="Concluir" textFill="WHITE" />
       <Button fx:id="btCancelar" layoutX="609.0" layoutY="513.0" mnemonicParsing="false" onMouseClicked="#fecharTela" prefHeight="36.0" prefWidth="179.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Cancelar" textFill="#031926" />
       <Line endX="13.0" endY="407.0" fill="#031926" layoutX="387.0" layoutY="141.0" startX="13.0" startY="-25.0" />
       <Label fx:id="valorCompra" layoutX="518.0" layoutY="414.0" text="R$ 0,00" textFill="#031926">
