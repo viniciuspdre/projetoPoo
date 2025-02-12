@@ -130,4 +130,38 @@ public class VendasDAO {
         LocalDate localDate = LocalDate.parse(dataStr, formatterEntrada);
         return localDate.toString(); // Retorna no formato yyyy-MM-dd
     }
+
+    public static void atualizarVenda(Vendas venda) {
+        String sql = "UPDATE VENDAS SET CNPJ_LOJA = ?, DATA_VENDA = ?, HORARIO = ?, VALOR_TOTAL = ?, FORMA_PAGAMENTO = ?, DATA_VENCIMENTO = ?, ESTADO_VENDA = ?, CPF_CLIENTE = ? WHERE ID_VENDA = ?";
+
+        try (Connection conexao = ConexaoDB.getConexao(); // Obtém a conexão
+             PreparedStatement stmt = conexao.prepareStatement(sql)) { // Cria o PreparedStatement
+
+            // Preenche os parâmetros do PreparedStatement
+            stmt.setString(1, venda.getCnpj());
+            stmt.setString(2, tratarDataParaBD(venda, 1));
+            stmt.setString(3, venda.getHorario());
+            stmt.setFloat(4, venda.getValor());
+            stmt.setString(5, venda.getForma_pagamento());
+            stmt.setString(6, tratarDataParaBD(venda, 2));
+            stmt.setString(7, venda.getEstado_venda());
+            stmt.setString(8, venda.getCPFCliente());
+            stmt.setInt(9, venda.getIdVenda());
+
+            // Executa a atualização
+            int linhasAfetadas = stmt.executeUpdate();
+
+            // Verifica se a atualização foi bem-sucedida
+            if (linhasAfetadas > 0) {
+                System.out.println("Venda atualizada com sucesso!");
+            } else {
+                System.out.println("Nenhuma venda foi atualizada. Verifique o ID_VENDA.");
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Erro ao atualizar a venda: " + e.getMessage());
+        }
+    }
 }

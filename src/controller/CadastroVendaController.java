@@ -97,10 +97,15 @@ public class CadastroVendaController {
 
     public void setModificacao(boolean isModificacao, Vendas vendaModificacao) {
         this.isModificacao = isModificacao;
+        this.vendaModificacao = vendaModificacao;
 
         if (isModificacao && vendaModificacao != null) {
             tituloPagina.setText("Modificação de Venda");
             carregarDadosVendaModificar(vendaModificacao);
+            catalogoClientes.setValue(vendaModificacao.getCPFCliente());
+            catalogoClientes.setDisable(true);
+            formaPagamento.setValue(vendaModificacao.getForma_pagamento());
+            somarProdutosCarrinho();
         }
     }
 
@@ -308,7 +313,7 @@ public class CadastroVendaController {
     }
 
     private boolean checaCamposVazios() {
-        if (catalogoClientes.getSelectionModel().isEmpty() || formaPagamento.getSelectionModel().isEmpty()) {
+        if (catalogoClientes.getSelectionModel().isEmpty() || formaPagamento.getSelectionModel().isEmpty() || tabelaCarrinho.getItems().isEmpty()) {
             return false;
         } return true;
     }
@@ -328,19 +333,30 @@ public class CadastroVendaController {
     @FXML
     private void concluirVenda() { // ainda falta atualizar estoque no banco de dados
         if (!checaCamposVazios()) {
-            gerarAlertas(Alert.AlertType.WARNING, "Selecione um cliente e uma forma de pagamento para continuar.", "Preencha os campos necessário.");
+            gerarAlertas(Alert.AlertType.WARNING, "Selecione um cliente, forma de pagamento, ou adicione um item para continuar.", "Preencha os campos necessário.");
             return;
         }
 
-        Vendas venda = new Vendas();
-        enviarDadosVenda(venda);
-        int idVenda = VendasDAO.CadastrarVenda(venda);
+        if (!isModificacao) {
+            Vendas venda = new Vendas();
+            enviarDadosVenda(venda);
+            int idVenda = VendasDAO.CadastrarVenda(venda);
 
-        if (idVenda != -1) {
-            enviarDadosProdutoVenda(idVenda);
-        } else {    gerarAlertas(Alert.AlertType.WARNING, "Erro ao cadastrar a sua venda", "Erro ao cadastrar a sua venda."); }
+            if (idVenda != -1) {
+                enviarDadosProdutoVenda(idVenda);
+            } else {    gerarAlertas(Alert.AlertType.WARNING, "Erro ao cadastrar a sua venda", "Erro ao cadastrar a sua venda."); }
 
-        gerarAlertas(Alert.AlertType.INFORMATION,"Sua venda foi cadastrada no sistema com sucesso! Verifique se já pode concluir ela.", "Venda cadastrada com sucesso!");
+            gerarAlertas(Alert.AlertType.INFORMATION,"Sua venda foi cadastrada no sistema com sucesso! Verifique se já pode concluir ela.", "Venda cadastrada com sucesso!");
+        } else {
+            enviarDadosVenda(vendaModificacao);
+            VendasDAO.atualizarVenda(vendaModificacao);
+
+            // Remove os produtos antigos da venda e adiciona os novos
+            ProdutosVendasDAO.deletarProdutoVendas(vendaModificacao.getIdVenda());
+            enviarDadosProdutoVenda(vendaModificacao.getIdVenda());
+
+            gerarAlertas(Alert.AlertType.INFORMATION, "A venda foi atualizada com sucesso!", "Venda atualizada com sucesso!");
+        }
         Stage stage = (Stage) btConcluir.getScene().getWindow();
         stage.close();
     }
