@@ -87,8 +87,22 @@ public class CadastroVendaController {
     @FXML
     private Button subProduto;
 
+    @FXML
+    private Label tituloPagina;
+
+    private boolean isModificacao = false;
+    private Vendas vendaModificacao;
     private int index = 0;
     double valorTotal = 0;
+
+    public void setModificacao(boolean isModificacao, Vendas vendaModificacao) {
+        this.isModificacao = isModificacao;
+
+        if (isModificacao && vendaModificacao != null) {
+            tituloPagina.setText("Modificação de Venda");
+            carregarDadosVendaModificar(vendaModificacao);
+        }
+    }
 
     @FXML
     public void initialize() {
@@ -104,6 +118,7 @@ public class CadastroVendaController {
         adicionarFormasPagamento();
         adicionandoClientesCombo();
         adicionarDesconto.setDisable(true);
+
     }
 
     private void gerarAlertas(Alert.AlertType tipo, String conteudo, String titulo) {
@@ -296,6 +311,18 @@ public class CadastroVendaController {
         if (catalogoClientes.getSelectionModel().isEmpty() || formaPagamento.getSelectionModel().isEmpty()) {
             return false;
         } return true;
+    }
+
+    private void carregarDadosVendaModificar(Vendas venda) {
+        List<ProdutosVendas> produtosVendas = ProdutosVendasDAO.listarProdutoVendasId(venda.getIdVenda());
+
+        for (ProdutosVendas produto : produtosVendas) {
+            Carrinho carrinho = new Carrinho();
+            carrinho.setValor(String.valueOf(produto.getPreco_produto()));
+            carrinho.setQuantidade(String.valueOf(produto.getQuantidade()));
+            carrinho.setCodigo(produto.getCod_produto());
+            tabelaCarrinho.getItems().add(carrinho);
+        }
     }
 
     @FXML

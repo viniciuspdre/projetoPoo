@@ -7,10 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -76,12 +73,23 @@ public class GerenciamentoVendasController {
     public void initialize() {
         configurarTabela();
         listarVendas();
-//        Vendas venda = tabelaVendas.getSelectionModel().getSelectedItem();
-//        if (venda.getEstado_venda().equals("Concluída") && venda != null) {
-//            btConcluirVenda.setDisable(true);
-//            btCancelarVenda.setDisable(true);
-//            btModificarVenda.setDisable(true);
-//        }
+        configurarEventoSelecao();
+    }
+
+    private void configurarEventoSelecao() {
+        tabelaVendas.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                boolean concluida = newSelection.getEstado_venda().equalsIgnoreCase("Concluída");
+                boolean em_andamento = newSelection.getEstado_venda().equalsIgnoreCase("Em andamento");
+
+                // Desativa ou ativa os botões com base no estado da venda
+                btGerarFatura.setDisable(em_andamento);
+
+                btConcluirVenda.setDisable(concluida);
+                btCancelarVenda.setDisable(concluida);
+                btModificarVenda.setDisable(concluida);
+            }
+        });
     }
 
     @FXML
@@ -112,6 +120,7 @@ public class GerenciamentoVendasController {
     @FXML
     private void cancelarVenda() {
         Vendas venda = tabelaVendas.getSelectionModel().getSelectedItem();
+
         int idVenda = venda.getIdVenda();
         List<ProdutosVendas> produtosParaVoltarEstoque = ProdutosVendasDAO.listarProdutoVendasId(idVenda);
 
@@ -133,10 +142,13 @@ public class GerenciamentoVendasController {
         return fxmlLoader;
     }
 
-    private void abrirPopup(String fxml, String tituloTela) {
+    private void abrirPopup(String fxml, String tituloTela, boolean isModificacao, Vendas venda) {
         try {
             FXMLLoader loader = loadFrame(fxml);
             Parent root = loader.getRoot(); // Obtém o root carregado
+
+            CadastroVendaController controller = loader.getController();
+            controller.setModificacao(isModificacao, venda);
 
             Stage stage = new Stage();
             Scene scene = new Scene(root);
@@ -151,10 +163,24 @@ public class GerenciamentoVendasController {
         }
     }
 
-    @FXML
-    private void abrirCadastrarVenda() {
-        abrirPopup("CadastroVenda", "Cadastrar Venda");
+    private void gerarAlertas(Alert.AlertType tipo, String conteudo, String titulo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(conteudo);
+        alert.showAndWait();
     }
 
+    @FXML
+    private void abrirCadastrarVenda() {
+        abrirPopup("CadastroVenda", "Cadastrar Venda", false, null);
+    }
 
+    @FXML
+    private void abrirModificarVenda() {
+        Vendas venda = tabelaVendas.getSelectionModel().getSelectedItem();
+        if (venda != null) {
+            abrirPopup("CadastroVenda", "Modificar Venda", true, venda);
+        } else {  gerarAlertas(Alert.AlertType.WARNING, "Selecione uma venda.", "Não é possível modificar uma venda sem antes selecioná-la");  }
+    }
 }

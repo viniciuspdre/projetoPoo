@@ -14,7 +14,7 @@
    <children>
       <AnchorPane prefHeight="83.0" prefWidth="800.0" style="-fx-background-color: #031926;">
          <children>
-            <Label layoutX="36.0" layoutY="27.0" text="Cadastro de Vendas" textFill="WHITE">
+            <Label fx:id="tituloPagina" layoutX="36.0" layoutY="27.0" text="Cadastro de Vendas" textFill="WHITE">
                <font>
                   <Font name="Avignon Pro Demi" size="26.0" />
                </font>
