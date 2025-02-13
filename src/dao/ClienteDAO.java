@@ -1,32 +1,13 @@
 package dao;
 
 import dao.conexao.ConexaoDB;
-import model.Cliente;
+import model.entity.Cliente;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteDAO {
-
-    public static List<String> buscarCPFCliente(){
-        String sql = "select CPF from cliente";
-        List<String> listaCPF = new ArrayList<>();
-
-        try(Connection conexao = ConexaoDB.getConexao();
-        PreparedStatement ps = conexao.prepareStatement(sql)) {
-            ResultSet rs = ps.executeQuery();
-
-            while(rs.next()){
-                listaCPF.add(rs.getString("CPF"));
-            }
-
-            return listaCPF;
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public static boolean cadastrarCliente(Cliente cliente) {
         String sql = "INSERT INTO CLIENTE (CPF, NOME, SEXO, ESTADO, DATA_NASCIMENTO, DATA_REGISTRO, STATUS_CLIENTE) VALUES (?,?,?,?,?,?,?)";
