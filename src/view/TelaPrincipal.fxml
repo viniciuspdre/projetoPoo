@@ -27,7 +27,10 @@
       <AnchorPane layoutX="371.0" layoutY="54.0" prefHeight="170.0" prefWidth="562.0" style="-fx-background-color: #031926; -fx-background-radius: 10;">
          <children>
             <Button layoutX="430.0" layoutY="62.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="80.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Entrar" />
-            <ImageView fx:id="iconCliente" fitHeight="125.0" fitWidth="165.0" layoutX="23.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="iconCliente" fitHeight="125.0" fitWidth="165.0" layoutX="23.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/cliente.png" />
+               </image></ImageView>
             <Label layoutX="223.0" layoutY="43.0" text="Gerenciar" textFill="WHITE">
                <font>
                   <Font name="Avignon Pro Demi" size="32.0" />
@@ -47,7 +50,10 @@
       <AnchorPane layoutX="371.0" layoutY="254.0" prefHeight="170.0" prefWidth="562.0" style="-fx-background-color: #031926; -fx-background-radius: 10;">
          <children>
             <Button layoutX="430.0" layoutY="75.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="80.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Entrar" />
-            <ImageView fx:id="iconProduto" fitHeight="125.0" fitWidth="165.0" layoutX="23.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="iconProduto" fitHeight="125.0" fitWidth="165.0" layoutX="23.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/produto.png" />
+               </image></ImageView>
             <Label layoutX="243.0" layoutY="37.0" text="Gerenciar" textFill="WHITE">
                <font>
                   <Font name="Avignon Pro Demi" size="32.0" />
@@ -67,7 +73,10 @@
       <AnchorPane layoutX="371.0" layoutY="453.0" prefHeight="170.0" prefWidth="562.0" style="-fx-background-color: #031926; -fx-background-radius: 10;">
          <children>
             <Button layoutX="430.0" layoutY="62.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="80.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Entrar" />
-            <ImageView fx:id="iconVenda" fitHeight="125.0" fitWidth="165.0" layoutX="23.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="iconVenda" fitHeight="125.0" fitWidth="165.0" layoutX="23.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/venda.png" />
+               </image></ImageView>
             <Label layoutX="243.0" layoutY="38.0" text="Gerenciar" textFill="WHITE">
                <font>
                   <Font name="Avignon Pro Demi" size="32.0" />
