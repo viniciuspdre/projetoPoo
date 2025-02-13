@@ -261,6 +261,7 @@ public class ProdutoController extends Component implements Initializable {
     @FXML private AnchorPane Container_Estatisticas_Produto;
     @FXML private AnchorPane Container_Remover_Produto;
     @FXML private AnchorPane Container_AlertaEstoque;
+    @FXML private AnchorPane Container_Produto;
     @FXML private TextField Pesquisar_AlertaEstoque;
     @FXML private Label Alerta_Nome;
     @FXML private Label Alerta_Codigo_Produto;
@@ -277,21 +278,34 @@ public class ProdutoController extends Component implements Initializable {
     @FXML private GridPane Catalogo;
     @FXML private TextField Pesquisar_Home;
     @FXML private ScrollPane Scroll_Catalogo;
+    @FXML private Label nome_Produto;
+    @FXML private ImageView view;
+    @FXML private Label preco_Produto;
+    @FXML private Label descricao_Produto;
+    @FXML private Label parcelamento_Produto;
+    @FXML private Label estoque_Produto;
+    @FXML private Label entrega_Produtos;
+    @FXML private Label codigo_Produto;
+    @FXML private Label marca_Produtos;
+    @FXML private AnchorPane Container_Pagamentos;
 
     private List<Produto> produtos; // Definindo produtos como um atributo da classe
     private List<Produto> alertaEstoque;
     private List<String> categorias = new ArrayList<String>();
+    private Produto catalogo_Produto;
 
     private ObservableList<String> categoriasObservableList;
     private ObservableList<Produto> DadosTabelaProdutoRemover = FXCollections.observableArrayList();
     private ObservableList<Produto> DadosTabelaProdutoAdicionar = FXCollections.observableArrayList();
     private ObservableList<Produto> DadosTabelaProdutoAtualizar = FXCollections.observableArrayList();
     private ObservableList<Produto> DadosTabelaProdutoAlerta = FXCollections.observableArrayList();
+    private ObservableList<Produto> listaProdutos = FXCollections.observableArrayList();
 
     private FilteredList<Produto> filteredListRemover = new FilteredList<>(DadosTabelaProdutoRemover, p -> true);
     private FilteredList<Produto> filteredListAdicionar = new FilteredList<>(DadosTabelaProdutoAdicionar, p -> true);
     private FilteredList<Produto> filteredListAtualizar = new FilteredList<>(DadosTabelaProdutoAtualizar, p -> true);
     private FilteredList<Produto> filteredListAlerta = new FilteredList<>(DadosTabelaProdutoAlerta, p -> true);
+    private FilteredList<Produto> filteredListCatalogo = new FilteredList<>(listaProdutos, p -> true);;
 
     private byte[] imagemBytes;
 
@@ -302,7 +316,9 @@ public class ProdutoController extends Component implements Initializable {
         Container_Remover_Produto.setVisible(false);
         Container_Estatisticas_Produto.setVisible(false);
         Container_AlertaEstoque.setVisible(false);
+        Container_Produto.setVisible(false);
         Container_Home.setVisible(false);
+        Container_Pagamentos.setVisible(false);
     }
 
     @FXML
@@ -312,6 +328,8 @@ public class ProdutoController extends Component implements Initializable {
         Container_Remover_Produto.setVisible(false);
         Container_AlertaEstoque.setVisible(false);
         Container_Home.setVisible(false);
+        Container_Produto.setVisible(false);
+        Container_Pagamentos.setVisible(false);
     }
 
     @FXML
@@ -322,6 +340,8 @@ public class ProdutoController extends Component implements Initializable {
         Container_Estatisticas_Produto.setVisible(true);
         Container_AlertaEstoque.setVisible(false);
         Container_Home.setVisible(false);
+        Container_Produto.setVisible(false);
+        Container_Pagamentos.setVisible(false);
     }
 
     @FXML
@@ -332,6 +352,8 @@ public class ProdutoController extends Component implements Initializable {
         Container_Estatisticas_Produto.setVisible(false);
         Container_AlertaEstoque.setVisible(false);
         Container_Home.setVisible(false);
+        Container_Produto.setVisible(false);
+        Container_Pagamentos.setVisible(false);
     }
     @FXML
      public void Estoque_Alerta(){
@@ -341,6 +363,8 @@ public class ProdutoController extends Component implements Initializable {
         Container_Remover_Produto.setVisible(false);
         Container_Estatisticas_Produto.setVisible(false);
         Container_Home.setVisible(false);
+        Container_Produto.setVisible(false);
+        Container_Pagamentos.setVisible(false);
     }
 
     @FXML public void Home(){
@@ -350,7 +374,11 @@ public class ProdutoController extends Component implements Initializable {
         Container_Atualizar_Produto.setVisible(false);
         Container_Remover_Produto.setVisible(false);
         Container_Estatisticas_Produto.setVisible(false);
+        Container_Produto.setVisible(false);
+        Container_Pagamentos.setVisible(false);
     }
+
+    @FXML public void Comprar(){}
 
     @FXML
     public byte[] Importar_Foto_Adicionar_Produto() {
@@ -391,10 +419,21 @@ public class ProdutoController extends Component implements Initializable {
     }
 
     @FXML
+    void btn_meio_Pagamento() {
+        Container_Pagamentos.setVisible(true);
+        Container_Home.setVisible(false);
+        Container_AlertaEstoque.setVisible(false);
+        Container_Adicionar_Produto.setVisible(false);
+        Container_Atualizar_Produto.setVisible(false);
+        Container_Remover_Produto.setVisible(false);
+        Container_Estatisticas_Produto.setVisible(false);
+        Container_Produto.setVisible(true);
+    }
+
+    @FXML
     private void close() {
         // Obter a janela atual
-        Stage stage = (Stage) btnFechar.getScene().getWindow();
-        stage.close(); // Fecha a janela
+        Container_Pagamentos.setVisible(false);
     }
 
     @FXML
@@ -686,12 +725,14 @@ public class ProdutoController extends Component implements Initializable {
         DadosTabelaProdutoAdicionar.clear();
         DadosTabelaProdutoAtualizar.clear();
         DadosTabelaProdutoAlerta.clear();
+        listaProdutos.clear();
 
         // Adiciona todos os produtos à lista
         DadosTabelaProdutoRemover.addAll(produtos);
         DadosTabelaProdutoAdicionar.addAll(produtos);
         DadosTabelaProdutoAtualizar.addAll(produtos);
         DadosTabelaProdutoAlerta.addAll(alertaEstoque);
+        listaProdutos.addAll(ProdutoDAO.listarProdutos());
     }
 
     // Metodo para configurar as colunas da TableView
@@ -1000,6 +1041,27 @@ public class ProdutoController extends Component implements Initializable {
         Table_AlertaEstoque.setItems(filteredListAlerta);
     }
 
+    public void filtroPesquisaProduto() {
+        Pesquisar_Home.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredListCatalogo.setPredicate(produto -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true; // Mostra todos os produtos se o campo estiver vazio
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                return produto.getNome().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getCodigo().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getCategoria().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getMarca().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getDescricao().toLowerCase().contains(lowerCaseFilter) ||
+                        produto.getCnpj_loja().toLowerCase().contains(lowerCaseFilter);
+            });
+
+            criarCatalogo(); // Atualiza o catálogo com os produtos filtrados
+        });
+    }
+
     public void atualizarDados(){
         produtos = ProdutoDAO.listarProdutos();
         Total_Produtos.setText(String.valueOf(produtos.size()));
@@ -1013,12 +1075,15 @@ public class ProdutoController extends Component implements Initializable {
         filtroPesquisaAdicionar(); // Filtro da textfield Pesquisa
         filtroPesquisaAtualizar(); // FIltro da textfileld Pesquisa
         filtroPesquisaAlerta(); // FIltro da textfileld Pesquisa
+        filtroPesquisaProduto();
         criarCatalogo();
     }
 
     public void criarCatalogo(){
         Scroll_Catalogo.setFitToWidth(true);  // Faz com que a largura do conteúdo se ajuste ao ScrollPane
         Scroll_Catalogo.setFitToHeight(false); // Permite rolagem vertical
+
+        Catalogo.getChildren().clear(); // Limpa o GridPane antes de adicionar novos produtos
 
         // Ajusta o GridPane para expandir corretamente dentro do ScrollPane
         Catalogo.setPrefWidth(Region.USE_COMPUTED_SIZE);
@@ -1036,12 +1101,11 @@ public class ProdutoController extends Component implements Initializable {
         int row = 0;
         int col = 0;
 
-        for (Produto produto : produtos) {
+        for (Produto produto : filteredListCatalogo) {
             // Adiciona os cards no GridPane com a lógica de posicionamento em linhas e colunas
             VBox card = criarCardProduto(produto);
             // Ajuste do tamanho do card para ocupar toda a célula
             card.setMaxWidth(Double.MAX_VALUE);
-            //card.setMaxHeight(Double.MAX_VALUE);
             Catalogo.add(card, col, row);
 
             col++;
@@ -1054,7 +1118,7 @@ public class ProdutoController extends Component implements Initializable {
 
     VBox criarCardProduto(Produto produto) {
         VBox card = new VBox();
-        card.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-background-color: #f9f9f9; -fx-background-radius: 10; -fx-cursor: hand;");
+        card.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-background-color: #f9f9f9; -fx-background-radius: 10; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 6,0,0,0);");
         card.setAlignment(Pos.CENTER);
 
         ImageView imageView;
@@ -1074,36 +1138,91 @@ public class ProdutoController extends Component implements Initializable {
         nomeLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
         Label precoLabel = new Label("R$ " + String.format("%.2f", produto.getPreco()));
-        precoLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: green;");
+        precoLabel.setStyle("-fx-font-size: 15px; -fx-text-fill: #1f67b9; -fx-font-weight: bold;");
 
         Label descricaoLabel = new Label(produto.getDescricao());
         descricaoLabel.setWrapText(true);
+        descricaoLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #000;");
 
         card.getChildren().addAll(imageView,nomeLabel, precoLabel, descricaoLabel);
 
         // Evento de clique para retornar o produto selecionado
         card.setOnMouseClicked(event -> {
-            getProdutoSelecionado(produto);
+            catalogo_Produto = produto;
+            Container_Produto.setVisible(true);
+            nome_Produto.setText(catalogo_Produto.getNome());
+            nome_Produto.setWrapText(true);
+            descricao_Produto.setText(catalogo_Produto.getDescricao());
+            descricao_Produto.setWrapText(true);
+            preco_Produto.setText("R$ " + String.format("%.2f", catalogo_Produto.getPreco()));
+            double precoProduto = catalogo_Produto.getPreco();
+            double valorMinParcela = 25.0;
+            int maxParcelas = 12;
+            int parcelasPossiveis = (int) Math.min(maxParcelas, precoProduto / valorMinParcela);
+            parcelamento_Produto.setText("O produto pode ser parcelado em até " + parcelasPossiveis + "x de R$ " + String.format("%.2f", (precoProduto / parcelasPossiveis)));
+            estoque_Produto.setText("Estoque disponível: " + catalogo_Produto.getEstoque());
+            entrega_Produtos.setText(entrega());
+            codigo_Produto.setText(catalogo_Produto.getCodigo());
+            marca_Produtos.setText("Vendido por " + catalogo_Produto.getMarca());
+            if (catalogo_Produto.getFoto() != null) {
+                Image image = new Image(new ByteArrayInputStream(catalogo_Produto.getFoto()));
+                view.setImage(image);
+            } else{
+                view.setImage(new Image("icon/image.png"));
+            }
+        });
+
+        card.setOnMouseEntered(event -> {
             // Remove seleção de todos os outros cards
-            Catalogo.getChildren().forEach(node -> node.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-background-color: #f9f9f9; -fx-background-radius: 10; -fx-cursor: hand;"));
+            Catalogo.getChildren().forEach(node -> node.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-background-color: #f9f9f9; -fx-background-radius: 10; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 6,0,0,0);"));
             // Destaca o card selecionado
-            card.setStyle("-fx-padding: 10; -fx-border-color: #000; -fx-border-radius: 10; -fx-background-color: #f9f9f9; -fx-background-radius: 10; -fx-cursor: hand;");
+            card.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-background-color: linear-gradient(to bottom right, #f9f9f9, #5090de); -fx-background-radius: 10; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 6,0,0,0);");
         });
 
         return card;
     }
 
-    // Metodo que retorna o produto selecionado
-    private Produto getProdutoSelecionado(Produto produto) {
-        System.out.println(produto);
-        return produto;
+    public String entrega(){
+        Random random = new Random();
+
+        // Lista de dias da semana úteis
+        String[] diasSemana = {"segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira"};
+
+        // Gerar dois dias aleatórios diferentes
+        int indiceDia1 = random.nextInt(diasSemana.length);
+        int indiceDia2;
+        do {
+            indiceDia2 = random.nextInt(diasSemana.length);
+        } while (indiceDia1 == indiceDia2); // Garante que os dias sejam diferentes
+
+        // Ordena os dias para exibir em ordem cronológica
+        int menorDia = Math.min(indiceDia1, indiceDia2);
+        int maiorDia = Math.max(indiceDia1, indiceDia2);
+
+        // Gerar preços aleatórios dentro do intervalo
+        double precoMin = 30.00; // Valor mínimo possível
+        double precoMax = 100.00; // Valor máximo possível
+        double preco1 = precoMin + (precoMax - precoMin) * random.nextDouble();
+        double preco2 = precoMin + (precoMax - precoMin) * random.nextDouble();
+
+        // Garante que os preços sejam exibidos em ordem crescente
+        double menorPreco = Math.min(preco1, preco2);
+        double maiorPreco = Math.max(preco1, preco2);
+
+        // Criar mensagem formatada
+        String mensagem = String.format("Chegará entre %s e %s por R$ %.2f",
+                diasSemana[menorDia], diasSemana[maiorDia], menorPreco);
+
+
+        // Exibir a mensagem
+        return mensagem;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Container_Home.setVisible(true);
         atualizarDados();
         configurarColunasTabela(); // Configura as colunas da TableView
         eventos(); // Adiciona eventos de teclado
-        criarCatalogo();
     }
 }

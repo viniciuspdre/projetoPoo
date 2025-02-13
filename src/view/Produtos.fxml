@@ -23,8 +23,10 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
@@ -48,24 +50,7 @@
                                     <Image url="@../icon/logo.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="btnFechar" layoutX="1033.0" layoutY="7.0" mnemonicParsing="false" onAction="#close" prefWidth="50.0" styleClass="close" stylesheets="@../style/cadastroProdutos.css">
-                                 <graphic>
-                                    <ImageView fitHeight="69.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../icon/close.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                              <Button fx:id="btnMinimizer" layoutX="982.0" layoutY="7.0" mnemonicParsing="false" onAction="#minimizer" prefWidth="50.0" styleClass="minimize" stylesheets="@../style/cadastroProdutos.css">
-                                 <graphic>
-                                    <ImageView fitHeight="69.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../icon/minus.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
+                              <Button fx:id="btnMinimizer" layoutX="982.0" layoutY="7.0" mnemonicParsing="false" onAction="#minimizer" prefWidth="50.0" styleClass="minimize" stylesheets="@../style/cadastroProdutos.css" />
                            </children></AnchorPane>
                      </children>
                   </AnchorPane>
@@ -448,7 +433,7 @@
                               <String fx:value="shadow" />
                            </styleClass>
                         </AnchorPane>
-                        <AnchorPane fx:id="Container_Atualizar_Produto" layoutX="130.0" layoutY="152.0" prefHeight="542.4" prefWidth="888.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Container_Atualizar_Produto" layoutX="130.0" layoutY="152.0" prefHeight="542.4" prefWidth="888.8" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="10.0" layoutY="11.0" prefHeight="521.0" prefWidth="876.0" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="10.600000000000023" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.799999999999955" AnchorPane.topAnchor="11.0">
                                  <styleClass>
@@ -859,17 +844,11 @@
                                     <ColorAdjust brightness="0.75" />
                                  </effect>
                               </ImageView>
-                              <AnchorPane layoutY="57.0" prefHeight="40.0" prefWidth="868.0" stylesheets="@../style/cadastroProdutos.css">
-                                 <styleClass>
-                                    <String fx:value="shadow" />
-                                    <String fx:value="card" />
-                                 </styleClass>
-                              </AnchorPane>
-                            <AnchorPane layoutY="97.0" minHeight="0.0" minWidth="0.0" prefHeight="421.0" prefWidth="868.0">
+                            <AnchorPane layoutY="56.0" minHeight="0.0" minWidth="0.0" prefHeight="463.0" prefWidth="868.0">
                                  <children>
-                                    <ScrollPane fx:id="Scroll_Catalogo" prefHeight="421.6" prefWidth="868.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ScrollPane fx:id="Scroll_Catalogo" layoutY="-44.0" prefHeight="466.0" prefWidth="868.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <content>
-                                          <GridPane fx:id="Catalogo" prefHeight="421.0" prefWidth="868.0">
+                                          <GridPane fx:id="Catalogo" prefHeight="462.0" prefWidth="866.0">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -886,11 +865,283 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="6.0" layoutY="7.0" prefHeight="530.0" prefWidth="882.0" stylesheets="@../style/cadastroProdutos.css" visible="false">
+                        <AnchorPane fx:id="Container_Produto" layoutX="6.0" layoutY="7.0" prefHeight="530.0" prefWidth="882.0" stylesheets="@../style/cadastroProdutos.css" visible="false">
                            <styleClass>
                               <String fx:value="shadow" />
                               <String fx:value="white" />
                            </styleClass>
+                           <children>
+                              <VBox layoutX="329.0" layoutY="22.0" prefHeight="496.0" prefWidth="350.0">
+                                 <children>
+                                    <Label prefHeight="18.0" prefWidth="418.0" text="Novo | +1000 vendidos">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="4.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="nome_Produto" prefWidth="418.0" stylesheets="@../style/cadastroProdutos.css" text="Label" wrapText="true">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="preco_Produto" prefWidth="418.0" stylesheets="@../style/cadastroProdutos.css" text="Label" textFill="#1f67b9" wrapText="true">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="parcelamento_Produto" prefWidth="418.0" stylesheets="@../style/cadastroProdutos.css" text="Label" wrapText="true">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="descricao_Produto" prefWidth="418.0" stylesheets="@../style/cadastroProdutos.css" text="Label" wrapText="true">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="estoque_Produto" alignment="CENTER_RIGHT" prefWidth="418.0" stylesheets="@../style/cadastroProdutos.css" text="Label" wrapText="true">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="pagamento_Produto" alignment="CENTER" onMouseClicked="#btn_meio_Pagamento" prefWidth="418.0" stylesheets="@../style/cadastroProdutos.css" text="Ver os meio de pagamento" textFill="#1f67b9" wrapText="true">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                       </padding>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Label>
+                                    <Label fx:id="entrega_Produtos" prefWidth="418.0" stylesheets="@../style/cadastroProdutos.css" text="Label" wrapText="true">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="marca_Produtos" prefWidth="418.0" stylesheets="@../style/cadastroProdutos.css" text="Label" wrapText="true">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <AnchorPane layoutX="22.0" layoutY="22.0" prefHeight="291.0" prefWidth="294.0" stylesheets="@../style/cadastroProdutos.css">
+                                 <styleClass>
+                                    <String fx:value="shadow" />
+                                    <String fx:value="white" />
+                                 </styleClass>
+                                 <children>
+                                    <ImageView fx:id="view" fitHeight="272.0" fitWidth="274.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </AnchorPane>
+                              <ImageView fitHeight="39.0" fitWidth="26.0" layoutX="658.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icon/heart.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="codigo_Produto" alignment="CENTER" layoutX="20.0" layoutY="312.0" prefWidth="298.0" stylesheets="@../style/cadastroProdutos.css" text="Label" textFill="#1f67b9" wrapText="true">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </padding>
+                              </Label>
+                              <Button layoutX="704.0" layoutY="456.0" mnemonicParsing="false" onAction="#Comprar" prefHeight="39.0" prefWidth="163.0" stylesheets="@../style/cadastroProdutos.css" text="Comprar">
+                                 <graphic>
+                                    <ImageView fitHeight="50.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icon/market.png" />
+                                       </image>
+                                       <effect>
+                                          <ColorAdjust brightness="1.0" />
+                                       </effect>
+                                    </ImageView>
+                                 </graphic>
+                                 <styleClass>
+                                    <String fx:value="btn-limpar" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="Container_Pagamentos" layoutX="217.0" layoutY="4.0" prefHeight="524.0" prefWidth="463.0" stylesheets="@../style/cadastroProdutos.css" visible="false">
+                           <styleClass>
+                              <String fx:value="white" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <VBox layoutX="14.0" layoutY="13.0" prefHeight="498.0" prefWidth="438.0">
+                                 <children>
+                                    <AnchorPane prefHeight="33.0" prefWidth="438.0">
+                                       <children>
+                                          <Button fx:id="btnFechar" layoutX="383.0" layoutY="3.0" mnemonicParsing="false" onAction="#close" prefWidth="50.0" styleClass="close" stylesheets="@../style/cadastroProdutos.css">
+                                             <graphic>
+                                                <ImageView fitHeight="69.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../icon/close.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                    <Label prefHeight="23.0" prefWidth="184.0" text="Cartões de Crédito">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="26.0" prefWidth="438.0" text="Até 12x sem juros">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Aprovação Imediata" textFill="#9c9191">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <ImageView fitHeight="76.0" fitWidth="101.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../icon/visa.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label alignment="CENTER" prefHeight="41.0" prefWidth="100.0" text="12 Parcelas" textFill="#5090de" />
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <ImageView fitHeight="76.0" fitWidth="101.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../icon/masterCard.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label alignment="CENTER" prefHeight="41.0" prefWidth="100.0" text="12 Parcelas" textFill="#5090de" />
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <ImageView fitHeight="76.0" fitWidth="101.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../icon/mercadopago.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label alignment="CENTER" prefHeight="41.0" prefWidth="100.0" text="12 Parcelas" textFill="#5090de" />
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <ImageView fitHeight="76.0" fitWidth="101.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../icon/americanExpress.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label alignment="CENTER" prefHeight="41.0" prefWidth="100.0" text="12 Parcelas" textFill="#5090de" />
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <ImageView fitHeight="76.0" fitWidth="101.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../icon/hipercard.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label alignment="CENTER" prefHeight="41.0" prefWidth="100.0" text="12 Parcelas" textFill="#5090de" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Line endX="337.69287109375" startX="-100.0">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </Line>
+                                    <Label prefHeight="23.0" prefWidth="184.0" text="Cartões de Crédito">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="Aprovação Imediata" textFill="#9c9191">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="22.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icon/caixa.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Line endX="337.69287109375" startX="-100.0">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </Line>
+                                    <Label prefHeight="23.0" prefWidth="184.0" text="Pix">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="Aprovação Imediata" textFill="#9c9191">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="64.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icon/pix.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Line endX="337.69287109375" startX="-100.0" />
+                                    <Label prefHeight="23.0" prefWidth="184.0" text="Boleto Bancário">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="3.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label prefHeight="34.0" prefWidth="439.0" text="Ao comprar, explicaremos como fazer o pagamento em qualquer agência bancária, caixa eletrônico, Internet Banking ou correspondentes bancários." textFill="#9c9191" wrapText="true" />
+                                 </children>
+                              </VBox>
+                           </children>
                         </AnchorPane>
                      </children>
                   </AnchorPane>
