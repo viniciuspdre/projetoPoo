@@ -53,7 +53,7 @@
             <Font name="Avignon Pro Demi" size="15.0" />
          </font>
       </Label>
-      <Hyperlink layoutX="709.0" layoutY="485.0" text="Cadastre-se agora" textFill="#031926">
+      <Hyperlink fx:id="redirecionaCadastro" layoutX="709.0" layoutY="485.0" onMouseClicked="#redirecionarCadastro" text="Cadastre-se agora" textFill="#031926">
          <font>
             <Font name="Avignon Pro" size="15.0" />
          </font>

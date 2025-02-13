@@ -3,11 +3,16 @@ package controller;
 
 import dao.UsuarioDAO;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import model.Usuario;
 
+import java.io.IOException;
 import java.util.Calendar;
 
 public class CadastroController {
@@ -199,6 +204,23 @@ public class CadastroController {
             UsuarioDAO.cadastroInicial(usuario);
             mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Cadastro realizado com sucesso!");
             limparCampos();
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
+                Parent root = loader.load();
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Login");
+                stage.setResizable(false);
+                stage.show();
+
+                Stage stageAtual = (Stage) botaoCadastro.getScene().getWindow();
+                stageAtual.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                mostrarAlerta(Alert.AlertType.ERROR, "Erro ao redirecionar", "Houve algum erro ao redirecionar à página de Login.");
+            }
         }
     }
 }

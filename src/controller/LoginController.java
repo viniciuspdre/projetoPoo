@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+import java.io.IOException;
+
 
 public class LoginController {
 
@@ -18,6 +20,8 @@ public class LoginController {
     private PasswordField campoSenhaLogin;
     @FXML
     private Button botaoLogin;
+    @FXML
+    private Hyperlink redirecionaCadastro;
 
     private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensagem) {
         Alert alerta = new Alert(tipo);
@@ -25,6 +29,25 @@ public class LoginController {
         alerta.setHeaderText(null);
         alerta.setContentText(mensagem);
         alerta.showAndWait();
+    }
+
+    @FXML
+    private void redirecionarCadastro() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Cadastro.fxml"));
+            Parent root = loader.load();
+
+            Stage telaCadastro = new Stage();
+            telaCadastro.setScene(new Scene(root));
+            telaCadastro.setTitle("Tela Principal");
+            telaCadastro.setResizable(false);
+            telaCadastro.show();
+            Stage stageAtual = (Stage) botaoLogin.getScene().getWindow();
+            stageAtual.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta(Alert.AlertType.ERROR, "Erro ao redirecionar", "Houve algum erro ao redirecionar à página de cadastro.");
+        }
     }
 
     @FXML
