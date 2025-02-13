@@ -1,7 +1,7 @@
 package dao;
 
 import dao.conexao.ConexaoDB;
-import model.entity.UsuarioCompraProduto;
+import model.UsuarioCompraProduto;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

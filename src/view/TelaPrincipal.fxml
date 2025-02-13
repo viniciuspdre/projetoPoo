@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaPrincipalController">
+   <children>
+      <AnchorPane fx:id="painelUsuario" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="731.0" prefWidth="295.0" style="-fx-background-color: #031926;">
+         <children>
+            <ImageView fx:id="imageUser" fitHeight="150.0" fitWidth="200.0" layoutX="73.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/user_white.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="labelUsuario" alignment="CENTER" layoutX="111.0" layoutY="250.0" text="Usuário" textFill="WHITE">
+               <font>
+                  <Font name="Avignon Pro Demi" size="22.0" />
+               </font>
+            </Label>
+            <Button fx:id="btEncerrarSessao" layoutX="38.0" layoutY="619.0" mnemonicParsing="false" onMouseClicked="#encerrarSessao" prefHeight="40.0" prefWidth="220.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Encerrar sessão" textFill="#031926" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="371.0" layoutY="54.0" prefHeight="170.0" prefWidth="562.0" style="-fx-background-color: #031926; -fx-background-radius: 10;">
+         <children>
+            <Button fx:id="btEntrarCliente" layoutX="430.0" layoutY="62.0" mnemonicParsing="false" onMouseClicked="#entrarCliente" prefHeight="47.0" prefWidth="80.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Entrar" />
+            <ImageView fx:id="iconCliente" fitHeight="125.0" fitWidth="165.0" layoutX="23.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/cliente.png" />
+               </image></ImageView>
+            <Label layoutX="223.0" layoutY="43.0" text="Gerenciar" textFill="WHITE">
+               <font>
+                  <Font name="Avignon Pro Demi" size="32.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="253.0" layoutY="81.0" prefHeight="47.0" prefWidth="145.0" style="-fx-background-color: #fff; -fx-background-radius: 10;" stylesheets="@../style/style.css">
+               <children>
+                  <Label layoutX="12.0" layoutY="2.0" text="Cliente" textFill="#031926">
+                     <font>
+                        <Font name="Avignon Pro Demi" size="38.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="371.0" layoutY="254.0" prefHeight="170.0" prefWidth="562.0" style="-fx-background-color: #031926; -fx-background-radius: 10;">
+         <children>
+            <Button fx:id="btEntrarProduto" layoutX="430.0" layoutY="75.0" mnemonicParsing="false" onMouseClicked="#entrarProduto" prefHeight="47.0" prefWidth="80.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Entrar" />
+            <ImageView fx:id="iconProduto" fitHeight="125.0" fitWidth="165.0" layoutX="23.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/produto.png" />
+               </image></ImageView>
+            <Label layoutX="243.0" layoutY="37.0" text="Gerenciar" textFill="WHITE">
+               <font>
+                  <Font name="Avignon Pro Demi" size="32.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="263.0" layoutY="75.0" prefHeight="47.0" prefWidth="145.0" style="-fx-background-color: #fff; -fx-background-radius: 10;" stylesheets="@../style/style.css">
+               <children>
+                  <Label layoutX="7.0" layoutY="2.0" text="Produto" textFill="#031926">
+                     <font>
+                        <Font name="Avignon Pro Demi" size="38.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="371.0" layoutY="453.0" prefHeight="170.0" prefWidth="562.0" style="-fx-background-color: #031926; -fx-background-radius: 10;">
+         <children>
+            <Button fx:id="btEntrarVenda" layoutX="430.0" layoutY="62.0" mnemonicParsing="false" onMouseClicked="#entrarVenda" prefHeight="47.0" prefWidth="80.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Entrar" />
+            <ImageView fx:id="iconVenda" fitHeight="125.0" fitWidth="165.0" layoutX="23.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/venda.png" />
+               </image></ImageView>
+            <Label layoutX="243.0" layoutY="38.0" text="Gerenciar" textFill="WHITE">
+               <font>
+                  <Font name="Avignon Pro Demi" size="32.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="271.0" layoutY="76.0" prefHeight="47.0" prefWidth="131.0" style="-fx-background-color: #fff; -fx-background-radius: 10;" stylesheets="@../style/style.css">
+               <children>
+                  <Label layoutX="9.0" layoutY="2.0" text="Venda" textFill="#031926">
+                     <font>
+                        <Font name="Avignon Pro Demi" size="38.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

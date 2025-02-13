@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: #EAEAEA;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+   <children>
+      <AnchorPane prefHeight="720.0" prefWidth="512.0" style="-fx-background-color: #031926;">
+         <children>
+            <ImageView fitHeight="197.0" fitWidth="227.0" layoutX="158.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/loja-online.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="173.0" layoutY="208.0" text="TekMark" textFill="#eaeaea">
+               <font>
+                  <Font name="Avignon Pro Demi" size="45.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <TextField fx:id="campoUsuarioLogin" layoutX="570.0" layoutY="248.0" prefHeight="47.0" prefWidth="413.0" promptText="Insira seu nome de usuário" style="-fx-border-radius: 10px;" stylesheets="@../style/style.css">
+         <font>
+            <Font name="Avignon Pro Demi" size="15.0" />
+         </font></TextField>
+      <PasswordField fx:id="campoSenhaLogin" layoutX="570.0" layoutY="317.0" prefHeight="47.0" prefWidth="413.0" promptText="Insira sua senha" style="-fx-border-radius: 10px;" stylesheets="@../style/style.css">
+         <font>
+            <Font name="Avignon Pro Demi" size="15.0" />
+         </font></PasswordField>
+      <Label layoutX="631.0" layoutY="156.0" text="Entre em sua conta" textFill="#031926" textOverrun="CLIP">
+         <font>
+            <Font name="Avignon Pro" size="34.0" />
+         </font>
+      </Label>
+      <Label layoutX="675.0" layoutY="106.0" text="Bem Vindo" textFill="#031926">
+         <font>
+            <Font name="Avignon Pro Demi" size="42.0" />
+         </font>
+      </Label>
+      <Button id="botaoLogin" fx:id="botaoLogin" layoutX="707.0" layoutY="395.0" mnemonicParsing="false" onAction="#botaoEnterLogin" prefHeight="47.0" prefWidth="140.0" styleClass="button-blue-background" stylesheets="@../style/style.css" text="Entrar" textFill="WHITE">
+         <font>
+            <Font name="Avignon Pro Demi" size="18.0" />
+         </font>
+      </Button>
+      <Label layoutX="768.0" layoutY="462.0" text="ou" textFill="#031926">
+         <font>
+            <Font name="Avignon Pro Demi" size="15.0" />
+         </font>
+      </Label>
+      <Hyperlink fx:id="redirecionaCadastro" layoutX="710.0" layoutY="487.0" onMouseClicked="#redirecionarCadastro" text="Cadastre-se agora" textFill="#031926">
+         <font>
+            <Font name="Avignon Pro" size="15.0" />
+         </font>
+      </Hyperlink>
+   </children>
+</AnchorPane>

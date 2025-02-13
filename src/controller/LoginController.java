@@ -1,43 +1,99 @@
 package controller;
 
 import dao.UsuarioDAO;
-import view.TelaPrincipal;
-import view.LoginCadastro;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import model.Usuario;
 
-import javax.swing.*;
+import java.io.IOException;
+
 
 public class LoginController {
-    private LoginCadastro loginCadastro;
 
-    public LoginController(LoginCadastro loginCadastro) {
-        this.loginCadastro = loginCadastro;
+    @FXML
+    private TextField campoUsuarioLogin;
+    @FXML
+    private PasswordField campoSenhaLogin;
+    @FXML
+    private Button botaoLogin;
+    @FXML
+    private Hyperlink redirecionaCadastro;
+
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensagem) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensagem);
+        alerta.showAndWait();
     }
-    public void botaoEnterLogin(java.awt.event.ActionEvent evt) {
-        try {
-            String Login = loginCadastro.getJfUsernameLogin().getText();
-            String Senha = new String(loginCadastro.getJfPasswordLogin().getPassword());
 
-            if (Login.isEmpty() || Senha.isEmpty() ) {
-                JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
+    @FXML
+    private void redirecionarCadastro() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Cadastro.fxml"));
+            Parent root = loader.load();
+
+            Stage telaCadastro = new Stage();
+            telaCadastro.setScene(new Scene(root));
+            telaCadastro.setTitle("Tela Principal");
+            telaCadastro.setResizable(false);
+            telaCadastro.show();
+            Stage stageAtual = (Stage) botaoLogin.getScene().getWindow();
+            stageAtual.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta(Alert.AlertType.ERROR, "Erro ao redirecionar", "Houve algum erro ao redirecionar à página de cadastro.");
+        }
+    }
+
+    @FXML
+    private void botaoEnterLogin(ActionEvent event) {
+        try {
+            String login = campoUsuarioLogin.getText();
+            String senha = campoSenhaLogin.getText();
+
+            if (login.isBlank() || senha.isBlank()) {
+                mostrarAlerta(Alert.AlertType.WARNING, "Campos Obrigatórios", "Preencha todos os campos.");
                 return;
             }
-            boolean auteticacao = UsuarioDAO.autenticacaoUsuario(Login, Senha);
 
-            if (auteticacao) {
-                JOptionPane.showMessageDialog(null, "Login realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            Usuario usuarioAutenticado = UsuarioDAO.autenticacaoUsuario(login, senha);
+            System.out.println("Autenticação " + usuarioAutenticado);
 
-                TelaPrincipal objPrincipal = new TelaPrincipal();
-                objPrincipal.setVisible(true);
+            if (usuarioAutenticado != null) {
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Login realizado com sucesso!");
 
-                loginCadastro.dispose();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TelaPrincipal.fxml"));
+                Parent root = loader.load();
+
+                TelaPrincipalController telaPrincipalController = loader.getController();
+                telaPrincipalController.setUsuario(usuarioAutenticado);
+
+                Stage TelaPrincipal = new Stage();
+                TelaPrincipal.setScene(new Scene(root));
+                TelaPrincipal.setTitle("Tela Principal");
+                TelaPrincipal.show();
+                TelaPrincipal.setResizable(false);
+                Stage stageAtual = (Stage) botaoLogin.getScene().getWindow();
+                stageAtual.close();
+
+                return;
             } else {
-                JOptionPane.showMessageDialog(null, "Login ou senha incorretos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Login ou senha incorretos!");
+                System.out.println("Erro ao autenticar");
             }
 
         } catch (Exception erro) {
             System.err.println("Erro ao processar login: " + erro.getMessage());
-            JOptionPane.showMessageDialog(null, "Erro ao realizar login. Tente novamente. ", "Erro" , JOptionPane.ERROR_MESSAGE);
+            erro.printStackTrace();
+            mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Erro ao realizar login. Tente novamente.");
         }
     }
 }
+
 

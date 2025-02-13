@@ -1,0 +1,186 @@
+.text-field {
+    -fx-background-color: white;    /* Fundo branco */
+    -fx-border-color: none;         /* Cor da borda */
+    -fx-border-width: 0px 0px 2px 0px;          /* Espessura da borda */
+    -fx-border-radius: 10px;        /* Bordas arredondadas */
+    -fx-background-radius: 10px;    /* Fundo arredondado */
+    -fx-padding: 8px;               /* Espaço interno para não cortar o texto */
+    -fx-font-size: 14px;            /* Tamanho da fonte */
+    -fx-focus-color: transparent;   /* Remove efeito azul padrão */
+}
+
+.text-field:focused {
+    -fx-border-color: #031926;         /* Borda azul ao focar */
+    -fx-border-width: 0px 0px 2px 0px;
+}
+
+.button-white-background {
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-background-color: #fff;
+    -fx-color-label-visible: #031926;
+    -fx-font-size: 15px;
+    -fx-font-family: "Avignon Pro Demi";
+}
+
+.button-blue-background {
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-background-color: #031926;
+    -fx-color-label-visible: #fff;
+    -fx-font-size: 15px;
+    -fx-font-family: "Avignon Pro Demi";
+}
+
+.hbox-custom {
+    -fx-background-color: #fff;  /* Cor de fundo azul */
+    -fx-border-color: #031926;      /* Cor da borda */
+    -fx-border-width: 2px;          /* Espessura da borda */
+    -fx-border-radius: 10px;        /* Borda arredondada */
+    -fx-background-radius: 10px;    /* Fundo arredondado */
+    -fx-padding: 10px;              /* Espaçamento interno */
+}
+
+.combo-box {
+    -fx-background-color: #031926;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-font-family: "Avignon Pro Demi";
+    -fx-text-fill: #fff;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent; /* Remove fundo */
+    -fx-border-color: transparent; /* Remove borda */
+    -fx-background-radius: 100px;
+    -fx-border-radius: 100px;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: #eaeaea; /* Remove fundo interno */
+    -fx-background-radius: 10px;
+}
+
+/* Barra de rolagem vertical */
+.scroll-bar:vertical {
+    -fx-background-color: transparent; /* Fundo da barra */
+}
+
+/* Barra de rolagem horizontal */
+.scroll-bar:horizontal {
+    -fx-background-color: transparent; /* Fundo da barra */
+}
+
+/* Thumb (a parte que se move da barra) */
+.scroll-bar .thumb {
+    -fx-background-color: #b8b7b7; /* Cor branca semi-transparente */
+    -fx-background-radius: 5px; /* Bordas arredondadas */
+}
+
+/* Quando o mouse passa por cima do thumb */
+.scroll-bar .thumb:hover {
+    -fx-background-color: #787676; /* Fica mais visível */
+}
+
+/* Track (trilho da barra) */
+.scroll-bar .track {
+    -fx-background-color: transparent; /* Remove o fundo do trilho */
+}
+
+/* Botões das extremidades (para subir/descer ou ir para os lados) */
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent; /* Remove fundo */
+    -fx-background-radius: 5px;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-font-family: "Arial";
+    -fx-font-size: 12px;
+    -fx-text-fill: #031926;
+    -fx-border-color: #c1c1c1;
+    -fx-border-width: 0;
+    -fx-background-radius: 10px;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: #031926;
+    -fx-background-insets: 0 0 0 0;
+    -fx-background-radius: 8px 8px 0px 0px;
+}
+
+.table-column {
+    -fx-background-color: #eaeaea;  /* Torna o fundo das colunas transparente */
+    -fx-border-color: none;  /* Cor da borda */
+    -fx-border-width: none;   /* Espessura da borda */
+    -fx-border-radius: 0px; /* Borda arredondada */
+    -fx-pref-width: 90px;
+    -fx-pref-height: 40px;
+}
+
+/* Estilo das células da TableView */
+.table-cell {
+    -fx-text-fill: #031926;
+    -fx-background-radius: 10px;
+    -fx-background-color: transparent;
+}
+
+/* Estilo das células quando estão selecionadas */
+.table-row-cell:selected {
+    -fx-background-color: #b8d9e3;  /* cor de fundo da linha selecionada */
+    -fx-text-fill: #031926;
+}
+
+/* Estilo de foco nas células */
+.table-row-cell:focused {
+    -fx-border-color: #6fa3d1;
+    -fx-border-width: 2px;
+}
+
+.choice-box {
+    -fx-border-color: #031926;
+    -fx-background-radius: 10px;
+    -fx-font-family: "Avignon Pro Demi";
+    -fx-background-color: #fff;
+    -fx-text-fill: #031926;
+    -fx-border-radius: 10px;
+    -fx-border-width: 1px;
+}
+
+.radio-button {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-padding: 5px 10px;
+}
+
+.radio-button .radio {
+    -fx-background-color: transparent;
+    -fx-border-color: #031926;
+    -fx-border-width: 2px;
+    -fx-border-radius: 50%;
+    -fx-padding: 5px;
+    -fx-min-width: 14px;
+    -fx-min-height: 14px;
+    -fx-font-family: "Avignon Pro Demi";
+}
+
+.radio-button:selected .radio {
+    -fx-background-color: #0b2d45;
+    -fx-border-color: #031926;
+    -fx-border-width: 2px;
+}
+
+.radio-button .dot {
+    -fx-background-color: white;
+    -fx-background-radius: 50%;
+    -fx-padding: 5px;
+    -fx-scale-x: 0;
+    -fx-scale-y: 0;
+}
+
+.radio-button:selected .dot {
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-background-color: white;
+}

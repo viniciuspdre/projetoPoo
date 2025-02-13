@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastroClienteController">
+    <children>
+        <AnchorPane prefHeight="83.0" prefWidth="470.0" style="-fx-background-color: #031926;">
+            <children>
+                <Label layoutX="36.0" layoutY="27.0" text="Cadastro de Clientes" textFill="WHITE">
+                    <font>
+                        <Font name="Avignon Pro Demi" size="26.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+         <Button fx:id="btConcluir" layoutX="249.0" layoutY="498.0" mnemonicParsing="false" onAction="#cadastrarCliente" prefHeight="36.0" prefWidth="122.0" styleClass="button-blue-background" stylesheets="@../style/style.css" text="Concluir" textFill="WHITE" />
+         <Button fx:id="btCancelar" layoutX="67.0" layoutY="498.0" mnemonicParsing="false" onMouseClicked="#cancelar" prefHeight="36.0" prefWidth="122.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Cancelar" textFill="#031926" />
+      <Label layoutX="68.0" layoutY="98.0" text="Dados: " textFill="#031926">
+         <font>
+            <Font name="Avignon Pro Demi" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="campoNome" layoutX="67.0" layoutY="147.0" prefHeight="36.0" prefWidth="302.0" promptText="Insira o nome do cliente" stylesheets="@../style/style.css" />
+      <TextField fx:id="campoCPF" layoutX="67.0" layoutY="202.0" prefHeight="36.0" prefWidth="301.0" promptText="Insira o CPF do cliente " stylesheets="@../style/style.css" />
+      <ComboBox fx:id="comboDia" layoutX="67.0" layoutY="282.0" onAction="#atualizarCalendario" prefHeight="36.0" prefWidth="62.0" promptText="Dia" styleClass="choice-box" stylesheets="@../style/style.css" />
+      <ComboBox fx:id="comboAno" layoutX="249.0" layoutY="282.0" onAction="#atualizarCalendario" prefHeight="36.0" prefWidth="114.0" promptText="Ano" styleClass="choice-box" stylesheets="@../style/style.css" />
+      <ComboBox fx:id="comboMes" layoutX="155.0" layoutY="282.0" onAction="#atualizarCalendario" prefHeight="36.0" prefWidth="72.0" promptText="Mês" styleClass="choice-box" stylesheets="@../style/style.css" />
+      <ComboBox fx:id="comboSexo" layoutX="68.0" layoutY="352.0" prefHeight="36.0" prefWidth="131.0" promptText="Sexo" styleClass="choice-box" stylesheets="@../style/style.css" />
+      <ComboBox fx:id="comboEstado" layoutX="238.0" layoutY="352.0" prefHeight="36.0" prefWidth="131.0" promptText="Estado" styleClass="choice-box" stylesheets="@../style/style.css" />
+    </children>
+</AnchorPane>
