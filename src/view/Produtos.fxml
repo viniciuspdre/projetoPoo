@@ -58,7 +58,7 @@
                <left>
                   <AnchorPane prefHeight="555.0" prefWidth="211.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane prefHeight="554.4" prefWidth="214.4" styleClass="nav-form" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="painelUsuario" prefHeight="554.4" prefWidth="214.4" styleClass="nav-form" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <ImageView fitHeight="112.0" fitWidth="84.0" layoutX="64.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -73,7 +73,7 @@
                                     <Font name="Tahoma" size="17.0" />
                                  </font>
                               </Label>
-                              <Label alignment="CENTER" layoutX="6.0" layoutY="154.0" prefHeight="26.0" prefWidth="197.0" text="Axel" textFill="#0970d1">
+                              <Label fx:id="labelUsuario" alignment="CENTER" layoutX="6.0" layoutY="154.0" prefHeight="26.0" prefWidth="197.0" text="Axel" textFill="#0970d1">
                                  <font>
                                     <Font name="Tahoma Bold" size="20.0" />
                                  </font>

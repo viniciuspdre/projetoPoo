@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import model.Usuario;
 
 import java.io.IOException;
 
@@ -61,19 +62,23 @@ public class LoginController {
                 return;
             }
 
-            boolean autenticacao = UsuarioDAO.autenticacaoUsuario(login, senha);
-            System.out.println("Autenticação " + autenticacao);
+            Usuario usuarioAutenticado = UsuarioDAO.autenticacaoUsuario(login, senha);
+            System.out.println("Autenticação " + usuarioAutenticado);
 
-            if (autenticacao) {
+            if (usuarioAutenticado != null) {
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Login realizado com sucesso!");
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TelaPrincipal.fxml"));
                 Parent root = loader.load();
 
+                TelaPrincipalController telaPrincipalController = loader.getController();
+                telaPrincipalController.setUsuario(usuarioAutenticado);
+
                 Stage TelaPrincipal = new Stage();
                 TelaPrincipal.setScene(new Scene(root));
                 TelaPrincipal.setTitle("Tela Principal");
                 TelaPrincipal.show();
+                TelaPrincipal.setResizable(false);
                 Stage stageAtual = (Stage) botaoLogin.getScene().getWindow();
                 stageAtual.close();
 

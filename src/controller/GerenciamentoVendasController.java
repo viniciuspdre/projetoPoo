@@ -9,6 +9,7 @@ import dao.ProdutosVendasDAO;
 import dao.VendasDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -19,6 +20,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Produto;
 import model.ProdutosVendas;
+import model.Usuario;
 import model.Vendas;
 import view.Telas;
 
@@ -80,6 +82,12 @@ public class GerenciamentoVendasController {
     private TableColumn<Vendas, String> colEstadoVenda;
     @FXML
     private TableColumn<Vendas, String> colIDVenda;
+    @FXML
+    private Label labelUsuario;
+    @FXML
+    private AnchorPane painelUsuario;
+
+    private Usuario usuarioLogado;
 
     @FXML
     public void initialize() {
@@ -92,6 +100,14 @@ public class GerenciamentoVendasController {
         campoFiltrar.textProperty().addListener((observable, oldValue, newValue) -> pesquisarVendasCPF());
         mostrarValorTotalVendas();
         configurarEventoSelecao();
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuarioLogado = usuario;
+        labelUsuario.setText(usuario.getNome());
+        painelUsuario.setLeftAnchor(labelUsuario, 0.0);
+        painelUsuario.setRightAnchor(labelUsuario, 0.0);
+        labelUsuario.setAlignment(Pos.CENTER);
     }
 
     private void configurarEventoSelecao() {

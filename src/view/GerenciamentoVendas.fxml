@@ -13,14 +13,14 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GerenciamentoVendasController">
    <children>
-      <AnchorPane layoutY="-1.0" prefHeight="731.0" prefWidth="295.0" style="-fx-background-color: #031926;">
+      <AnchorPane fx:id="painelUsuario" layoutY="-1.0" prefHeight="731.0" prefWidth="295.0" style="-fx-background-color: #031926;">
          <children>
             <ImageView fx:id="imageUser" fitHeight="150.0" fitWidth="200.0" layoutX="73.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icon/user_white.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" layoutX="111.0" layoutY="249.0" text="Usuário" textFill="WHITE">
+            <Label fx:id="labelUsuario" alignment="CENTER" layoutX="111.0" layoutY="249.0" text="Usuário" textFill="WHITE">
                <font>
                   <Font name="Avignon Pro Demi" size="22.0" />
                </font>

@@ -26,6 +26,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import model.Usuario;
 
 import java.io.*;
 
@@ -288,6 +289,18 @@ public class ProdutoController extends Component implements Initializable {
     @FXML private Label codigo_Produto;
     @FXML private Label marca_Produtos;
     @FXML private AnchorPane Container_Pagamentos;
+    @FXML private Label labelUsuario;
+    @FXML private AnchorPane painelUsuario;
+
+    private Usuario usuarioLogado;
+
+    public void setUsuario(Usuario usuario) {
+        this.usuarioLogado = usuario;
+        labelUsuario.setText(usuario.getNome());
+        painelUsuario.setLeftAnchor(labelUsuario, 0.0);
+        painelUsuario.setRightAnchor(labelUsuario, 0.0);
+        labelUsuario.setAlignment(Pos.CENTER);
+    }
 
     private List<Produto> produtos; // Definindo produtos como um atributo da classe
     private List<Produto> alertaEstoque;

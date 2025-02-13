@@ -72,23 +72,35 @@ public class UsuarioDAO {
     }
     private static Connection conexao;
 
-    public static boolean autenticacaoUsuario(String login, String senha) {
+    public static Usuario autenticacaoUsuario(String login, String senha) {
         conexao = new ConexaoDB().getConexao();
+        Usuario usuario = null;
 
-        try{
+        try {
             String sql = "SELECT * FROM USUARIO WHERE LOGIN = ? AND SENHA = ?";
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setString(1, login);
             pstm.setString(2, senha);
 
-            try (ResultSet rs = pstm.executeQuery()) {
-                return rs.next();
+            ResultSet rs = pstm.executeQuery();
+
+            if (rs.next()) { // Se encontrou um usuário
+                usuario = new Usuario();
+                usuario.setTipoUsuario(rs.getString("TIPO_USUARIO"));
+                usuario.setCpf(rs.getString("CPF"));
+                usuario.setNome(rs.getString("NOME"));
+                usuario.setDataNascimento(rs.getString("DATA_NASCIMENTO"));
             }
+
+            rs.close();
+            pstm.close();
+            conexao.close();
+
 
         } catch (SQLException erro) {
             System.err.println("Erro ao autenticar usuário: " + erro.getMessage());
-            return false;
-        }
+            return null;
+        } return usuario;
     }
 }
 
