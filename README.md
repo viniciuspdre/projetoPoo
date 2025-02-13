@@ -1,4 +1,3 @@
-# Projeto POO
 # Loja de Informática - Aplicativo Java
 
 ## Descrição
