@@ -8,6 +8,10 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.layout.StackPane;
+
 
 
 public class LoginController {
@@ -66,6 +70,32 @@ public class LoginController {
             mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Erro ao realizar login. Tente novamente.");
         }
     }
+    @FXML
+    private Hyperlink linkCadastro;
+
+    @FXML
+    private void abrirTelaCadastro(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Cadastro.fxml"));
+            Parent root = loader.load();
+
+            Stage cadastroStage = new Stage();
+            cadastroStage.setScene(new Scene(root));
+            cadastroStage.setTitle("Cadastro de Usuário");
+            cadastroStage.show();
+
+            Stage stageAtual = (Stage) linkCadastro.getScene().getWindow();
+            stageAtual.close();
+
+
+        } catch (Exception e) {
+            System.err.println("Erro ao abrir tela de cadastro: " + e.getMessage());
+            e.printStackTrace();
+            mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Não foi possível abrir a tela de cadastro.");
+        }
+    }
+
 }
+
 
 

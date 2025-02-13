@@ -6,13 +6,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.entity.Cliente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.entity.Cliente;
 import model.entity.Sexo;
@@ -23,8 +21,12 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static dao.ClienteDAO.listarClientes;
+
 public class GerenciamentoClientesController implements Initializable {
 
+    @FXML
+    private TextField campoPesquisar;
     @FXML
     private Button btCadastrar;
 
@@ -76,12 +78,14 @@ public class GerenciamentoClientesController implements Initializable {
         btCadastrar.setOnAction(event -> cadastrarCliente());
         btEditar.setOnAction(event -> editarCliente());
         btExcluir.setOnAction(event -> excluirCliente());
+
+        campoPesquisar.textProperty().addListener((observable, oldValue, newValue) -> pesquisarClienteCPF());
     }
 
     public void carregarTabelaClientes() {
         ClienteDAO clienteDAO = new ClienteDAO();
 
-        List<Cliente> lista = clienteDAO.listarClientes();
+        List<Cliente> lista = listarClientes();
         listaClientes = FXCollections.observableArrayList(lista);
         tabelaClientes.setItems(listaClientes);
 
@@ -94,7 +98,9 @@ public class GerenciamentoClientesController implements Initializable {
             Stage popupStage = new Stage();
             popupStage.setScene(new Scene(loader.load()));
             popupStage.setTitle("Cadastro de Cliente");
+            popupStage.setOnHidden(event -> carregarTabelaClientes());
             popupStage.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -106,20 +112,86 @@ public class GerenciamentoClientesController implements Initializable {
         Cliente clienteSelecionado = tabelaClientes.getSelectionModel().getSelectedItem();
         if (clienteSelecionado != null) {
             System.out.println("Editar cliente: " + clienteSelecionado.getNome());
-        } else {  // Aqui pode ser implementada a lógica para abrir uma tela de edição
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/EditarCliente.fxml"));
+                Stage popupStage = new Stage();
+                popupStage.setScene(new Scene(loader.load()));
+                popupStage.setTitle("Editar Cliente");
+
+                EditarClienteController controller = loader.getController();
+                controller.receberCliente(clienteSelecionado, this);
+                popupStage.setOnHidden(event -> carregarTabelaClientes());
+                popupStage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
             System.out.println("Selecione um cliente para editar.");
+
+            System.out.println("Selecione um cliente para editar.");
+
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Atenção");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Selecione um cliente para editar.");
+            alerta.showAndWait();
         }
     }
 
     @FXML
     private void excluirCliente() {
         Cliente clienteSelecionado = tabelaClientes.getSelectionModel().getSelectedItem();
+
         if (clienteSelecionado != null) {
-            listaClientes.remove(clienteSelecionado);
-            System.out.println("Cliente removido: " + clienteSelecionado.getNome());
+            // Exclui do banco de dados
+            boolean removido = ClienteDAO.excluirCliente(clienteSelecionado.getCpf());
+
+            if (removido) {
+                // Remove da lista da tabela
+                listaClientes.remove(clienteSelecionado);
+                System.out.println("Cliente removido do banco: " + clienteSelecionado.getNome());
+
+                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                alerta.setTitle("Sucesso");
+                alerta.setHeaderText(null);
+                alerta.setContentText("Cliente removido com sucesso!");
+                alerta.showAndWait();
+            } else {
+                System.out.println("Erro ao excluir cliente do banco.");
+
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setTitle("Erro");
+                alerta.setHeaderText(null);
+                alerta.setContentText("Erro ao excluir cliente do banco.");
+                alerta.showAndWait();
+            }
         } else {
             System.out.println("Selecione um cliente para excluir.");
+
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Atenção");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Selecione um cliente para excluir.");
+            alerta.showAndWait();
         }
+    }
+
+
+    @FXML
+    private void pesquisarClienteCPF() {
+        String filtro = campoPesquisar.getText().trim();
+
+        if (filtro.isEmpty()) {
+            listarClientes(); // Recarrega todas as vendas caso o campo esteja vazio
+            return;
+        }
+
+        List<Cliente> listaFiltrada = listarClientes()
+                .stream()
+                .filter(v -> v.getCpf().contains(filtro))
+                .toList(); // Filtra vendas que contenham o CPF digitado
+
+        tabelaClientes.getItems().setAll(listaFiltrada);
     }
 }
 

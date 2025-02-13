@@ -1,7 +1,7 @@
 package model.entity;
 
 public enum Sexo {
-    MASCULINO ("Masculino"), FEMININO ("Feminino"), OUTRO ("Outro");
+    MASCULINO ("Masculino"), FEMININO ("Feminino"), OUTROS ("Outros");
 
     private String sexo;
     public String getSexo() {
