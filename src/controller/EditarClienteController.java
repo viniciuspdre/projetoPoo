@@ -5,7 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.entity.Cliente;
+import model.Cliente;
 import model.entity.Estado;
 import model.entity.Sexo;
 

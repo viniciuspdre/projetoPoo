@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.chart.BarChart?>
@@ -36,29 +37,12 @@
          <children>
             <BorderPane layoutX="110.0" layoutY="210.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <top>
-                  <AnchorPane prefHeight="45.0" prefWidth="200.0" styleClass="top-form" stylesheets="@../style/cadastroProdutos.css" BorderPane.alignment="CENTER">
-                     <children>
-                        <AnchorPane layoutX="107.0" layoutY="-68.0" prefHeight="35.0" prefWidth="1100.0" styleClass="semi-top-form" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <Label layoutX="58.0" layoutY="7.0" text="HelliotTech">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <ImageView fitHeight="35.0" fitWidth="61.0" layoutX="14.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icon/logo.png" />
-                                 </image>
-                              </ImageView>
-                              <Button fx:id="btnMinimizer" layoutX="982.0" layoutY="7.0" mnemonicParsing="false" onAction="#minimizer" prefWidth="50.0" styleClass="minimize" stylesheets="@../style/cadastroProdutos.css" />
-                           </children></AnchorPane>
-                     </children>
-                  </AnchorPane>
+                  <AnchorPane prefHeight="0.0" prefWidth="1108.0" styleClass="top-form" stylesheets="@../style/cadastroProdutos.css" BorderPane.alignment="CENTER" />
                </top>
                <left>
                   <AnchorPane prefHeight="555.0" prefWidth="211.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="painelUsuario" prefHeight="554.4" prefWidth="214.4" styleClass="nav-form" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="painelUsuario" prefHeight="554.4" prefWidth="214.4" style="-fx-background-color: #031926;" styleClass="nav-form" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <ImageView fitHeight="112.0" fitWidth="84.0" layoutX="64.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -68,18 +52,13 @@
                                     <ColorAdjust brightness="1.0" />
                                  </effect>
                               </ImageView>
-                              <Label layoutX="63.0" layoutY="132.0" text="Bem Vindo," textFill="WHITE">
+                              <Label fx:id="labelUsuario" alignment="CENTER" layoutX="6.0" layoutY="154.0" prefHeight="26.0" prefWidth="197.0" text="Axel" textFill="WHITE">
                                  <font>
-                                    <Font name="Tahoma" size="17.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="labelUsuario" alignment="CENTER" layoutX="6.0" layoutY="154.0" prefHeight="26.0" prefWidth="197.0" text="Axel" textFill="#0970d1">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="20.0" />
+                                    <Font name="Avignon Pro Demi" size="26.0" />
                                  </font>
                               </Label>
                               <Line endX="78.80000305175781" endY="-1.52587890625E-5" layoutX="107.0" layoutY="191.0" startX="-82.80000305175781" startY="-1.52587890625E-5" stroke="WHITE" />
-                              <Button alignment="CENTER" layoutX="16.0" layoutY="212.0" mnemonicParsing="false" onAction="#Home" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../style/cadastroProdutos.css" text="Página Inicial">
+                              <Button alignment="CENTER" layoutX="14.0" layoutY="212.0" mnemonicParsing="false" onAction="#Home" prefHeight="35.0" prefWidth="137.0" styleClass="button-blue-background" stylesheets="@../style/style.css" text="Página Inicial" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="15.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -90,35 +69,18 @@
                                        </effect>
                                     </ImageView>
                                  </graphic>
-                              </Button>
-                              <Button fx:id="Encerrar_Sessao" layoutX="16.0" layoutY="496.0" mnemonicParsing="false" stylesheets="@../style/cadastroProdutos.css">
-                                 <graphic>
-                                    <ImageView fitHeight="25.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../icon/sing_out.png" />
-                                       </image>
-                                       <effect>
-                                          <ColorAdjust brightness="1.0" />
-                                       </effect>
-                                    </ImageView>
-                                 </graphic>
-                                 <styleClass>
-                                    <String fx:value="logout" />
-                                    <String fx:value="shadow" />
-                                 </styleClass>
-                              </Button>
-                              <Label layoutX="64.0" layoutY="503.0" text="Encerrar Sessão" textFill="WHITE">
                                  <font>
-                                    <Font name="Tahoma" size="14.0" />
+                                    <Font name="Avignon Pro Demi" size="16.0" />
                                  </font>
-                              </Label>
+                              </Button>
+                              <Button fx:id="btVoltar" layoutX="22.0" layoutY="524.0" mnemonicParsing="false" onMouseClicked="#voltarTelaPrincipal" prefHeight="40.0" prefWidth="168.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Voltar" />
                               <Accordion layoutX="16.0" layoutY="247.0" prefHeight="200.0" prefWidth="180.0" stylesheets="@../style/cadastroProdutos.css">
                                  <panes>
-                                    <TitledPane contentDisplay="CENTER" prefHeight="50.0" prefWidth="180.0" stylesheets="@../style/cadastroProdutos.css" text="Produto" textFill="#050505">
+                                    <TitledPane contentDisplay="CENTER" prefHeight="50.0" prefWidth="180.0" text="Produto" textFill="#050505">
                                        <content>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="178.0" stylesheets="@../style/cadastroProdutos.css">
                                              <children>
-                                                <Button alignment="CENTER" layoutX="10.0" layoutY="26.0" mnemonicParsing="false" onAction="#Adicionar_Produto" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../style/cadastroProdutos.css" text="Adicionar Produto">
+                                                <Button alignment="CENTER" layoutX="-2.0" layoutY="45.0" mnemonicParsing="false" onAction="#Adicionar_Produto" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: transparent;" styleClass="button-blue-background" stylesheets="@../style/style.css" text="Adicionar Produto" textFill="WHITE">
                                                    <graphic>
                                                       <ImageView fitHeight="15.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -130,7 +92,7 @@
                                                       </ImageView>
                                                    </graphic>
                                                 </Button>
-                                                <Button alignment="CENTER" layoutX="10.0" layoutY="81.0" mnemonicParsing="false" onAction="#Remover_Produto" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../style/cadastroProdutos.css" text="Remover Produto">
+                                                <Button alignment="CENTER" layoutX="10.0" layoutY="115.0" mnemonicParsing="false" onAction="#Remover_Produto" prefHeight="35.0" prefWidth="156.0" styleClass="button-blue-background" stylesheets="@../style/style.css" text="Remover Produto" textFill="WHITE">
                                                    <graphic>
                                                       <ImageView fitHeight="15.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -142,7 +104,7 @@
                                                       </ImageView>
                                                    </graphic>
                                                 </Button>
-                                                <Button alignment="CENTER" layoutX="9.0" layoutY="54.0" mnemonicParsing="false" onAction="#Atualizar_Produto" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../style/cadastroProdutos.css" text="Atualizar Produto">
+                                                <Button alignment="CENTER" layoutX="9.0" layoutY="80.0" mnemonicParsing="false" onAction="#Atualizar_Produto" prefHeight="35.0" prefWidth="180.0" stylesheets="@../style/style.css" text="Atualizar Produto" textFill="WHITE">
                                                    <graphic>
                                                       <ImageView fitHeight="15.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -153,8 +115,12 @@
                                                          </effect>
                                                       </ImageView>
                                                    </graphic>
+                                                   <styleClass>
+                                                      <String fx:value="nav-btn" />
+                                                      <String fx:value="button-blue-background" />
+                                                   </styleClass>
                                                 </Button>
-                                                <Button alignment="CENTER" layoutX="9.0" layoutY="1.0" mnemonicParsing="false" onAction="#Estatisticas_Produto" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../style/cadastroProdutos.css" text="Estatísticas ">
+                                                <Button alignment="CENTER" layoutX="9.0" layoutY="14.0" mnemonicParsing="false" onAction="#Estatisticas_Produto" prefHeight="35.0" prefWidth="116.0" style="-fx-background-color: transparent;" styleClass="button-blue-background" stylesheets="@../style/style.css" text="Estatísticas " textFill="WHITE">
                                                    <graphic>
                                                       <ImageView fitHeight="15.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -165,26 +131,16 @@
                                                          </effect>
                                                       </ImageView>
                                                    </graphic>
+                                                   <font>
+                                                      <Font name="Avignon Pro Demi" size="16.0" />
+                                                   </font>
                                                 </Button>
                                              </children>
                                           </AnchorPane>
                                        </content>
-                                    </TitledPane>
-                                    <TitledPane prefHeight="130.0" stylesheets="@../style/cadastroProdutos.css" text="Usuários">
-                                       <content>
-                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../style/cadastroProdutos.css" />
-                                       </content>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                       <effect>
-                                          <ColorAdjust />
-                                       </effect>
-                                    </TitledPane>
-                                    <TitledPane prefHeight="130.0" prefWidth="180.0" stylesheets="@../style/cadastroProdutos.css" text="Carrinho">
-                                       <content>
-                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../style/cadastroProdutos.css" />
-                                       </content>
+                                       <font>
+                                          <Font name="Avignon Pro Demi" size="16.0" />
+                                       </font>
                                     </TitledPane>
                                  </panes>
                               </Accordion>
@@ -210,7 +166,7 @@
                                           <String fx:value="shadow" />
                                        </styleClass>
                                        <children>
-                                          <AnchorPane layoutX="14.0" layoutY="12.0" prefHeight="150.0" prefWidth="260.0" stylesheets="@../style/cadastroProdutos.css">
+                                          <AnchorPane layoutX="14.0" layoutY="12.0" prefHeight="150.0" prefWidth="260.0" style="-fx-background-color: #031926;" stylesheets="@../style/cadastroProdutos.css">
                                              <children>
                                                 <ImageView fitHeight="90.0" fitWidth="95.0" layoutX="-2.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -227,7 +183,7 @@
                                                 </Label>
                                                 <Label fx:id="Total_Produtos" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="35.0" layoutY="11.0" prefHeight="18.0" prefWidth="209.0" text="0" textFill="WHITE">
                                                    <font>
-                                                      <Font name="Arial" size="25.0" />
+                                                      <Font name="Avignon Pro Demi" size="26.0" />
                                                    </font>
                                                 </Label>
                                              </children>
@@ -236,7 +192,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                           </AnchorPane>
-                                          <AnchorPane layoutX="300.0" layoutY="12.0" prefHeight="150.0" prefWidth="260.0" stylesheets="@../style/cadastroProdutos.css">
+                                          <AnchorPane layoutX="300.0" layoutY="12.0" prefHeight="150.0" prefWidth="260.0" style="-fx-background-color: #031926;" stylesheets="@../style/cadastroProdutos.css">
                                              <children>
                                                 <ImageView fitHeight="66.0" fitWidth="63.0" layoutX="10.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -253,7 +209,7 @@
                                                 </Label>
                                                 <Label fx:id="Vendas_Mes" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="36.0" layoutY="14.0" prefHeight="18.0" prefWidth="209.0" text="R$ 0,00" textFill="WHITE">
                                                    <font>
-                                                      <Font name="Arial" size="25.0" />
+                                                      <Font name="Avignon Pro Demi" size="26.0" />
                                                    </font>
                                                 </Label>
                                              </children>
@@ -262,7 +218,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                           </AnchorPane>
-                                          <AnchorPane layoutX="587.0" layoutY="12.0" onMouseClicked="#Estoque_Alerta" prefHeight="150.0" prefWidth="260.0" stylesheets="@../style/cadastroProdutos.css">
+                                          <AnchorPane layoutX="587.0" layoutY="12.0" onMouseClicked="#Estoque_Alerta" prefHeight="150.0" prefWidth="260.0" style="-fx-background-color: #031926;" stylesheets="@../style/cadastroProdutos.css">
                                              <styleClass>
                                                 <String fx:value="card" />
                                                 <String fx:value="shadow" />
@@ -278,12 +234,12 @@
                                                 </ImageView>
                                                 <Label fx:id="Alerta_Estoque" alignment="CENTER" contentDisplay="CENTER" layoutX="59.0" layoutY="106.0" prefHeight="30.0" prefWidth="208.0" text="Alerta Estoque" textAlignment="CENTER" textFill="WHITE">
                                                    <font>
-                                                      <Font name="Tahoma" size="20.0" />
+                                                      <Font name="Avignon Pro Demi" size="19.0" />
                                                    </font>
                                                 </Label>
                                                 <Label fx:id="Alerta_Estoque" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="47.0" layoutY="15.0" prefHeight="18.0" prefWidth="209.0" text="0" textFill="WHITE">
                                                    <font>
-                                                      <Font name="Arial" size="25.0" />
+                                                      <Font name="Avignon Pro Demi" size="26.0" />
                                                    </font>
                                                 </Label>
                                              </children>
@@ -309,11 +265,11 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="Container_Adicionar_Produto" layoutX="9.0" prefHeight="532.0" prefWidth="882.0" stylesheets="@../style/cadastroProdutos.css" visible="false" AnchorPane.bottomAnchor="10.399999999999977" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="10.199999999999932" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Container_Adicionar_Produto" layoutX="10.0" layoutY="14.0" prefHeight="532.0" prefWidth="882.0" stylesheets="@../style/cadastroProdutos.css" visible="false" AnchorPane.bottomAnchor="-3.6000000000000227" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="9.199999999999932" AnchorPane.topAnchor="14.0">
                            <children>
                               <AnchorPane prefHeight="288.0" prefWidth="878.0" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="259.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <TableView fx:id="Tabela_Produto_Adicionar" layoutX="10.0" layoutY="55.0" prefHeight="206.0" prefWidth="870.0" stylesheets="@../style/cadastroProdutos.css">
+                                    <TableView fx:id="Tabela_Produto_Adicionar" layoutY="54.0" prefHeight="211.0" prefWidth="874.0" stylesheets="@../style/style.css">
                                        <columns>
                                           <TableColumn fx:id="colunaCodigo_Adicionar" prefWidth="116.79998874664307" text="Código" />
                                           <TableColumn fx:id="colunaNome_Adicionar" prefWidth="77.5999755859375" text="Nome" />
@@ -327,7 +283,11 @@
                                           <TableColumn fx:id="colunaLoja_Adicionar" prefWidth="112.7999267578125" text="Loja(CNPJ)" />
                                        </columns>
                                     </TableView>
-                                    <TextField fx:id="Pesquisar_Adicionar_Produto" layoutX="12.0" layoutY="13.0" prefHeight="30.0" prefWidth="200.0" promptText="Pesquisar" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
+                                    <TextField fx:id="Pesquisar_Adicionar_Produto" layoutX="12.0" layoutY="13.0" prefHeight="30.0" prefWidth="200.0" promptText="Pesquisar" style="-fx-border-width: 1; -fx-border-color: #031926;" styleClass="text-field" stylesheets="@../style/style.css">
+                                       <font>
+                                          <Font name="Avignon Pro Demi" size="17.0" />
+                                       </font>
+                                    </TextField>
                                     <ImageView fitHeight="22.0" fitWidth="23.0" layoutX="184.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" styleClass="nav-btn">
                                        <image>
                                           <Image url="@../icon/search.png" />
@@ -338,29 +298,35 @@
                                     </ImageView>
                                  </children>
                               </AnchorPane>
-                              <TextField fx:id="Adicionar_Produto_Nome" layoutX="109.0" layoutY="317.0" promptText="Nome" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
-                              <TextField fx:id="Adicionar_Produto_Preco" layoutX="109.0" layoutY="377.0" promptText="Preço" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
-                              <ComboBox fx:id="Adicionar_Produto_Categorias" editable="true" layoutX="298.0" layoutY="377.0" prefWidth="150.0" promptText="Vazio" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css">
+                              <TextField fx:id="Adicionar_Produto_Nome" layoutX="109.0" layoutY="317.0" promptText="Nome" style="-fx-border-color: #031926;" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
+                              <TextField fx:id="Adicionar_Produto_Preco" layoutX="109.0" layoutY="377.0" promptText="Preço" style="-fx-border-color: #031926;" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
+                              <ComboBox fx:id="Adicionar_Produto_Categorias" editable="true" layoutX="298.0" layoutY="377.0" prefWidth="150.0" promptText="Vazio" style="-fx-border-color: #031926; -fx-background-radius: 10; -fx-border-radius: 10;">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
-                                 </cursor></ComboBox>
-                              <TextField fx:id="Adicionar_Produto_Marca" layoutX="109.0" layoutY="432.0" promptText="Marca" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
-                              <TextArea fx:id="Adicionar_Produto_Descricao" layoutX="298.0" layoutY="433.0" prefHeight="83.0" prefWidth="150.0" promptText="Descrição" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" wrapText="true" />
-                              <AnchorPane layoutX="488.0" layoutY="317.0" prefHeight="180.0" prefWidth="150.0" stylesheets="@../style/cadastroProdutos.css">
+                                 </cursor>
+                              </ComboBox>
+                              <TextField fx:id="Adicionar_Produto_Marca" layoutX="109.0" layoutY="432.0" promptText="Marca" style="-fx-border-color: #031926;" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
+                              <TextArea fx:id="Adicionar_Produto_Descricao" layoutX="298.0" layoutY="433.0" prefHeight="83.0" prefWidth="150.0" promptText="Descrição" style="-fx-border-width: 1; -fx-border-color: #031926;" styleClass="text-field" wrapText="true">
+                                 <stylesheets>
+                                    <URL value="@../style/cadastroProdutos.css" />
+                                    <URL value="@../style/style.css" />
+                                 </stylesheets></TextArea>
+                              <AnchorPane layoutX="488.0" layoutY="317.0" prefHeight="180.0" prefWidth="150.0" style="-fx-border-color: #031926;" stylesheets="@../style/cadastroProdutos.css">
                                  <styleClass>
                                     <String fx:value="white" />
                                     <String fx:value="shadow" />
                                     <String fx:value="textfield" />
                                  </styleClass>
                                  <children>
-                                    <Button layoutX="24.0" layoutY="150.2" mnemonicParsing="false" onAction="#Importar_Foto_Adicionar_Produto" prefWidth="101.0" stylesheets="@../style/cadastroProdutos.css" text="Importar" AnchorPane.bottomAnchor="6.600000000000023">
+                                    <Button layoutX="24.0" layoutY="150.2" mnemonicParsing="false" onAction="#Importar_Foto_Adicionar_Produto" prefWidth="101.0" styleClass="button-blue-background" text="Importar" textFill="WHITE" AnchorPane.bottomAnchor="6.600000000000023">
                                        <font>
-                                          <Font name="Tahoma Bold" size="12.0" />
+                                          <Font name="Avignon Pro Demi" size="16.0" />
                                        </font>
-                                       <styleClass>
-                                          <String fx:value="btn-operacao" />
-                                          <String fx:value="shadow" />
-                                       </styleClass></Button>
+                                       <stylesheets>
+                                          <URL value="@../style/cadastroProdutos.css" />
+                                          <URL value="@../style/style.css" />
+                                       </stylesheets>
+                                    </Button>
                                     <ImageView fx:id="Imagem_Produto_Adicionar" fitHeight="136.0" fitWidth="140.0" layoutX="7.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../icon/image2.png" />
@@ -368,63 +334,64 @@
                                     </ImageView>
                                  </children>
                               </AnchorPane>
-                              <Button layoutX="691.0" layoutY="333.0" mnemonicParsing="false" onAction="#Limpar_Adicionar_Produto" prefHeight="41.0" prefWidth="94.0" stylesheets="@../style/cadastroProdutos.css" text="Limpar">
+                              <Button layoutX="691.0" layoutY="333.0" mnemonicParsing="false" onAction="#Limpar_Adicionar_Produto" prefHeight="42.0" prefWidth="122.0" styleClass="button-blue-background" text="Limpar" textFill="WHITE">
                                  <font>
-                                    <Font name="Tahoma Bold" size="14.0" />
+                                    <Font name="Avignon Pro Demi" size="15.0" />
                                  </font>
-                                 <styleClass>
-                                    <String fx:value="btn-limpar" />
-                                    <String fx:value="shadow" />
-                                 </styleClass></Button>
-                              <Label alignment="CENTER" layoutX="109.0" layoutY="293.0" prefHeight="18.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Nome:">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label alignment="CENTER" layoutX="108.0" layoutY="354.0" prefHeight="18.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Preço:">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label alignment="CENTER" layoutX="110.0" layoutY="411.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Marca:">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="Adicionar_Produto_Estoque" layoutX="111.0" layoutY="492.0" promptText="Estoque" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
-                              <Label alignment="CENTER" layoutX="110.0" layoutY="469.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Estoque:">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label alignment="CENTER" layoutX="298.0" layoutY="353.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Categoria:">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label alignment="CENTER" layoutX="298.0" layoutY="409.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Descrição:">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label alignment="CENTER" layoutX="488.0" layoutY="293.0" prefHeight="18.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Carregar Foto">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Button layoutX="691.0" layoutY="403.0" mnemonicParsing="false" onAction="#btn_Adicionar_Produto" prefHeight="41.0" prefWidth="94.0" stylesheets="@../style/cadastroProdutos.css" text="Adicionar">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="14.0" />
-                                 </font>
-                                 <styleClass>
-                                    <String fx:value="btn-operacao" />
-                                    <String fx:value="shadow" />
-                                 </styleClass>
+                                 <stylesheets>
+                                    <URL value="@../style/cadastroProdutos.css" />
+                                    <URL value="@../style/style.css" />
+                                 </stylesheets>
                               </Button>
-                              <TextField fx:id="Adicionar_Produto_Estoque_Minimo" layoutX="301.0" layoutY="320.0" promptText=" Estoque Mínimo" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
-                              <Label alignment="CENTER" layoutX="298.0" layoutY="297.0" prefWidth="150.0" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Estoque Mínimo:">
+                              <Label alignment="CENTER" layoutX="109.0" layoutY="293.0" prefHeight="22.0" prefWidth="147.0" style="-fx-background-color: #031926;" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Nome:">
                                  <font>
-                                    <Font name="Tahoma Bold" size="14.0" />
+                                    <Font name="Avignon Pro Demi" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="108.0" layoutY="354.0" prefHeight="18.0" prefWidth="150.0" style="-fx-background-color: #031926;" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Preço:">
+                                 <font>
+                                    <Font name="Avignon Pro Demi" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="107.0" layoutY="409.0" prefWidth="150.0" style="-fx-background-color: #031926;" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Marca:">
+                                 <font>
+                                    <Font name="Avignon Pro Demi" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="Adicionar_Produto_Estoque" layoutX="111.0" layoutY="492.0" promptText="Estoque" style="-fx-border-color: #031926;" styleClass="textfield" />
+                              <Label alignment="CENTER" layoutX="110.0" layoutY="469.0" prefWidth="150.0" style="-fx-background-color: #031926;" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Estoque:">
+                                 <font>
+                                    <Font name="Avignon Pro Demi" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="298.0" layoutY="353.0" prefWidth="150.0" style="-fx-background-color: #031926;" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Categoria:">
+                                 <font>
+                                    <Font name="Avignon Pro Demi" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="298.0" layoutY="409.0" prefWidth="150.0" style="-fx-background-color: #031926;" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Descrição:">
+                                 <font>
+                                    <Font name="Avignon Pro Demi" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="488.0" layoutY="293.0" prefHeight="18.0" prefWidth="150.0" style="-fx-background-color: #031926;" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Carregar Foto">
+                                 <font>
+                                    <Font name="Avignon Pro Demi" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="691.0" layoutY="403.0" mnemonicParsing="false" onAction="#btn_Adicionar_Produto" prefHeight="42.0" prefWidth="122.0" styleClass="button-blue-background" text="Adicionar" textFill="WHITE">
+                                 <font>
+                                    <Font name="Avignon Pro Demi" size="15.0" />
+                                 </font>
+                                 <stylesheets>
+                                    <URL value="@../style/cadastroProdutos.css" />
+                                    <URL value="@../style/style.css" />
+                                 </stylesheets>
+                              </Button>
+                              <TextField fx:id="Adicionar_Produto_Estoque_Minimo" layoutX="301.0" layoutY="320.0" promptText=" Estoque Mínimo" style="-fx-border-color: #031926;" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
+                              <Label alignment="CENTER" layoutX="298.0" layoutY="297.0" prefWidth="150.0" style="-fx-background-color: #031926;" styleClass="title_label" stylesheets="@../style/cadastroProdutos.css" text="Estoque Mínimo:">
+                                 <font>
+                                    <Font name="Avignon Pro Demi" size="18.0" />
                                  </font>
                               </Label>
                            </children>
@@ -433,9 +400,9 @@
                               <String fx:value="shadow" />
                            </styleClass>
                         </AnchorPane>
-                        <AnchorPane fx:id="Container_Atualizar_Produto" layoutX="130.0" layoutY="152.0" prefHeight="542.4" prefWidth="888.8" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Container_Atualizar_Produto" layoutX="130.0" layoutY="152.0" prefHeight="542.4" prefWidth="888.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <AnchorPane layoutX="10.0" layoutY="11.0" prefHeight="521.0" prefWidth="876.0" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="10.600000000000023" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.799999999999955" AnchorPane.topAnchor="11.0">
+                              <AnchorPane layoutX="10.0" layoutY="11.0" prefHeight="521.0" prefWidth="876.0" stylesheets="@../style/cadastroProdutos.css" visible="false" AnchorPane.bottomAnchor="10.600000000000023" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.799999999999955" AnchorPane.topAnchor="11.0">
                                  <styleClass>
                                     <String fx:value="white" />
                                     <String fx:value="shadow" />
@@ -502,7 +469,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                           </TableView>
-                                          <TextField fx:id="Pesquisar_Atualizar_Produto" layoutX="14.0" layoutY="15.0" prefHeight="30.0" prefWidth="200.0" promptText="Pesquisar" styleClass="textfield" stylesheets="@../style/cadastroProdutos.css" />
+                                          <TextField fx:id="Pesquisar_Atualizar_Produto" layoutX="14.0" layoutY="15.0" prefHeight="30.0" prefWidth="200.0" promptText="Pesquisar" />
                                           <Button layoutX="172.0" layoutY="14.0" mnemonicParsing="false" styleClass="nav-btn" stylesheets="@../style/cadastroProdutos.css">
                                              <graphic>
                                                 <ImageView fitHeight="22.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" styleClass="nav-btn">

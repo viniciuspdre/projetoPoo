@@ -13,14 +13,14 @@
 <AnchorPane prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GerenciamentoClientesController">
     <children>
         <!-- Sidebar -->
-        <AnchorPane layoutY="-3.0" prefHeight="731.0" prefWidth="295.0" style="-fx-background-color: #031926;">
+        <AnchorPane fx:id="painelUsuario" layoutY="-3.0" prefHeight="731.0" prefWidth="295.0" style="-fx-background-color: #031926;">
             <children>
                 <ImageView fx:id="imageUser" fitHeight="150.0" fitWidth="200.0" layoutX="73.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../icon/user_white.png" />
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" layoutX="111.0" layoutY="249.0" text="Usuário" textFill="WHITE">
+                <Label fx:id="labelUsuario" alignment="CENTER" layoutX="111.0" layoutY="249.0" text="Usuário" textFill="WHITE">
                     <font>
                         <Font name="Avignon Pro Demi" size="22.0" />
                     </font>
@@ -28,6 +28,7 @@
                 <Button id="btCadastrar" fx:id="btCadastrar" layoutX="38.0" layoutY="313.0" mnemonicParsing="false" onAction="#cadastrarCliente" prefHeight="40.0" prefWidth="220.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Cadastrar cliente" textFill="#031926" />
                 <Button id="btEditar" fx:id="btEditar" layoutX="38.0" layoutY="379.0" mnemonicParsing="false" onAction="#editarCliente" prefHeight="40.0" prefWidth="220.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Editar cliente" textFill="#031926" />
                 <Button id="btExcluir" fx:id="btExcluir" layoutX="38.0" layoutY="444.0" mnemonicParsing="false" onAction="#excluirCliente" prefHeight="40.0" prefWidth="220.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Excluir cliente" textFill="#031926" />
+            <Button id="btExcluir" fx:id="btVoltar" layoutX="38.0" layoutY="649.0" mnemonicParsing="false" onMouseClicked="#voltarTelaPrincipal" prefHeight="40.0" prefWidth="220.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Voltar" textFill="#031926" />
             </children>
         </AnchorPane>
 

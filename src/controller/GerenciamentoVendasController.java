@@ -90,6 +90,30 @@ public class GerenciamentoVendasController {
     private Usuario usuarioLogado;
 
     @FXML
+    private Button btVoltar;
+
+    @FXML
+    private void voltarTelaPrincipal() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TelaPrincipal.fxml"));
+            Parent root = loader.load();
+            TelaPrincipalController controller = loader.getController();
+            controller.setUsuario(usuarioLogado);
+
+            Stage telaGerenciamento = new Stage();
+            telaGerenciamento.setTitle("Tela Principal");
+            telaGerenciamento.setScene(new Scene(root));
+            telaGerenciamento.setResizable(false);
+            telaGerenciamento.show();
+
+            Stage stage = ( Stage ) btVoltar.getScene().getWindow();
+            stage.close();
+        } catch (IOException e) {
+            System.out.println("Erro ao voltar");
+        }
+    }
+
+    @FXML
     public void initialize() {
         configurarTabela();
         listarVendas();

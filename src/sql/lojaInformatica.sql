@@ -2,58 +2,185 @@
 
 CREATE TABLE loja # Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
 (
-	cnpj VARCHAR(18),
-	categoria VARCHAR(50),
-	nome VARCHAR (80) NOT NULL, # NOT NULL = garante que a coluna nao tenha valor nulo.
-	pais CHAR (3),
-	estado CHAR (2),
-	cidade VARCHAR(50),
-	bairro VARCHAR(50),
-	rua VARCHAR(50),
-	numero VARCHAR(10),
+    cnpj VARCHAR(18),
+    categoria VARCHAR(50),
+    nome VARCHAR (80) NOT NULL, # NOT NULL = garante que a coluna nao tenha valor nulo.
+    pais CHAR (3),
+    estado CHAR (2),
+    cidade VARCHAR(50),
+    bairro VARCHAR(50),
+    rua VARCHAR(50),
+    numero VARCHAR(10),
     cep VARCHAR(9),
     telefone VARCHAR(14),
     email VARCHAR(80),
-	PRIMARY KEY(cnpj) #Chave Primaria
-);
+    PRIMARY KEY(cnpj) #Chave Primaria
+    );
 
 CREATE TABLE usuario #Comando DDL (Linguagem de Definição de Dados) para criacao de tabelas
 (
-	login VARCHAR(80),
-	senha VARCHAR(15) NOT NULL, # NOT NULL = garante que a coluna nao tenha valor nulo.
-	nome VARCHAR(70) NOT NULL, # NOT NULL = garante que a coluna nao tenha valor nulo.
-	idade SMALLINT,
-	cpf VARCHAR(14) NOT NULL, # NOT NULL = garante que a coluna nao tenha valor nulo.
-	data_nascimento DATE,
-	pais CHAR(3),
-	estado CHAR(2),
-	cidade VARCHAR(50),
-	bairro VARCHAR(50),
-	rua VARCHAR(50),
-	numero VARCHAR(10),
+    login VARCHAR(80),
+    senha VARCHAR(15) NOT NULL, # NOT NULL = garante que a coluna nao tenha valor nulo.
+    nome VARCHAR(70) NOT NULL, # NOT NULL = garante que a coluna nao tenha valor nulo.
+    cpf VARCHAR(14) NOT NULL, # NOT NULL = garante que a coluna nao tenha valor nulo.
+    data_nascimento DATE,
+    pais CHAR(3),
+    estado CHAR(2),
+    cidade VARCHAR(50),
+    bairro VARCHAR(50),
+    rua VARCHAR(50),
+    numero VARCHAR(10),
     cep VARCHAR(9),
     foto_usuario longblob,
-	cnpj_loja VARCHAR(18),
-	PRIMARY KEY(login), # Chave Primaria
-	FOREIGN KEY (cnpj_loja) REFERENCES loja (cnpj) # Chave Estrangeira
-);
+    cnpj_loja VARCHAR(18),
+    tipo_usuario ENUM("admin","cliente"),
+    PRIMARY KEY(login), # Chave Primaria
+    FOREIGN KEY (cnpj_loja) REFERENCES loja (cnpj) # Chave Estrangeira
+    );
+
+alter table usuario modify column tipo_usuario ENUM("admin","padrão");
 
 CREATE TABLE produto #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
 (
-	cod VARCHAR(50),
-	nome VARCHAR(60) NOT NULL,# NOT NULL = garante que a coluna nao tenha valor nulo.
-	preco real NOT NULL CHECK (preco > 0) , # Garante que os valores em uma coluna satisfacam uma condicao especifica
-	categoria VARCHAR(50),
-	marca VARCHAR(50),
-	descricao VARCHAR(1000),
+    cod VARCHAR(50),
+    nome VARCHAR(60) NOT NULL,# NOT NULL = garante que a coluna nao tenha valor nulo.
+    preco real CHECK (preco > 0) NOT NULL, # Garante que os valores em uma coluna satisfacam uma condicao especifica
+    categoria VARCHAR(50),
+    marca VARCHAR(50),
+    descricao VARCHAR(1000),
     foto_produto longblob,
     estoque int,
-    estoque_minimo int,
     vendidos int,
-	cnpj_loja VARCHAR(18),
-	PRIMARY KEY (cod), # Chave Primaria
-	FOREIGN KEY (cnpj_loja) REFERENCES loja (cnpj) # Chave Estrangeira
+    cnpj_loja VARCHAR(18),
+    PRIMARY KEY (cod), # Chave Primaria
+    FOREIGN KEY (cnpj_loja) REFERENCES loja (cnpj) # Chave Estrangeira
+    );
+
+alter table produto add estoque_minimo int;
+
+select * from produto;
+select categoria from produto order by categoria ASC;
+
+CREATE TABLE fornecedor #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
+(
+    login_usuario VARCHAR(80) NOT NULL,# NOT NULL = garante que a coluna nao tenha valor nulo.
+    cnpj VARCHAR(18),
+    data_fornecimento DATE,
+    nome VARCHAR(80) NOT NULL,# NOT NULL = garante que a coluna nao tenha valor nulo.
+    pais CHAR(3),
+    estado CHAR(2),
+    cidade VARCHAR(50),
+    bairro VARCHAR(50),
+    rua VARCHAR(50),
+    numero VARCHAR(10),
+    cep VARCHAR(9),
+    PRIMARY KEY(cnpj), # Chave Primaria
+    FOREIGN KEY (login_usuario) REFERENCES usuario(login) # Chave Estrangeira
+    );
+
+CREATE TABLE dependente #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
+(
+    login_usuario VARCHAR(80) NOT NULL,# NOT NULL = garante que a coluna nao tenha valor nulo.
+    nome VARCHAR(60) NOT NULL,# NOT NULL = garante que a coluna nao tenha valor nulo.
+    sexo CHAR(1),
+    data_nascimento DATE,
+    grau_parentesco VARCHAR(25),
+    PRIMARY KEY (data_nascimento,login_usuario), # Chave Primaria
+    FOREIGN KEY (login_usuario) REFERENCES usuario(login) # Chave Estrangeira
+    );
+
+CREATE TABLE administrador #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
+(
+    login_usuario VARCHAR(80), # NOT NULL = garante que a coluna nao tenha valor nulo.
+    cargo VARCHAR(50),
+    PRIMARY KEY (login_usuario), # Chave Primaria
+    FOREIGN KEY (login_usuario) REFERENCES usuario (login) # Chave Estrangeira
+    );
+
+CREATE TABLE cliente #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
+(
+    login_usuario VARCHAR(80),
+    status VARCHAR(10),
+    PRIMARY KEY (login_usuario), # Chave Primaria
+    FOREIGN KEY (login_usuario) REFERENCES usuario (login) # Chave Estrangeira
+    );
+
+CREATE TABLE dados_bancarios_usuario #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
+(
+    login_usuario VARCHAR(80),
+    nome_titular VARCHAR(100) NOT NULL, -- Nome do titular da conta
+    banco VARCHAR(50) NOT NULL, -- Nome do banco
+    agencia VARCHAR(20) NOT NULL, -- Número da agência
+    numeroConta VARCHAR(30) NOT NULL, -- Número da conta corrente
+    tipo_conta ENUM('Corrente', 'Poupança') NOT NULL, -- Tipo da conta
+    chave_pix VARCHAR(100) DEFAULT NULL, -- Chave PIX (opcional)
+    criado_em DATETIME DEFAULT CURRENT_TIMESTAMP, -- Data de criação do registro
+    atualizado_em DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- Data da última atualização
+    PRIMARY KEY (login_usuario), # Chave Primaria
+    FOREIGN KEY (login_usuario) REFERENCES usuario (login) # Chave Estrangeira
+    );
+
+CREATE TABLE emails_usuario #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
+(
+    login_usuario VARCHAR(80),
+    emails VARCHAR(80),
+    PRIMARY KEY (emails,login_usuario), # Chave Primaria
+    FOREIGN KEY (login_usuario) REFERENCES usuario(login) # Chave Estrangeira
+    );
+
+CREATE TABLE telefones_usuario #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
+(
+    login_usuario VARCHAR(80),
+    telefones VARCHAR(80),
+    PRIMARY KEY(telefones,login_usuario), # Chave Primaria
+    FOREIGN KEY (login_usuario) REFERENCES usuario(login) # Chave Estrangeira
+    );
+
+CREATE TABLE usuario_compra_produto #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
+(
+    login_usuario VARCHAR(80),
+    cod_produto VARCHAR(50),
+    data_compra DATE,
+    forma_pagamento ENUM('Cartão de Crédito', 'Cartão de Débito', 'Pix', 'Boleto'),
+    PRIMARY KEY(login_usuario,cod_produto), # Chave Primaria
+    FOREIGN KEY(login_usuario) REFERENCES usuario (login), # Chave Estrangeira
+    FOREIGN KEY(cod_produto) REFERENCES produto (cod) # Chave Estrangeira
+    );
+
+CREATE TABLE loja_detem_fornecedor #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
+(
+    cnpj_loja VARCHAR(18),
+    cnpj_fornecedor VARCHAR(18),
+    PRIMARY KEY (cnpj_loja,cnpj_fornecedor), # Chave Primaria
+    FOREIGN KEY (cnpj_loja) REFERENCES loja (cnpj), # Chave Estrangeira
+    FOREIGN KEY (cnpj_fornecedor) REFERENCES fornecedor (cnpj) # Chave Estrangeira
+    );
+
+CREATE TABLE administrador_gerencia_administrador #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
+(
+    login_usuario_administrador_gerencia VARCHAR(80),
+    login_usuario_administrador_gerenciado VARCHAR(80),
+    PRIMARY KEY(login_usuario_administrador_gerencia,login_usuario_administrador_gerenciado), # Chave Primaria
+    FOREIGN KEY(login_usuario_administrador_gerencia) REFERENCES administrador (login_usuario), # Chave Estrangeira
+    FOREIGN KEY(login_usuario_administrador_gerenciado) REFERENCES administrador (login_usuario) # Chave Estrangeira
+    );
+
+CREATE TABLE vendas (
+                        id_venda INT AUTO_INCREMENT PRIMARY KEY,  -- ID único para cada venda
+                        cnpj_loja VARCHAR(18) NOT NULL,           -- FK para a loja
+                        login_usuario VARCHAR(80) NOT NULL,       -- FK para o usuário (cliente)
+                        data_venda DATE NOT NULL,                 -- Data da venda
+                        horario TIME NOT NULL,                     -- Horário da venda
+                        valor_total DECIMAL(10,2) NOT NULL,       -- Valor da venda (corrigido FLOAT para DECIMAL)
+                        forma_pagamento ENUM('Cartão de Crédito', 'Cartão de Débito', 'Pix', 'Boleto') NOT NULL,  -- Forma de pagamento padronizada
+                        data_vencimento DATE,                     -- Data de vencimento do pagamento (se aplicável)
+
+    -- Definição de chaves estrangeiras
+                        FOREIGN KEY (cnpj_loja) REFERENCES loja (cnpj),
+                        FOREIGN KEY (login_usuario) REFERENCES usuario (login)
 );
+
+alter table vendas modify column forma_pagamento enum('Cartão de Crédito', 'Cartão de Débito', 'Pix', 'Boleto', 'Dinheiro')  not null;
 
 CREATE TABLE cliente #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
 (
@@ -66,135 +193,73 @@ CREATE TABLE cliente #Comando DDL (Linguagem de Definicao de Dados) para criacao
     data_nascimento DATE,
     status_cliente VARCHAR(10),
     PRIMARY KEY (cpf)
-);
+    );
 
+select * from vendas;
+SELECT * FROM produto_vendas;
 select * from produto;
-select categoria from produto order by categoria ASC;
 
-CREATE TABLE fornecedor #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
-(
-	login_usuario VARCHAR(80) NOT NULL,# NOT NULL = garante que a coluna nao tenha valor nulo.
-	cnpj VARCHAR(18),
-	data_fornecimento DATE,
-    nome VARCHAR(80) NOT NULL,# NOT NULL = garante que a coluna nao tenha valor nulo.
-    pais CHAR(3),
-	estado CHAR(2),
-	cidade VARCHAR(50),
-	bairro VARCHAR(50),
-	rua VARCHAR(50),
-	numero VARCHAR(10),
-    cep VARCHAR(9),
-	PRIMARY KEY(cnpj), # Chave Primaria
-	FOREIGN KEY (login_usuario) REFERENCES usuario(login) # Chave Estrangeira
+insert into cliente values("Ivanilson", "98756432115", "PE", "MASCULINO", "2025-02-08", "2005-12-04", "Ativo");
+select * from cliente;
+
+drop table cliente;
+
+alter table vendas add cpf_cliente VARCHAR(14);
+ALTER TABLE vendas
+    ADD CONSTRAINT fk_vendas_cliente
+        FOREIGN KEY (cpf_cliente)
+            REFERENCES cliente(cpf);
+
+
+create table produto_vendas (
+                                id_venda int,
+                                cod_produto varchar(50),
+                                quantidade int,
+                                preco_unitario float,
+
+                                primary key (id_venda, cod_produto),
+                                foreign key (id_venda) references vendas(id_venda),
+                                foreign key (cod_produto) references produto(cod)
 );
 
-CREATE TABLE dependente #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
-(
-	login_usuario VARCHAR(80) NOT NULL,# NOT NULL = garante que a coluna nao tenha valor nulo.
-	nome VARCHAR(60) NOT NULL,# NOT NULL = garante que a coluna nao tenha valor nulo.
-	sexo CHAR(1),
-	data_nascimento DATE,
-	grau_parentesco VARCHAR(25),
-	PRIMARY KEY (data_nascimento,login_usuario), # Chave Primaria
-	FOREIGN KEY (login_usuario) REFERENCES usuario(login) # Chave Estrangeira
-);
+alter table vendas add estado_venda enum("concluída", "em andamento");
 
-CREATE TABLE administrador #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
-(
-	login_usuario VARCHAR(80), # NOT NULL = garante que a coluna nao tenha valor nulo.
-	cargo VARCHAR(50),
-	PRIMARY KEY (login_usuario), # Chave Primaria
-	FOREIGN KEY (login_usuario) REFERENCES usuario (login) # Chave Estrangeira
-);
-
-CREATE TABLE dados_bancarios_usuario #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
-(
-	login_usuario VARCHAR(80),
-	nome_titular VARCHAR(100) NOT NULL, -- Nome do titular da conta
-    banco VARCHAR(50) NOT NULL, -- Nome do banco
-    agencia VARCHAR(20) NOT NULL, -- Número da agência
-    numeroConta VARCHAR(30) NOT NULL, -- Número da conta corrente
-    tipo_conta ENUM('Corrente', 'Poupança') NOT NULL, -- Tipo da conta
-    chave_pix VARCHAR(100) DEFAULT NULL, -- Chave PIX (opcional)
-    criado_em DATETIME DEFAULT CURRENT_TIMESTAMP, -- Data de criação do registro
-    atualizado_em DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- Data da última atualização
-	PRIMARY KEY (login_usuario), # Chave Primaria
-	FOREIGN KEY (login_usuario) REFERENCES usuario (login) # Chave Estrangeira
-);
-
-CREATE TABLE emails_usuario #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
-(
-	login_usuario VARCHAR(80),
-	emails VARCHAR(80),
-	PRIMARY KEY (emails,login_usuario), # Chave Primaria
-	FOREIGN KEY (login_usuario) REFERENCES usuario(login) # Chave Estrangeira
-);
-
-CREATE TABLE telefones_usuario #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
-(
-	login_usuario VARCHAR(80),
-	telefones VARCHAR(80),
-	PRIMARY KEY(telefones,login_usuario), # Chave Primaria
-	FOREIGN KEY (login_usuario) REFERENCES usuario(login) # Chave Estrangeira
-);
-
-CREATE TABLE usuario_compra_produto #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
-(
-	login_usuario VARCHAR(80),
-	cod_produto VARCHAR(50),
-	data_compra DATE,
-	forma_pagamento ENUM('Cartão de Crédito', 'Cartão de Débito', 'Pix', 'Boleto'),
-	PRIMARY KEY(login_usuario,cod_produto), # Chave Primaria
-	FOREIGN KEY(login_usuario) REFERENCES usuario (login), # Chave Estrangeira
-	FOREIGN KEY(cod_produto) REFERENCES produto (cod) # Chave Estrangeira
-);
-
-CREATE TABLE loja_detem_fornecedor #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
-(
-	cnpj_loja VARCHAR(18),
-	cnpj_fornecedor VARCHAR(18),
-	PRIMARY KEY (cnpj_loja,cnpj_fornecedor), # Chave Primaria
-	FOREIGN KEY (cnpj_loja) REFERENCES loja (cnpj), # Chave Estrangeira
-	FOREIGN KEY (cnpj_fornecedor) REFERENCES fornecedor (cnpj) # Chave Estrangeira
-);
-
-CREATE TABLE administrador_gerencia_administrador #Comando DDL (Linguagem de Definicao de Dados) para criacao de tabelas
-(
-	login_usuario_administrador_gerencia VARCHAR(80),
-	login_usuario_administrador_gerenciado VARCHAR(80),
-	PRIMARY KEY(login_usuario_administrador_gerencia,login_usuario_administrador_gerenciado), # Chave Primaria
-	FOREIGN KEY(login_usuario_administrador_gerencia) REFERENCES administrador (login_usuario), # Chave Estrangeira
-	FOREIGN KEY(login_usuario_administrador_gerenciado) REFERENCES administrador (login_usuario) # Chave Estrangeira
-);
-
-insert into loja (cnpj, categoria, nome, pais, estado, cidade, bairro, rua, numero, cep, telefone, email) 
+insert into loja (cnpj, categoria, nome, pais, estado, cidade, bairro, rua, numero, cep, telefone, email)
 values('23.456.789/0001-95', 'Loja de Informática', 'HelliotTech', 'BR', 'PE', 'Belo Jardim','São Pedro', 'Virando a Esquina', '15', '12345-678', '(11)91234-5678', 'loja@loja.com');
 
-INSERT INTO produto (cod, nome, preco, categoria, marca, descricao, foto_produto, estoque, estoque_minimo, vendidos, cnpj_loja) VALUES
-('CPV-2025-00001', 'Notebook Dell Inspiron 15', 3999.90, 'Notebooks', 'Dell', 'Notebook com Intel Core i7, 16GB RAM e SSD 512GB.', NULL, 20, 5, 8, '23.456.789/0001-95'),
-('CPV-2025-00002', 'Monitor LG Ultragear 27"', 1899.90, 'Monitores', 'LG', 'Monitor gamer de 27 polegadas, 165Hz, 1ms, Full HD.', NULL, 15, 3, 6, '23.456.789/0001-95'),
-('CPV-2025-00003', 'Teclado Mecânico Redragon Kumara', 299.90, 'Periféricos', 'Redragon', 'Teclado mecânico RGB switch blue para jogos.', NULL, 30, 10, 12, '23.456.789/0001-95'),
-('CPV-2025-00004', 'Mouse Logitech G Pro Wireless', 599.90, 'Periféricos', 'Logitech', 'Mouse sem fio para gamers, sensor HERO 25K.', NULL, 25, 5, 10, '23.456.789/0001-95'),
-('CPV-2025-00005', 'Gabinete Gamer NZXT H510', 699.90, 'Gabinetes', 'NZXT', 'Gabinete ATX Mid Tower com vidro temperado.', NULL, 18, 4, 7, '23.456.789/0001-95'),
-('CPV-2025-00006', 'Placa de Vídeo RTX 4060 Ti', 3299.90, 'Placas de Vídeo', 'NVIDIA', 'Placa de vídeo com 8GB GDDR6 para alto desempenho.', NULL, 12, 3, 4, '23.456.789/0001-95'),
-('CPV-2025-00007', 'Processador AMD Ryzen 7 5800X', 1799.90, 'Processadores', 'AMD', 'Processador de 8 núcleos e 16 threads, clock de até 4.7GHz.', NULL, 10, 2, 5, '23.456.789/0001-95'),
-('CPV-2025-00008', 'Memória RAM Corsair Vengeance 16GB', 499.90, 'Memórias', 'Corsair', 'Memória RAM DDR4 de 16GB, 3200MHz.', NULL, 25, 5, 12, '23.456.789/0001-95'),
-('CPV-2025-00009', 'SSD Kingston NV2 1TB', 529.90, 'Armazenamento', 'Kingston', 'SSD NVMe M.2 1TB de alta velocidade.', NULL, 40, 10, 20, '23.456.789/0001-95'),
-('CPV-2025-00010', 'Fonte Corsair RM750', 799.90, 'Fontes', 'Corsair', 'Fonte modular 750W 80 Plus Gold.', NULL, 14, 3, 6, '23.456.789/0001-95'),
-('CPV-2025-00011', 'Water Cooler Cooler Master ML240L', 599.90, 'Coolers', 'Cooler Master', 'Water cooler RGB de 240mm para refrigeração líquida.', NULL, 10, 2, 4, '23.456.789/0001-95'),
-('CPV-2025-00012', 'Placa-Mãe ASUS TUF B550M-Plus', 999.90, 'Placas-Mãe', 'ASUS', 'Placa-mãe com suporte a Ryzen e PCIe 4.0.', NULL, 12, 3, 5, '23.456.789/0001-95'),
-('CPV-2025-00013', 'Cadeira Gamer ThunderX3 TGC12', 899.90, 'Móveis para Escritório', 'ThunderX3', 'Cadeira ergonômica com ajuste de altura.', NULL, 20, 5, 8, '23.456.789/0001-95'),
-('CPV-2025-00014', 'No-Break APC 1500VA', 1299.90, 'Energia e Proteção', 'APC', 'No-break inteligente com estabilização de voltagem.', NULL, 15, 3, 6, '23.456.789/0001-95'),
-('CPV-2025-00015', 'Headset HyperX Cloud II', 499.90, 'Periféricos', 'HyperX', 'Headset gamer com som surround 7.1.', NULL, 18, 4, 9, '23.456.789/0001-95'),
-('CPV-2025-00016', 'Hub USB 3.0 4 Portas', 79.90, 'Acessórios', 'Ugreen', 'Hub USB 3.0 com 4 portas de alta velocidade.', NULL, 50, 10, 15, '23.456.789/0001-95'),
-('CPV-2025-00017', 'Impressora HP DeskJet Ink Advantage 2776', 499.90, 'Impressoras', 'HP', 'Impressora multifuncional com conexão Wi-Fi.', NULL, 12, 3, 5, '23.456.789/0001-95'),
-('CPV-2025-00018', 'Mousepad Gamer RGB XXL', 129.90, 'Acessórios', 'Fortrek', 'Mousepad XXL com iluminação RGB.', NULL, 35, 8, 14, '23.456.789/0001-95'),
-('CPV-2025-00019', 'Controle Xbox Series X', 399.90, 'Controles', 'Microsoft', 'Controle sem fio para Xbox e PC.', NULL, 20, 5, 10, '23.456.789/0001-95'),
-('CPV-2025-00020', 'Webcam Logitech C920', 399.90, 'Acessórios', 'Logitech', 'Webcam Full HD 1080p com microfone estéreo.', NULL, 14, 4, 6, '23.456.789/0001-95');
+INSERT INTO produto (cod, nome, preco, estoque, vendidos, categoria, marca, descricao, cnpj_loja)
+VALUES
+    ('CPV-2025-00001', 'Notebook Dell Inspiron 15', 3999.90, 50, 5, 'Notebooks', 'Dell', 'Notebook com processador Intel Core i5, 8GB RAM, 256GB SSD.', '23.456.789/0001-95'),
+    ('CPV-2025-00002', 'Mouse Logitech MX Master 3', 499.90, 100, 20, 'Acessórios', 'Logitech', 'Mouse ergonômico sem fio com alta precisão.', '23.456.789/0001-95'),
+    ('CPV-2025-00003', 'Monitor LG UltraWide 29"', 1599.90, 30, 10, 'Monitores', 'LG', 'Monitor ultrawide com resolução Full HD e painel IPS.', '23.456.789/0001-95'),
+    ('CPV-2025-00004', 'Teclado Mecânico HyperX Alloy FPS', 599.90, 40, 15, 'Acessórios', 'HyperX', 'Teclado mecânico com switches Cherry MX Red.', '23.456.789/0001-95'),
+    ('CPV-2025-00005', 'SSD Kingston NV2 1TB', 449.90, 70, 25, 'Armazenamento', 'Kingston', 'SSD NVMe PCIe 4.0 com alta velocidade de leitura e gravação.', '23.456.789/0001-95'),
+    ('CPV-2025-00006', 'Processador AMD Ryzen 7 5800X', 1999.90, 25, 10, 'Processadores', 'AMD', 'Processador com 8 núcleos e 16 threads para alto desempenho.', '23.456.789/0001-95'),
+    ('CPV-2025-00007', 'Placa-Mãe ASUS TUF Gaming B550M', 1299.90, 20, 5, 'Placas-Mãe', 'ASUS', 'Placa-mãe compatível com processadores Ryzen e suporte a PCIe 4.0.', '23.456.789/0001-95'),
+    ('CPV-2025-00008', 'Memória RAM Corsair Vengeance 16GB', 399.90, 80, 35, 'Memórias', 'Corsair', 'Memória DDR4 de 3200MHz para alto desempenho.', '23.456.789/0001-95'),
+    ('CPV-2025-00009', 'Gabinete Gamer NZXT H510', 749.90, 20, 7, 'Gabinetes', 'NZXT', 'Gabinete compacto com design minimalista e excelente ventilação.', '23.456.789/0001-95'),
+    ('CPV-2025-00010', 'Fonte Corsair RM750', 699.90, 30, 8, 'Fontes', 'Corsair', 'Fonte modular com certificação 80 Plus Gold.', '23.456.789/0001-95'),
+    ('CPV-2025-00011', 'Placa de Vídeo NVIDIA RTX 3060 Ti', 2999.90, 10, 3, 'Placas de Vídeo', 'NVIDIA', 'Placa de vídeo para jogos e criação de conteúdo.', '23.456.789/0001-95'),
+    ('CPV-2025-00012', 'Impressora Epson EcoTank L3250', 1499.90, 15, 5, 'Impressoras', 'Epson', 'Impressora multifuncional com tanque de tinta recarregável.', '23.456.789/0001-95'),
+    ('CPV-2025-00013', 'Roteador TP-Link Archer AX50', 699.90, 25, 10, 'Redes', 'TP-Link', 'Roteador Wi-Fi 6 com alta velocidade de conexão.', '23.456.789/0001-95'),
+    ('CPV-2025-00014', 'Webcam Logitech C920', 499.90, 50, 20, 'Acessórios', 'Logitech', 'Webcam Full HD com microfone embutido.', '23.456.789/0001-95'),
+    ('CPV-2025-00015', 'HD Externo Seagate 2TB', 599.90, 40, 15, 'Armazenamento', 'Seagate', 'HD externo portátil com alta capacidade.', '23.456.789/0001-95'),
+    ('CPV-2025-00016', 'Headset Gamer HyperX Cloud II', 799.90, 30, 12, 'Acessórios', 'HyperX', 'Headset com som surround 7.1 e conforto extremo.', '23.456.789/0001-95'),
+    ('CPV-2025-00017', 'Smartphone Samsung Galaxy S21', 4299.90, 20, 8, 'Celulares', 'Samsung', 'Smartphone com tela AMOLED de 120Hz e câmera tripla.', '23.456.789/0001-95'),
+    ('CPV-2025-00018', 'Tablet Apple iPad 9ª Geração', 3699.90, 25, 9, 'Tablets', 'Apple', 'Tablet com chip A13 Bionic e suporte para Apple Pencil.', '23.456.789/0001-95'),
+    ('CPV-2025-00019', 'Notebook Lenovo Ideapad 3', 3299.90, 35, 10, 'Notebooks', 'Lenovo', 'Notebook com AMD Ryzen 5, 8GB RAM e 256GB SSD.', '23.456.789/0001-95'),
+    ('CPV-2025-00020', 'Cadeira Gamer DXRacer', 1499.90, 15, 4, 'Móveis', 'DXRacer', 'Cadeira ergonômica com design gamer e ajustes.', '23.456.789/0001-95'),
+    ('CPV-2025-00021', 'Switch Gigabit TP-Link SG105', 199.90, 50, 20, 'Redes', 'TP-Link', 'Switch de 5 portas com suporte a Gigabit Ethernet.', '23.456.789/0001-95'),
+    ('CPV-2025-00022', 'Power Bank Xiaomi Mi 20.000mAh', 249.90, 60, 25, 'Acessórios', 'Xiaomi', 'Bateria portátil de alta capacidade com suporte a carregamento rápido.', '23.456.789/0001-95'),
+    ('CPV-2025-00023', 'Monitor Samsung Odyssey G5', 1999.90, 20, 6, 'Monitores', 'Samsung', 'Monitor curvo com resolução WQHD e taxa de 144Hz.', '23.456.789/0001-95'),
+    ('CPV-2025-00024', 'Controle Xbox Series X', 499.90, 40, 18, 'Acessórios', 'Microsoft', 'Controle sem fio para Xbox e PC.', '23.456.789/0001-95'),
+    ('CPV-2025-00025', 'Placa Captura Elgato HD60 S', 1299.90, 10, 3, 'Acessórios', 'Elgato', 'Placa de captura para streaming de jogos.', '23.456.789/0001-95'),
+    ('CPV-2025-00026', 'Microfone Condensador Blue Yeti', 899.90, 20, 5, 'Acessórios', 'Blue', 'Microfone condensador para gravações e transmissões ao vivo.', '23.456.789/0001-95');
 
 SELECT COD FROM PRODUTO ORDER BY COD DESC LIMIT 1;
 
-#Comando DDL (Linguagem de Definicao de dados) usado para destruir tabelas  
+
+#Comando DDL (Linguagem de Definicao de dados) usado para destruir tabelas
 
 DROP TABLE telefones_usuario;
 
@@ -202,6 +267,8 @@ DROP TABLE telefones_usuario;
 
 ALTER TABLE fornecedor DROP data_fornecimento; # apagar coluna
 ALTER TABLE fornecedor ADD data_fornecimento DATE; # adicionar coluna
+
+ALTER TABLE vendas ADD num_parcelas int;
 
 #Comando DML (Linguagem de Manipulacao de dados) usado para visualizar dados da tabela
 
@@ -236,7 +303,7 @@ SELECT * FROM fornecedor WHERE bairro = 'Morumbi' OR bairro = 'Vila Sônia';#Lis
 SELECT * FROM produto WHERE preco BETWEEN (200) AND (500); #Lista os produtos que os preços estão no intervalo de 200 e 500
 SELECT * FROM produto WHERE preco NOT BETWEEN (200) AND (500);#Lista os produtos que os preços não estão no intervalo de 200 e 500
 
-# SELECT - LIKE & NOT LIKE 
+# SELECT - LIKE & NOT LIKE
 
 SELECT * FROM emails_usuario WHERE emails LIKE '%@hotmail.com'; #Lista os emails que possuem terminacao "@hotmail.com"
 SELECT * FROM produto WHERE descricao LIKE 'memória%';#Lista os produtos que possuem descrição,inciada com a palavra memoria
@@ -307,6 +374,11 @@ SELECT * FROM dependente;
 DELETE FROM dependente WHERE grau_parentesco = 'amigo';
 
 #Comando DML (Linguagem de Manipulacao de dados) para atualizar dados da tabela
- 
+
 UPDATE produto SET preco = 1500 WHERE cod = 10;
 SELECT * FROM produto WHERE cod = 10;
+
+ALTER TABLE usuario
+    MODIFY COLUMN tipo_usuario ENUM("admin", "padrao");
+
+select * from usuario;

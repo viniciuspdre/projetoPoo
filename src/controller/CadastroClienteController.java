@@ -1,14 +1,17 @@
-/*package controller;
+package controller;
 
 
 import dao.ClienteDAO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.entity.Cliente;
+import model.Cliente;
+import model.Usuario;
 import model.entity.Estado;
 import model.entity.Sexo;
 
@@ -38,7 +41,8 @@ public class CadastroClienteController {
     @FXML
     private ComboBox<Estado> comboEstado;
 
-   // public  static  boolean cadastro = false;
+
+    // public  static  boolean cadastro = false;
 
 
     private int flag = 0;
@@ -58,9 +62,9 @@ public class CadastroClienteController {
         if (campoCPF.getText().isBlank() || campoNome.getText().isBlank() || comboSexo.getValue() == null  ||
                 comboEstado.getValue() == null  ||
                 comboDia.getValue() == null || comboMes.getValue() == null || comboAno.getValue() == null) {
-                return false;
-            }   return true;
-        }
+            return false;
+        }   return true;
+    }
 
     private boolean validarCPF() {
         String cpf = campoCPF.getText();
@@ -160,10 +164,10 @@ public class CadastroClienteController {
 
     @FXML
     private void cancelar() {
-            limparCampos();
+        limparCampos();
 
-            Stage stage = (Stage) btCancelar.getScene().getWindow();
-            stage.close();
+        Stage stage = (Stage) btCancelar.getScene().getWindow();
+        stage.close();
     }
 
     private void limparCampos() {
@@ -224,7 +228,7 @@ public class CadastroClienteController {
             if (ClienteDAO.cadastrarCliente(cliente)) {
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Cadastro realizado com sucesso!");
                 limparCampos();
-               // cadastro = true;
+                // cadastro = true;
                 Stage stage = (Stage) btConcluir.getScene().getWindow();
                 stage.close();
             }
@@ -234,5 +238,3 @@ public class CadastroClienteController {
         }
     }
 }
-
-*/

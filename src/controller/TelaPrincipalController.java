@@ -75,7 +75,7 @@ public class TelaPrincipalController {
             telaGerenciamento.setResizable(false);
             telaGerenciamento.show();
 
-            Stage stage = ( Stage ) btEntrarVenda.getScene().getWindow();
+            Stage stage = ( Stage ) btEntrarProduto.getScene().getWindow();
             stage.close();
         } catch (IOException e) {
             System.out.println("Erro ao entrar Venda");
@@ -97,6 +97,27 @@ public class TelaPrincipalController {
             telaGerenciamento.show();
 
             Stage stage = ( Stage ) btEntrarVenda.getScene().getWindow();
+            stage.close();
+        } catch (IOException e) {
+            System.out.println("Erro ao entrar Venda");
+        }
+    }
+
+    @FXML
+    private void entrarCliente() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/GerenciamentoClientes.fxml"));
+            Parent root = loader.load();
+            GerenciamentoClientesController controller = loader.getController();
+            controller.setUsuario(usuarioLogado);
+
+            Stage telaGerenciamento = new Stage();
+            telaGerenciamento.setTitle("Gerenciamento de Clientes");
+            telaGerenciamento.setScene(new Scene(root));
+            telaGerenciamento.setResizable(false);
+            telaGerenciamento.show();
+
+            Stage stage = ( Stage ) btEntrarCliente.getScene().getWindow();
             stage.close();
         } catch (IOException e) {
             System.out.println("Erro ao entrar Venda");

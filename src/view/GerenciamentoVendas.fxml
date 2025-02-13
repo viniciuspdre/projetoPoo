@@ -32,6 +32,7 @@
             </Button>
             <Button fx:id="btCancelarVenda" layoutX="37.0" layoutY="382.0" mnemonicParsing="false" onMouseClicked="#cancelarVenda" prefHeight="40.0" prefWidth="220.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Cancelar venda" textFill="#031926" />
             <Button fx:id="btModificarVenda" layoutX="37.0" layoutY="452.0" mnemonicParsing="false" onMouseClicked="#abrirModificarVenda" prefHeight="40.0" prefWidth="220.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Modificar venda" textFill="#031926" />
+            <Button fx:id="btVoltar" layoutX="37.0" layoutY="661.0" mnemonicParsing="false" onMouseClicked="#voltarTelaPrincipal" prefHeight="40.0" prefWidth="220.0" styleClass="button-white-background" stylesheets="@../style/style.css" text="Voltar" textFill="#031926" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="painelListaVendas" layoutX="295.0" prefHeight="728.0" prefWidth="730.0" style="-fx-background-color: #fff;">

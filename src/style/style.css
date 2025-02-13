@@ -104,6 +104,12 @@
     -fx-background-radius: 10px;
 }
 
+.table-view .column-header-background{
+    -fx-background-color: #031926;
+    -fx-background-insets: 0 0 0 0;
+    -fx-background-radius: 8px 8px 0px 0px;
+}
+
 .table-column {
     -fx-background-color: #eaeaea;  /* Torna o fundo das colunas transparente */
     -fx-border-color: none;  /* Cor da borda */
