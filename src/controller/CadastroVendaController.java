@@ -130,7 +130,6 @@ public class CadastroVendaController {
         adicionarProdutosTabela();
         adicionarFormasPagamento();
         adicionandoClientesCombo();
-        adicionarDesconto.setDisable(true);
     }
 
     private void gerarAlertas(Alert.AlertType tipo, String conteudo, String titulo) {
@@ -266,7 +265,7 @@ public class CadastroVendaController {
             adicionarDesconto.setDisable(false);
             String valorDesconto = adicionarDesconto.getText().trim().replace("\\D", "");
             if (!valorDesconto.isEmpty()) {
-                valorTotal *= Double.parseDouble(valorDesconto) / 100;
+                valorTotal *= 1 - (Double.parseDouble(valorDesconto) / 100);
             }
         }
     }
@@ -298,6 +297,7 @@ public class CadastroVendaController {
         venda.setData_venda(data.format(formatterSaida));
         venda.setCnpj("23.456.789/0001-95");
         venda.setForma_pagamento(formaPagamento.getSelectionModel().getSelectedItem());
+        adicionarDescontoVenda();
         venda.setValor((float)valorTotal);
         venda.setHorario(hora.format(formatterHora));
         venda.setEstado_venda("Em andamento");
