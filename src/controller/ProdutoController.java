@@ -36,6 +36,8 @@ import java.io.*;
 import java.awt.*;
 import java.net.URL;
 import java.nio.file.Files;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 import java.util.List;
 
@@ -660,7 +662,7 @@ public class ProdutoController extends Component implements Initializable {
     }
 
     @FXML
-    private void btn_Remover_Produto(){
+    private void btn_Remover_Produto() throws SQLException {
         // Obtém o código digitado no campo de texto
         String codigo = Input_Remover_Produto.getText();
 
@@ -697,11 +699,19 @@ public class ProdutoController extends Component implements Initializable {
             Limpar_Remover_Produto();
             atualizarDados();
 
-        } catch (Exception e) {
+        } catch (SQLIntegrityConstraintViolationException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erro");
             alert.setHeaderText(null);
-            alert.setContentText("Erro ao tentar remover o produto");
+            alert.setContentText("Erro ao tentar remover o produto, pois o mesmo já foi vendido pelo menos uma vez");
+            alert.showAndWait();
+            System.out.println("Erro ao tentar remover o produto: " + e.getMessage());
+            e.printStackTrace(); // Para depuração (pode ser substituído por um logger)
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText(null);
+            alert.setContentText("Erro ao tentar remover o produto.");
             alert.showAndWait();
             System.out.println("Erro ao tentar remover o produto: " + e.getMessage());
             e.printStackTrace(); // Para depuração (pode ser substituído por um logger)
@@ -824,11 +834,20 @@ public class ProdutoController extends Component implements Initializable {
         colunaMarcaAlerta.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMarca()));
     }
 
-    public void eventos(){
+    public void eventos() throws SQLException{
         // Adicionando o evento de pressionar Enter no TextField
-        Input_Remover_Produto.setOnAction(event -> {
-            btn_Remover_Produto();
-        });
+            Input_Remover_Produto.setOnAction(event -> {
+                try {
+                    btn_Remover_Produto();
+                } catch (SQLIntegrityConstraintViolationException e) {
+                    Alert alerta = new Alert(Alert.AlertType.ERROR);
+                    alerta.setHeaderText(null);
+                    alerta.setTitle("Erro");
+                    alerta.setContentText("Erro ao remover produto pois ele já foi vendido pelo menos uma vez");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            });
 
         // Ao clicar em uma linha da tabela tranfere o código dela para o textfield
         Tabela_Produto_Remover.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -1263,6 +1282,10 @@ public class ProdutoController extends Component implements Initializable {
         Container_Home.setVisible(true);
         atualizarDados();
         configurarColunasTabela(); // Configura as colunas da TableView
-        eventos(); // Adiciona eventos de teclado
+        try {
+            eventos(); // Adiciona eventos de teclado
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

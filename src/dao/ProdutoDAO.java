@@ -230,7 +230,7 @@ public class ProdutoDAO {
         return produtos;
     }
 
-    public void excluirProduto(String codigo) {
+    public void excluirProduto(String codigo) throws SQLException{
         String sqlProduto = "DELETE FROM PRODUTO WHERE COD = ?";
         String sqlUsuarioCompraProduto = "DELETE FROM usuario_compra_produto WHERE COD_PRODUTO = ?";
 
@@ -247,10 +247,9 @@ public class ProdutoDAO {
 
             System.out.println("Produto excluído das tabelas usuario_compra_produto e PRODUTO com sucesso!");
 
-        } catch (SQLException e) {
+        } catch (SQLIntegrityConstraintViolationException e) {
             // Log de erro detalhado
-            System.err.println("Erro ao excluir produto: " + e.getMessage());
-            e.printStackTrace();
+            throw e;
         }
     }
 

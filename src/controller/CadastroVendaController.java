@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -90,10 +91,17 @@ public class CadastroVendaController {
     @FXML
     private Label tituloPagina;
 
+    private Usuario usuarioLogado;
+
     private boolean isModificacao = false;
     private Vendas vendaModificacao;
     private int index = 0;
     double valorTotal = 0;
+
+    public void setUsuario(Usuario usuario) {
+        this.usuarioLogado = usuario;
+        configurarDesconto();
+    }
 
     public void setModificacao(boolean isModificacao, Vendas vendaModificacao) {
         this.isModificacao = isModificacao;
@@ -123,7 +131,6 @@ public class CadastroVendaController {
         adicionarFormasPagamento();
         adicionandoClientesCombo();
         adicionarDesconto.setDisable(true);
-
     }
 
     private void gerarAlertas(Alert.AlertType tipo, String conteudo, String titulo) {
@@ -254,11 +261,21 @@ public class CadastroVendaController {
     }
 
     @FXML
-    private void adicionarDescontoVenda(Usuario usuario) {
-        if (usuario.getTipoUsuario().equals("admin")) {
+    private void adicionarDescontoVenda() {
+        if (usuarioLogado != null && usuarioLogado.getTipoUsuario().equals("admin")) {
             adicionarDesconto.setDisable(false);
             String valorDesconto = adicionarDesconto.getText().trim().replace("\\D", "");
-            valorTotal *= Double.parseDouble(valorDesconto)/100;
+            if (!valorDesconto.isEmpty()) {
+                valorTotal *= Double.parseDouble(valorDesconto) / 100;
+            }
+        }
+    }
+
+    private void configurarDesconto() {
+        if (usuarioLogado != null && usuarioLogado.getTipoUsuario().equals("admin")) {
+            adicionarDesconto.setDisable(false);
+        } else {
+            adicionarDesconto.setDisable(true);
         }
     }
 

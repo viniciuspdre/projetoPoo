@@ -46,7 +46,7 @@
                            <children>
                               <ImageView fitHeight="112.0" fitWidth="84.0" layoutX="64.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../icon/user.png" />
+                                    <Image url="@../icon/user_white.png" />
                                  </image>
                                  <effect>
                                     <ColorAdjust brightness="1.0" />
@@ -400,9 +400,9 @@
                               <String fx:value="shadow" />
                            </styleClass>
                         </AnchorPane>
-                        <AnchorPane fx:id="Container_Atualizar_Produto" layoutX="130.0" layoutY="152.0" prefHeight="542.4" prefWidth="888.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Container_Atualizar_Produto" layoutX="130.0" layoutY="152.0" prefHeight="542.4" prefWidth="888.8" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <AnchorPane layoutX="10.0" layoutY="11.0" prefHeight="521.0" prefWidth="876.0" stylesheets="@../style/cadastroProdutos.css" visible="false" AnchorPane.bottomAnchor="10.600000000000023" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.799999999999955" AnchorPane.topAnchor="11.0">
+                              <AnchorPane layoutX="10.0" layoutY="11.0" prefHeight="521.0" prefWidth="876.0" stylesheets="@../style/cadastroProdutos.css" AnchorPane.bottomAnchor="10.600000000000023" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.799999999999955" AnchorPane.topAnchor="11.0">
                                  <styleClass>
                                     <String fx:value="white" />
                                     <String fx:value="shadow" />
@@ -793,7 +793,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="Container_Home" layoutX="14.0" layoutY="14.0" prefHeight="519.0" prefWidth="868.0" stylesheets="@../style/cadastroProdutos.css" visible="false">
+                        <AnchorPane fx:id="Container_Home" layoutX="14.0" layoutY="14.0" prefHeight="519.0" prefWidth="868.0" stylesheets="@../style/cadastroProdutos.css">
                            <styleClass>
                               <String fx:value="shadow" />
                               <String fx:value="white" />
