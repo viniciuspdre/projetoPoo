@@ -225,6 +225,7 @@ public class GerenciamentoVendasController {
 
             CadastroVendaController controller = loader.getController();
             controller.setModificacao(isModificacao, venda);
+            controller.setUsuario(usuarioLogado);
 
             Stage stage = new Stage();
             Scene scene = new Scene(root);

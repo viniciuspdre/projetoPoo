@@ -4,21 +4,17 @@ package controller;
 import dao.ClienteDAO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+
 import javafx.stage.Stage;
 import model.Cliente;
-import model.Usuario;
 import model.entity.Estado;
 import model.entity.Sexo;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.List;
+
 
 public class CadastroClienteController {
 
@@ -40,7 +36,6 @@ public class CadastroClienteController {
     private ComboBox<Sexo> comboSexo;
     @FXML
     private ComboBox<Estado> comboEstado;
-
 
     // public  static  boolean cadastro = false;
 
@@ -195,7 +190,7 @@ public class CadastroClienteController {
         String mes = comboMes.getSelectionModel().getSelectedItem().length() == 1 ?
                 0+comboMes.getSelectionModel().getSelectedItem() : comboMes.getSelectionModel().getSelectedItem();
         String ano = comboAno.getSelectionModel().getSelectedItem();
-        cliente.setData_nascimento(dia+"/"+mes+"/"+ano);
+        cliente.setData_nascimento(ano+"-"+mes+"-"+dia);
         cliente.setData_registro(data.format(formatter));
         cliente.setSexo(comboSexo.getSelectionModel().getSelectedItem().name());
         cliente.setEstado(comboEstado.getSelectionModel().getSelectedItem().name());

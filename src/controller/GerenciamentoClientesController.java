@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -179,25 +181,39 @@ public class GerenciamentoClientesController implements Initializable {
 
         if (clienteSelecionado != null) {
             // Exclui do banco de dados
-            boolean removido = ClienteDAO.excluirCliente(clienteSelecionado.getCpf());
 
-            if (removido) {
-                // Remove da lista da tabela
-                listaClientes.remove(clienteSelecionado);
-                System.out.println("Cliente removido do banco: " + clienteSelecionado.getNome());
+            try {
+                boolean removido = ClienteDAO.excluirCliente(clienteSelecionado.getCpf());
+                if (removido) {
+                    // Remove da lista da tabela
+                    listaClientes.remove(clienteSelecionado);
+                    System.out.println("Cliente removido do banco: " + clienteSelecionado.getNome());
 
-                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-                alerta.setTitle("Sucesso");
-                alerta.setHeaderText(null);
-                alerta.setContentText("Cliente removido com sucesso!");
-                alerta.showAndWait();
-            } else {
-                System.out.println("Erro ao excluir cliente do banco.");
+                    Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                    alerta.setTitle("Sucesso");
+                    alerta.setHeaderText(null);
+                    alerta.setContentText("Cliente removido com sucesso!");
+                    alerta.showAndWait();
+                } else {
+                    System.out.println("Erro ao excluir cliente do banco.");
 
+                    Alert alerta = new Alert(Alert.AlertType.ERROR);
+                    alerta.setTitle("Erro");
+                    alerta.setHeaderText(null);
+                    alerta.setContentText("Erro ao excluir cliente do banco.");
+                    alerta.showAndWait();
+                }
+            } catch (SQLIntegrityConstraintViolationException e) {
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
-                alerta.setTitle("Erro");
+                alerta.setTitle("Erro ao remover");
                 alerta.setHeaderText(null);
-                alerta.setContentText("Erro ao excluir cliente do banco.");
+                alerta.setContentText("Você não pode remover um cliente que já fez pelo menos uma compra, coloque ele como inativo.");
+                alerta.showAndWait();
+            } catch (SQLException e) {
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setTitle("Erro ao remover");
+                alerta.setHeaderText(null);
+                alerta.setContentText("Erro ao remover o cliente do banco de dados.");
                 alerta.showAndWait();
             }
         } else {

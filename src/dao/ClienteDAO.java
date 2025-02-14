@@ -72,7 +72,7 @@ public class ClienteDAO {
         }
     }
 
-    public static boolean excluirCliente(String Cpf) {
+    public static boolean excluirCliente(String Cpf) throws SQLException{
         String sql = "DELETE FROM CLIENTE WHERE CPF = ?";
         try (Connection conn = ConexaoDB.getConexao();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -81,9 +81,8 @@ public class ClienteDAO {
 
             return ps.executeUpdate() > 0; // verifica se o comando SQL afetou pelo menos uma linha.
             // retorna true
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+        } catch (SQLIntegrityConstraintViolationException e) {
+            throw e;
         }
     }
 
